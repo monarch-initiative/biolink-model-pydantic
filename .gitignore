@@ -1,6 +1,9 @@
 # Project specific
 biolink-model.yaml
 
+# Pycharm
+.idea
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
