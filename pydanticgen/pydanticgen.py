@@ -52,7 +52,13 @@ import typer
 from linkml.generators import PYTHON_GEN_VERSION
 from linkml.generators.pythongen import PythonGenerator
 from linkml.utils.formatutils import be, camelcase, split_line, wrapped_annotation
-from linkml_model.meta import ClassDefinition, ClassDefinitionName, SchemaDefinition, SlotDefinition
+from linkml_model.meta import (
+    ClassDefinition,
+    ClassDefinitionName,
+    EnumDefinition,
+    SchemaDefinition,
+    SlotDefinition,
+)
 
 
 class PydanticGen(PythonGenerator):
@@ -167,6 +173,9 @@ Quotient = float
 
 # Predicates
 {self.gen_predicate_enum()}
+
+# Enumerations
+{self.gen_enumerations()}
 
 # Classes
 {self.gen_classdefs()}
@@ -394,7 +403,8 @@ Quotient = float
             if len(rangelist) > 1 and rangelist[-1] == 'IriType':
                 class_ref = 'IriType'
             else:
-                class_ref = f"Union[{base}, {rangelist[-1]}]" if len(rangelist) > 1 else base
+                cls = rangelist[-1].replace('"', '') if len(rangelist) > 1 else base
+                class_ref = f"Union[{base}, {cls}]"
 
         return class_ref
 
@@ -491,6 +501,26 @@ valid_prefix = [
 
         return ret_val
 
+    def gen_enum(self, enum: EnumDefinition) -> str:
+        enum_name = camelcase(enum.name)
+
+        formatted_pvalues = '\n'.join(
+            [
+                f'    {key} = "{pvalue.text}"'
+                if key.isidentifier()
+                else f'    value_{key} = "{pvalue.text}"'
+                if f"value_{key}".isidentifier()
+                else f'    value_{list(enum.permissible_values.keys()).index(key)} = "{pvalue.text}"'
+                for key, pvalue in enum.permissible_values.items()
+            ]
+        )
+
+        return f'''
+class {enum_name}(str, Enum):
+    {self.gen_enum_comment(enum)}
+{formatted_pvalues}
+'''.strip()
+
     def gen_predicate_enum(self) -> str:
         """
         Creates a named tuple of all biolink predicates
@@ -512,7 +542,7 @@ class Predicate(str, Enum):
     """
 
 {formatted_predicates}
-'''
+'''.strip()
 
     def gen_pydantic_validators(self, cls) -> str:
         """
@@ -598,9 +628,9 @@ class Predicate(str, Enum):
         """
         return f'''
     @validator('{slotname}')
-    def check_{slotname}_prefix(cls, field):
-        check_curie_prefix({cls_name}, field)
-        return field'''
+    def check_{slotname}_prefix(cls, value):
+        check_curie_prefix({cls_name}, value)
+        return value'''
 
     @staticmethod
     def _gen_scalar_to_list_check_curies_validator(slotname: str, cls_name: str = 'cls') -> str:
@@ -610,8 +640,8 @@ class Predicate(str, Enum):
         """
         return f'''
     @validator('{slotname}')
-    def convert_{slotname}_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies({cls_name}, field)'''
+    def convert_{slotname}_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies({cls_name}, value)'''
 
     @staticmethod
     def _gen_required_validator(
@@ -623,14 +653,14 @@ class Predicate(str, Enum):
         """
         validator = f'''
     @validator('{slotname}')
-    def validate_required_{slotname}(cls, field):
-        check_value_is_not_none("{slotname}", field)
+    def validate_required_{slotname}(cls, value):
+        check_value_is_not_none("{slotname}", value)
 '''
         if is_multivalued:
-            validator += f'\t\tconvert_scalar_to_list_check_curies({cls_name}, field)\n'
+            validator += f'\t\tconvert_scalar_to_list_check_curies({cls_name}, value)\n'
         elif is_curie:
-            validator += f'\t\tcheck_curie_prefix({cls_name}, field)\n'
-        validator += f'\t\treturn field'
+            validator += f'\t\tcheck_curie_prefix({cls_name}, value)\n'
+        validator += f'\t\treturn value'
         return validator
 
     @staticmethod
@@ -704,7 +734,7 @@ def check_curie_prefix(cls, curie: Union[List, str, None]):
                 )          
 
 
-def convert_scalar_to_list_check_curies(cls, field: Any) -> List[str]:
+def convert_scalar_to_list_check_curies(cls, value: Any) -> List[str]:
     """
     Converts list fields that have been passed a scalar to a 1-sized list
     
@@ -712,26 +742,26 @@ def convert_scalar_to_list_check_curies(cls, field: Any) -> List[str]:
     are applied prior to running this function, we can use this for both
     curie and non-curie fields by rechecking re.match(curie_pattern, some_string)
     """
-    if not isinstance(field, list):
-        field = [field]
-    for feld in field:
-        if isinstance(feld, str) and re.match(curie_pattern, feld):
-            check_curie_prefix(cls, feld)
-    return field
+    if not isinstance(value, list):
+        value = [value]
+    for val in value:
+        if isinstance(val, str) and re.match(curie_pattern, val):
+            check_curie_prefix(cls, val)
+    return value
     
 
-def check_value_is_not_none(slotname: str, field: Any) -> bool:
+def check_value_is_not_none(slotname: str, value: Any):
     is_none = False
-    if isinstance(field, list) or isinstance(field, dict):
+    if isinstance(value, list) or isinstance(value, dict):
         if not field:
             is_none = True
     else:
-        if field is None:
+        if value is None:
             is_none = True
             
     if is_none:
         raise ValueError(f"{slotname} is required")
-        '''
+'''.strip()
 
 
 def main(yamlfile: str):

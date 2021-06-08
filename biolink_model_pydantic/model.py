@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-06-08 10:16
+# Generation date: 2021-06-08 14:42
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -250,8 +250,6 @@ valid_prefix = [
 
 
 # Pydantic config and validators
-
-
 class PydanticConfig:
     """
     Pydantic config
@@ -292,7 +290,7 @@ def check_curie_prefix(cls, curie: Union[List, str, None]):
                 )
 
 
-def convert_scalar_to_list_check_curies(cls, field: Any) -> List[str]:
+def convert_scalar_to_list_check_curies(cls, value: Any) -> List[str]:
     """
     Converts list fields that have been passed a scalar to a 1-sized list
 
@@ -300,21 +298,21 @@ def convert_scalar_to_list_check_curies(cls, field: Any) -> List[str]:
     are applied prior to running this function, we can use this for both
     curie and non-curie fields by rechecking re.match(curie_pattern, some_string)
     """
-    if not isinstance(field, list):
-        field = [field]
-    for feld in field:
-        if isinstance(feld, str) and re.match(curie_pattern, feld):
-            check_curie_prefix(cls, feld)
-    return field
+    if not isinstance(value, list):
+        value = [value]
+    for val in value:
+        if isinstance(val, str) and re.match(curie_pattern, val):
+            check_curie_prefix(cls, val)
+    return value
 
 
-def check_value_is_not_none(slotname: str, field: Any) -> bool:
+def check_value_is_not_none(slotname: str, value: Any):
     is_none = False
-    if isinstance(field, list) or isinstance(field, dict):
+    if isinstance(value, list) or isinstance(value, dict):
         if not field:
             is_none = True
     else:
-        if field is None:
+        if value is None:
             is_none = True
 
     if is_none:
@@ -322,8 +320,6 @@ def check_value_is_not_none(slotname: str, field: Any) -> bool:
 
 
 # Predicates
-
-
 class Predicate(str, Enum):
     """
     Enum for biolink predicates
@@ -618,6 +614,58 @@ class Predicate(str, Enum):
     xenologous_to = "biolink:xenologous_to"
 
 
+# Enumerations
+class LogicalInterpretationEnum(str, Enum):
+
+    SomeSome = "SomeSome"
+    AllSome = "AllSome"
+    InverseAllSome = "InverseAllSome"
+
+
+class ReactionDirectionEnum(str, Enum):
+
+    left_to_right = "left_to_right"
+    right_to_left = "right_to_left"
+    bidirectional = "bidirectional"
+    neutral = "neutral"
+
+
+class ReactionSideEnum(str, Enum):
+
+    left = "left"
+    right = "right"
+
+
+class PhaseEnum(str, Enum):
+    """
+    phase
+    """
+
+    value_0 = "0"
+    value_1 = "1"
+    value_2 = "2"
+
+
+class StrandEnum(str, Enum):
+    """
+    strand
+    """
+
+    value_0 = "+"
+    value_1 = "-"
+    value_2 = "."
+    value_3 = "?"
+
+
+class SequenceEnum(str, Enum):
+    """
+    type of sequence
+    """
+
+    NA = "NA"
+    AA = "AA"
+
+
 # Classes
 
 
@@ -652,7 +700,7 @@ class QuantityValue(Annotation):
     _category: ClassVar[str] = "QuantityValue"
 
     has_unit: Optional[Union[str, Unit]] = None
-    has_numeric_value: Optional[float] = None
+    has_numeric_value: Optional[Union[float, float]] = None
 
 
 @dataclass(config=PydanticConfig)
@@ -678,18 +726,18 @@ class Attribute(Annotation, OntologyClass):
     # Validators
 
     @validator('has_attribute_type')
-    def validate_required_has_attribute_type(cls, field):
-        check_value_is_not_none("has_attribute_type", field)
-        return field
+    def validate_required_has_attribute_type(cls, value):
+        check_value_is_not_none("has_attribute_type", value)
+        return value
 
     @validator('has_quantitative_value')
-    def convert_has_quantitative_value_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_has_quantitative_value_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('has_qualitative_value')
-    def check_has_qualitative_value_prefix(cls, field):
-        check_curie_prefix(cls, field)
-        return field
+    def check_has_qualitative_value_prefix(cls, value):
+        check_curie_prefix(cls, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -758,10 +806,10 @@ class PathognomonicityQuantifier(SpecificityQuantifier):
 
 @dataclass(config=PydanticConfig)
 class FrequencyQuantifier(RelationshipQuantifier):
-    has_count: Optional[int] = None
-    has_total: Optional[int] = None
-    has_quotient: Optional[float] = None
-    has_percentage: Optional[float] = None
+    has_count: Optional[Union[int, int]] = None
+    has_total: Optional[Union[int, int]] = None
+    has_quotient: Optional[Union[float, float]] = None
+    has_percentage: Optional[Union[float, float]] = None
 
 
 @dataclass(config=PydanticConfig)
@@ -779,7 +827,7 @@ class Entity:
     id: URIorCURIE = None
     iri: Optional[IriType] = None
     category: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
-    type: Optional[str] = None
+    type: Optional[Union[str, str]] = None
     name: Optional[Union[str, LabelType]] = None
     description: Optional[Union[str, NarrativeText]] = None
     source: Optional[Union[str, LabelType]] = None
@@ -791,22 +839,22 @@ class Entity:
     # Validators
 
     @validator('id')
-    def validate_required_id(cls, field):
-        check_value_is_not_none("id", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_id(cls, value):
+        check_value_is_not_none("id", value)
+        check_curie_prefix(cls, value)
+        return value
 
     @validator('category')
-    def convert_category_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_category_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('provided_by')
-    def convert_provided_by_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_provided_by_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('has_attribute')
-    def convert_has_attribute_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_has_attribute_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     def __post_init__(self):
         # Initialize default categories if not set
@@ -835,10 +883,10 @@ class NamedThing(Entity):
     # Validators
 
     @validator('category')
-    def validate_required_category(cls, field):
-        check_value_is_not_none("category", field)
-        convert_scalar_to_list_check_curies(cls, field)
-        return field
+    def validate_required_category(cls, value):
+        check_value_is_not_none("category", value)
+        convert_scalar_to_list_check_curies(cls, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -893,8 +941,8 @@ class OrganismTaxon(NamedThing):
     # Validators
 
     @validator('subclass_of')
-    def convert_subclass_of_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_subclass_of_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -917,20 +965,20 @@ class Agent(AdministrativeEntity):
     affiliation: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = field(
         default_factory=list
     )
-    address: Optional[str] = None
+    address: Optional[Union[str, str]] = None
     name: Optional[Union[str, LabelType]] = None
 
     # Validators
 
     @validator('affiliation')
-    def convert_affiliation_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_affiliation_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('id')
-    def validate_required_id(cls, field):
-        check_value_is_not_none("id", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_id(cls, value):
+        check_value_is_not_none("id", value)
+        check_curie_prefix(cls, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -942,9 +990,9 @@ class InformationContentEntity(NamedThing):
     # Class Variables
     _id_prefixes: ClassVar[List[str]] = ["doi"]
 
-    license: Optional[str] = None
-    rights: Optional[str] = None
-    format: Optional[str] = None
+    license: Optional[Union[str, str]] = None
+    rights: Optional[Union[str, str]] = None
+    format: Optional[Union[str, str]] = None
     creation_date: Optional[Union[str, XSDDate]] = None
 
 
@@ -967,7 +1015,7 @@ class DatasetDistribution(InformationContentEntity):
     # Class Variables
     _category: ClassVar[str] = "DatasetDistribution"
 
-    distribution_download_url: Optional[str] = None
+    distribution_download_url: Optional[Union[str, str]] = None
 
 
 @dataclass(config=PydanticConfig)
@@ -980,20 +1028,20 @@ class DatasetVersion(InformationContentEntity):
     _category: ClassVar[str] = "DatasetVersion"
 
     has_dataset: Optional[Union[URIorCURIE, Dataset]] = None
-    ingest_date: Optional[str] = None
+    ingest_date: Optional[Union[str, str]] = None
     has_distribution: Optional[Union[URIorCURIE, DatasetDistribution]] = None
 
     # Validators
 
     @validator('has_dataset')
-    def check_has_dataset_prefix(cls, field):
-        check_curie_prefix(Dataset, field)
-        return field
+    def check_has_dataset_prefix(cls, value):
+        check_curie_prefix(Dataset, value)
+        return value
 
     @validator('has_distribution')
-    def check_has_distribution_prefix(cls, field):
-        check_curie_prefix(DatasetDistribution, field)
-        return field
+    def check_has_distribution_prefix(cls, value):
+        check_curie_prefix(DatasetDistribution, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -1005,8 +1053,8 @@ class DatasetSummary(InformationContentEntity):
     # Class Variables
     _category: ClassVar[str] = "DatasetSummary"
 
-    source_web_page: Optional[str] = None
-    source_logo: Optional[str] = None
+    source_web_page: Optional[Union[str, str]] = None
+    source_logo: Optional[Union[str, str]] = None
 
 
 @dataclass(config=PydanticConfig)
@@ -1057,11 +1105,11 @@ class Publication(InformationContentEntity):
     _id_prefixes: ClassVar[List[str]] = ["NLMID"]
 
     id: URIorCURIE = None
-    type: str = None
-    authors: Optional[Union[str, List[str]]] = field(default_factory=list)
-    pages: Optional[Union[str, List[str]]] = field(default_factory=list)
-    summary: Optional[str] = None
-    keywords: Optional[Union[str, List[str]]] = field(default_factory=list)
+    type: Union[str, str] = None
+    authors: Optional[Union[Union[str, str], List[Union[str, str]]]] = field(default_factory=list)
+    pages: Optional[Union[Union[str, str], List[Union[str, str]]]] = field(default_factory=list)
+    summary: Optional[Union[str, str]] = None
+    keywords: Optional[Union[Union[str, str], List[Union[str, str]]]] = field(default_factory=list)
     mesh_terms: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = field(
         default_factory=list
     )
@@ -1071,35 +1119,35 @@ class Publication(InformationContentEntity):
     # Validators
 
     @validator('authors')
-    def convert_authors_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_authors_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('pages')
-    def convert_pages_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_pages_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('keywords')
-    def convert_keywords_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_keywords_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('mesh_terms')
-    def convert_mesh_terms_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_mesh_terms_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('xref')
-    def convert_xref_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_xref_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('id')
-    def validate_required_id(cls, field):
-        check_value_is_not_none("id", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_id(cls, value):
+        check_value_is_not_none("id", value)
+        check_curie_prefix(cls, value)
+        return value
 
     @validator('type')
-    def validate_required_type(cls, field):
-        check_value_is_not_none("type", field)
-        return field
+    def validate_required_type(cls, value):
+        check_value_is_not_none("type", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -1113,20 +1161,20 @@ class Book(Publication):
     _id_prefixes: ClassVar[List[str]] = ["isbn", "NLMID"]
 
     id: URIorCURIE = None
-    type: str = None
+    type: Union[str, str] = None
 
     # Validators
 
     @validator('id')
-    def validate_required_id(cls, field):
-        check_value_is_not_none("id", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_id(cls, value):
+        check_value_is_not_none("id", value)
+        check_curie_prefix(cls, value)
+        return value
 
     @validator('type')
-    def validate_required_type(cls, field):
-        check_value_is_not_none("type", field)
-        return field
+    def validate_required_type(cls, value):
+        check_value_is_not_none("type", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -1136,16 +1184,16 @@ class BookChapter(Publication):
     _category: ClassVar[str] = "BookChapter"
 
     published_in: Union[str, URIorCURIE] = None
-    volume: Optional[str] = None
-    chapter: Optional[str] = None
+    volume: Optional[Union[str, str]] = None
+    chapter: Optional[Union[str, str]] = None
 
     # Validators
 
     @validator('published_in')
-    def validate_required_published_in(cls, field):
-        check_value_is_not_none("published_in", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_published_in(cls, value):
+        check_value_is_not_none("published_in", value)
+        check_curie_prefix(cls, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -1159,23 +1207,23 @@ class Serial(Publication):
     _id_prefixes: ClassVar[List[str]] = ["issn", "NLMID"]
 
     id: URIorCURIE = None
-    type: str = None
-    iso_abbreviation: Optional[str] = None
-    volume: Optional[str] = None
-    issue: Optional[str] = None
+    type: Union[str, str] = None
+    iso_abbreviation: Optional[Union[str, str]] = None
+    volume: Optional[Union[str, str]] = None
+    issue: Optional[Union[str, str]] = None
 
     # Validators
 
     @validator('id')
-    def validate_required_id(cls, field):
-        check_value_is_not_none("id", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_id(cls, value):
+        check_value_is_not_none("id", value)
+        check_curie_prefix(cls, value)
+        return value
 
     @validator('type')
-    def validate_required_type(cls, field):
-        check_value_is_not_none("type", field)
-        return field
+    def validate_required_type(cls, value):
+        check_value_is_not_none("type", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -1186,17 +1234,17 @@ class Article(Publication):
     _id_prefixes: ClassVar[List[str]] = ["PMID"]
 
     published_in: Union[str, URIorCURIE] = None
-    iso_abbreviation: Optional[str] = None
-    volume: Optional[str] = None
-    issue: Optional[str] = None
+    iso_abbreviation: Optional[Union[str, str]] = None
+    volume: Optional[Union[str, str]] = None
+    issue: Optional[Union[str, str]] = None
 
     # Validators
 
     @validator('published_in')
-    def validate_required_published_in(cls, field):
-        check_value_is_not_none("published_in", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_published_in(cls, value):
+        check_value_is_not_none("published_in", value)
+        check_curie_prefix(cls, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -1331,8 +1379,8 @@ class GeographicLocation(PlanetaryEntity):
     # Class Variables
     _category: ClassVar[str] = "GeographicLocation"
 
-    latitude: Optional[float] = None
-    longitude: Optional[float] = None
+    latitude: Optional[Union[float, float]] = None
+    longitude: Optional[Union[float, float]] = None
 
 
 @dataclass(config=PydanticConfig)
@@ -1367,8 +1415,8 @@ class ThingWithTaxon:
     # Validators
 
     @validator('in_taxon')
-    def convert_in_taxon_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(OrganismTaxon, field)
+    def convert_in_taxon_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(OrganismTaxon, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -1443,10 +1491,10 @@ class SmallMolecule(MolecularEntity):
     # Validators
 
     @validator('id')
-    def validate_required_id(cls, field):
-        check_value_is_not_none("id", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_id(cls, value):
+        check_value_is_not_none("id", value)
+        check_curie_prefix(cls, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -1513,16 +1561,16 @@ class BiologicalProcessOrActivity(BiologicalEntity, Occurrent, OntologyClass):
     # Validators
 
     @validator('has_input')
-    def convert_has_input_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_has_input_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('has_output')
-    def convert_has_output_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_has_output_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('enabled_by')
-    def convert_enabled_by_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_enabled_by_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -1552,16 +1600,16 @@ class MolecularActivity(BiologicalProcessOrActivity, Occurrent, OntologyClass):
     # Validators
 
     @validator('has_input')
-    def convert_has_input_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_has_input_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('has_output')
-    def convert_has_output_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_has_output_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('enabled_by')
-    def convert_enabled_by_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_enabled_by_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -1735,8 +1783,8 @@ class OrganismalEntity(BiologicalEntity):
     # Validators
 
     @validator('has_attribute')
-    def convert_has_attribute_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_has_attribute_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -1948,7 +1996,7 @@ class Gene(NucleicAcidEntity, GeneOrGeneProduct, ThingWithTaxon):
         "Xenbase",
     ]
 
-    symbol: Optional[str] = None
+    symbol: Optional[Union[str, str]] = None
     synonym: Optional[Union[Union[str, LabelType], List[Union[str, LabelType]]]] = field(
         default_factory=list
     )
@@ -1957,12 +2005,12 @@ class Gene(NucleicAcidEntity, GeneOrGeneProduct, ThingWithTaxon):
     # Validators
 
     @validator('synonym')
-    def convert_synonym_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_synonym_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('xref')
-    def convert_xref_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_xref_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -1983,12 +2031,12 @@ class GeneProductMixin(GeneOrGeneProduct):
     # Validators
 
     @validator('synonym')
-    def convert_synonym_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_synonym_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('xref')
-    def convert_xref_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_xref_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -2147,8 +2195,8 @@ class GeneGroupingMixin:
     # Validators
 
     @validator('has_gene_or_gene_product')
-    def convert_has_gene_or_gene_product_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(Gene, field)
+    def convert_has_gene_or_gene_product_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(Gene, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -2244,14 +2292,14 @@ class SequenceVariant(NucleicAcidEntity):
     # Validators
 
     @validator('has_gene')
-    def convert_has_gene_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(Gene, field)
+    def convert_has_gene_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(Gene, value)
 
     @validator('id')
-    def validate_required_id(cls, field):
-        check_value_is_not_none("id", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_id(cls, value):
+        check_value_is_not_none("id", value)
+        check_curie_prefix(cls, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -2300,9 +2348,9 @@ class ClinicalMeasurement(ClinicalAttribute):
     # Validators
 
     @validator('has_attribute_type')
-    def validate_required_has_attribute_type(cls, field):
-        check_value_is_not_none("has_attribute_type", field)
-        return field
+    def validate_required_has_attribute_type(cls, value):
+        check_value_is_not_none("has_attribute_type", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -2380,8 +2428,8 @@ class ClinicalFinding(PhenotypicFeature):
     # Validators
 
     @validator('has_attribute')
-    def convert_has_attribute_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_has_attribute_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -2575,16 +2623,16 @@ class Treatment(NamedThing, ExposureEvent, ChemicalOrDrugOrTreatment):
     # Validators
 
     @validator('has_drug')
-    def convert_has_drug_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(Drug, field)
+    def convert_has_drug_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(Drug, value)
 
     @validator('has_device')
-    def convert_has_device_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(Device, field)
+    def convert_has_device_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(Device, value)
 
     @validator('has_procedure')
-    def convert_has_procedure_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(Procedure, field)
+    def convert_has_procedure_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(Procedure, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -2645,10 +2693,10 @@ class SocioeconomicExposure(Behavior, ExposureEvent):
     # Validators
 
     @validator('has_attribute')
-    def validate_required_has_attribute(cls, field):
-        check_value_is_not_none("has_attribute", field)
-        convert_scalar_to_list_check_curies(cls, field)
-        return field
+    def validate_required_has_attribute(cls, value):
+        check_value_is_not_none("has_attribute", value)
+        convert_scalar_to_list_check_curies(cls, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -2762,45 +2810,45 @@ class Association(Entity):
     publications: Optional[
         Union[Union[URIorCURIE, Publication], List[Union[URIorCURIE, Publication]]]
     ] = field(default_factory=list)
-    type: Optional[str] = None
+    type: Optional[Union[str, str]] = None
     category: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
 
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(NamedThing, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(NamedThing, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(NamedThing, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(NamedThing, value)
+        return value
 
     @validator('relation')
-    def validate_required_relation(cls, field):
-        check_value_is_not_none("relation", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_relation(cls, value):
+        check_value_is_not_none("relation", value)
+        check_curie_prefix(cls, value)
+        return value
 
     @validator('qualifiers')
-    def convert_qualifiers_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_qualifiers_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('publications')
-    def convert_publications_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(Publication, field)
+    def convert_publications_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(Publication, value)
 
     @validator('category')
-    def convert_category_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_category_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -2822,25 +2870,25 @@ class ContributorAssociation(Association):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(InformationContentEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(InformationContentEntity, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(Agent, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(Agent, value)
+        return value
 
     @validator('qualifiers')
-    def convert_qualifiers_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_qualifiers_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -2859,21 +2907,21 @@ class GenotypeToGenotypePartAssociation(Association):
     # Validators
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Genotype, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Genotype, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(Genotype, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(Genotype, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -2893,21 +2941,21 @@ class GenotypeToGeneAssociation(Association):
     # Validators
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Genotype, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Genotype, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(Gene, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(Gene, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -2926,21 +2974,21 @@ class GenotypeToVariantAssociation(Association):
     # Validators
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Genotype, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Genotype, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(SequenceVariant, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(SequenceVariant, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -2956,14 +3004,14 @@ class GeneToGeneAssociation(Association):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -2981,9 +3029,9 @@ class GeneToGeneHomologyAssociation(GeneToGeneAssociation):
     # Validators
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3001,19 +3049,19 @@ class GeneExpressionMixin:
     # Validators
 
     @validator('expression_site')
-    def check_expression_site_prefix(cls, field):
-        check_curie_prefix(AnatomicalEntity, field)
-        return field
+    def check_expression_site_prefix(cls, value):
+        check_curie_prefix(AnatomicalEntity, value)
+        return value
 
     @validator('stage_qualifier')
-    def check_stage_qualifier_prefix(cls, field):
-        check_curie_prefix(LifeStage, field)
-        return field
+    def check_stage_qualifier_prefix(cls, value):
+        check_curie_prefix(LifeStage, value)
+        return value
 
     @validator('phenotypic_state')
-    def check_phenotypic_state_prefix(cls, field):
-        check_curie_prefix(DiseaseOrPhenotypicFeature, field)
-        return field
+    def check_phenotypic_state_prefix(cls, value):
+        check_curie_prefix(DiseaseOrPhenotypicFeature, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3030,9 +3078,9 @@ class GeneToGeneCoexpressionAssociation(GeneToGeneAssociation, GeneExpressionMix
     # Validators
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3051,15 +3099,15 @@ class PairwiseGeneToGeneInteraction(GeneToGeneAssociation):
     # Validators
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
     @validator('relation')
-    def validate_required_relation(cls, field):
-        check_value_is_not_none("relation", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_relation(cls, value):
+        check_value_is_not_none("relation", value)
+        check_curie_prefix(cls, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3081,33 +3129,33 @@ class PairwiseMolecularInteraction(PairwiseGeneToGeneInteraction):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(MolecularEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(MolecularEntity, value)
+        return value
 
     @validator('id')
-    def validate_required_id(cls, field):
-        check_value_is_not_none("id", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_id(cls, value):
+        check_value_is_not_none("id", value)
+        check_curie_prefix(cls, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
     @validator('relation')
-    def validate_required_relation(cls, field):
-        check_value_is_not_none("relation", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_relation(cls, value):
+        check_value_is_not_none("relation", value)
+        check_curie_prefix(cls, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(MolecularEntity, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(MolecularEntity, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3121,10 +3169,10 @@ class CellLineToEntityAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(CellLine, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(CellLine, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3138,10 +3186,10 @@ class ChemicalEntityToEntityAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(ChemicalEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(ChemicalEntity, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3155,10 +3203,10 @@ class DrugToEntityAssociationMixin(ChemicalEntityToEntityAssociationMixin):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Drug, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Drug, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3172,10 +3220,10 @@ class ChemicalToEntityAssociationMixin(ChemicalEntityToEntityAssociationMixin):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(ChemicalEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(ChemicalEntity, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3189,10 +3237,10 @@ class CaseToEntityAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Case, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Case, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3210,10 +3258,10 @@ class ChemicalToChemicalAssociation(Association, ChemicalToEntityAssociationMixi
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(ChemicalEntity, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(ChemicalEntity, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3223,17 +3271,17 @@ class ReactionToParticipantAssociation(ChemicalToChemicalAssociation):
     _category: ClassVar[str] = "ReactionToParticipantAssociation"
 
     subject: Union[URIorCURIE, MolecularEntity] = None
-    stoichiometry: Optional[int] = None
-    reaction_direction: Optional[Union[str, "ReactionDirectionEnum"]] = None
-    reaction_side: Optional[Union[str, "ReactionSideEnum"]] = None
+    stoichiometry: Optional[Union[int, int]] = None
+    reaction_direction: Optional[Union[str, ReactionDirectionEnum]] = None
+    reaction_side: Optional[Union[str, ReactionSideEnum]] = None
 
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(MolecularEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(MolecularEntity, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3247,9 +3295,9 @@ class ReactionToCatalystAssociation(ReactionToParticipantAssociation):
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3279,25 +3327,25 @@ class ChemicalToChemicalDerivationAssociation(ChemicalToChemicalAssociation):
     # Validators
 
     @validator('catalyst_qualifier')
-    def convert_catalyst_qualifier_to_list_check_curies(cls, field):
-        return convert_scalar_to_list_check_curies(cls, field)
+    def convert_catalyst_qualifier_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(ChemicalEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(ChemicalEntity, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(ChemicalEntity, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(ChemicalEntity, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3314,10 +3362,10 @@ class ChemicalToPathwayAssociation(Association, ChemicalToEntityAssociationMixin
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(Pathway, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(Pathway, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3334,9 +3382,9 @@ class ChemicalToGeneAssociation(Association, ChemicalToEntityAssociationMixin):
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3353,9 +3401,9 @@ class DrugToGeneAssociation(Association, DrugToEntityAssociationMixin):
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3369,10 +3417,10 @@ class MaterialSampleToEntityAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(MaterialSample, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(MaterialSample, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3391,21 +3439,21 @@ class MaterialSampleDerivationAssociation(Association):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(MaterialSample, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(MaterialSample, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(NamedThing, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(NamedThing, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3415,10 +3463,10 @@ class DiseaseToEntityAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Disease, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Disease, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3432,9 +3480,9 @@ class EntityToExposureEventAssociationMixin:
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3460,9 +3508,9 @@ class ExposureEventToEntityAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3476,9 +3524,9 @@ class EntityToOutcomeAssociationMixin:
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3498,9 +3546,9 @@ class ExposureEventToOutcomeAssociation(
     # Validators
 
     @validator('has_population_context')
-    def check_has_population_context_prefix(cls, field):
-        check_curie_prefix(PopulationOfIndividualOrganisms, field)
-        return field
+    def check_has_population_context_prefix(cls, value):
+        check_curie_prefix(PopulationOfIndividualOrganisms, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3531,10 +3579,10 @@ class EntityToPhenotypicFeatureAssociationMixin(EntityToFeatureOrDiseaseQualifie
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(PhenotypicFeature, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(PhenotypicFeature, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3558,21 +3606,21 @@ class NamedThingToInformationContentEntityAssociation(Association):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(NamedThing, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(NamedThing, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(Publication, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(Publication, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3586,10 +3634,10 @@ class EntityToDiseaseAssociationMixin(EntityToFeatureOrDiseaseQualifiersMixin):
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(Disease, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(Disease, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3599,10 +3647,10 @@ class DiseaseOrPhenotypicFeatureToEntityAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(DiseaseOrPhenotypicFeature, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(DiseaseOrPhenotypicFeature, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3622,10 +3670,10 @@ class DiseaseOrPhenotypicFeatureToLocationAssociation(
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(AnatomicalEntity, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(AnatomicalEntity, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3635,10 +3683,10 @@ class EntityToDiseaseOrPhenotypicFeatureAssociationMixin:
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(DiseaseOrPhenotypicFeature, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(DiseaseOrPhenotypicFeature, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3660,10 +3708,10 @@ class CellLineToDiseaseOrPhenotypicFeatureAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(DiseaseOrPhenotypicFeature, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(DiseaseOrPhenotypicFeature, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3685,10 +3733,10 @@ class ChemicalToDiseaseOrPhenotypicFeatureAssociation(
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(DiseaseOrPhenotypicFeature, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(DiseaseOrPhenotypicFeature, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3712,10 +3760,10 @@ class GenotypeToEntityAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Genotype, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Genotype, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3736,15 +3784,15 @@ class GenotypeToPhenotypicFeatureAssociation(
     # Validators
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Genotype, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Genotype, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3764,9 +3812,9 @@ class ExposureEventToPhenotypicFeatureAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3813,16 +3861,16 @@ class BehaviorToBehavioralFeatureAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Behavior, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Behavior, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(BehavioralFeature, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(BehavioralFeature, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3832,9 +3880,9 @@ class GeneToEntityAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3844,10 +3892,10 @@ class VariantToEntityAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(SequenceVariant, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(SequenceVariant, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3863,9 +3911,9 @@ class GeneToPhenotypicFeatureAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3881,9 +3929,9 @@ class GeneToDiseaseAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3902,15 +3950,15 @@ class VariantToGeneAssociation(Association, VariantToEntityAssociationMixin):
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(Gene, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(Gene, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3927,9 +3975,9 @@ class VariantToGeneExpressionAssociation(VariantToGeneAssociation, GeneExpressio
     # Validators
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3945,23 +3993,23 @@ class VariantToPopulationAssociation(
 
     subject: Union[URIorCURIE, SequenceVariant] = None
     object: Union[URIorCURIE, PopulationOfIndividualOrganisms] = None
-    has_quotient: Optional[float] = None
-    has_count: Optional[int] = None
-    has_total: Optional[int] = None
+    has_quotient: Optional[Union[float, float]] = None
+    has_count: Optional[Union[int, int]] = None
+    has_total: Optional[Union[int, int]] = None
 
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(SequenceVariant, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(SequenceVariant, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(PopulationOfIndividualOrganisms, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(PopulationOfIndividualOrganisms, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -3980,21 +4028,21 @@ class PopulationToPopulationAssociation(Association):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(PopulationOfIndividualOrganisms, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(PopulationOfIndividualOrganisms, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(PopulationOfIndividualOrganisms, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(PopulationOfIndividualOrganisms, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4010,10 +4058,10 @@ class VariantToPhenotypicFeatureAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(SequenceVariant, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(SequenceVariant, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4031,21 +4079,21 @@ class VariantToDiseaseAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(NamedThing, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(NamedThing, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(NamedThing, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(NamedThing, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4063,21 +4111,21 @@ class GenotypeToDiseaseAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(NamedThing, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(NamedThing, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(NamedThing, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(NamedThing, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4094,15 +4142,15 @@ class ModelToDiseaseAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(NamedThing, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(NamedThing, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4118,9 +4166,9 @@ class GeneAsAModelOfDiseaseAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4136,10 +4184,10 @@ class VariantAsAModelOfDiseaseAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(SequenceVariant, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(SequenceVariant, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4155,10 +4203,10 @@ class GenotypeAsAModelOfDiseaseAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Genotype, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Genotype, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4176,10 +4224,10 @@ class CellLineAsAModelOfDiseaseAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(CellLine, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(CellLine, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4195,10 +4243,10 @@ class OrganismalEntityAsAModelOfDiseaseAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(OrganismalEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(OrganismalEntity, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4214,22 +4262,22 @@ class OrganismToOrganismAssociation(Association):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(IndividualOrganism, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(IndividualOrganism, value)
+        return value
 
     @validator('relation')
-    def validate_required_relation(cls, field):
-        check_value_is_not_none("relation", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_relation(cls, value):
+        check_value_is_not_none("relation", value)
+        check_curie_prefix(cls, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(IndividualOrganism, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(IndividualOrganism, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4245,22 +4293,22 @@ class TaxonToTaxonAssociation(Association):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(OrganismTaxon, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(OrganismTaxon, value)
+        return value
 
     @validator('relation')
-    def validate_required_relation(cls, field):
-        check_value_is_not_none("relation", field)
-        check_curie_prefix(cls, field)
-        return field
+    def validate_required_relation(cls, value):
+        check_value_is_not_none("relation", value)
+        check_curie_prefix(cls, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(OrganismTaxon, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(OrganismTaxon, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4275,14 +4323,14 @@ class GeneHasVariantThatContributesToDiseaseAssociation(GeneToDiseaseAssociation
     # Validators
 
     @validator('sequence_variant_qualifier')
-    def check_sequence_variant_qualifier_prefix(cls, field):
-        check_curie_prefix(SequenceVariant, field)
-        return field
+    def check_sequence_variant_qualifier_prefix(cls, value):
+        check_curie_prefix(SequenceVariant, value)
+        return value
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4303,25 +4351,25 @@ class GeneToExpressionSiteAssociation(Association):
     # Validators
 
     @validator('stage_qualifier')
-    def check_stage_qualifier_prefix(cls, field):
-        check_curie_prefix(LifeStage, field)
-        return field
+    def check_stage_qualifier_prefix(cls, value):
+        check_curie_prefix(LifeStage, value)
+        return value
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(AnatomicalEntity, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(AnatomicalEntity, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4337,16 +4385,16 @@ class SequenceVariantModulatesTreatmentAssociation(Association):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(SequenceVariant, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(SequenceVariant, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(Treatment, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(Treatment, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4365,14 +4413,14 @@ class FunctionalAssociation(Association):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4386,10 +4434,10 @@ class MacromolecularMachineToEntityAssociationMixin:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(NamedThing, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(NamedThing, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4410,10 +4458,10 @@ class MacromolecularMachineToMolecularActivityAssociation(
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(MolecularActivity, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(MolecularActivity, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4434,10 +4482,10 @@ class MacromolecularMachineToBiologicalProcessAssociation(
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(BiologicalProcess, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(BiologicalProcess, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4458,10 +4506,10 @@ class MacromolecularMachineToCellularComponentAssociation(
     # Validators
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(CellularComponent, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(CellularComponent, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4476,15 +4524,15 @@ class GeneToGoTermAssociation(FunctionalAssociation):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Gene, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Gene, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4510,30 +4558,30 @@ class GenomicSequenceLocalization(SequenceAssociation):
     subject: Union[URIorCURIE, NucleicAcidEntity] = None
     object: Union[URIorCURIE, NucleicAcidEntity] = None
     predicate: Predicate = None
-    start_interbase_coordinate: Optional[int] = None
-    end_interbase_coordinate: Optional[int] = None
-    genome_build: Optional[Union[str, "StrandEnum"]] = None
-    strand: Optional[Union[str, "StrandEnum"]] = None
-    phase: Optional[Union[str, "PhaseEnum"]] = None
+    start_interbase_coordinate: Optional[Union[int, int]] = None
+    end_interbase_coordinate: Optional[Union[int, int]] = None
+    genome_build: Optional[Union[str, StrandEnum]] = None
+    strand: Optional[Union[str, StrandEnum]] = None
+    phase: Optional[Union[str, PhaseEnum]] = None
 
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(NucleicAcidEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(NucleicAcidEntity, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(NucleicAcidEntity, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(NucleicAcidEntity, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4551,16 +4599,16 @@ class SequenceFeatureRelationship(Association):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(NucleicAcidEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(NucleicAcidEntity, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(NucleicAcidEntity, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(NucleicAcidEntity, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4578,16 +4626,16 @@ class TranscriptToGeneRelationship(SequenceFeatureRelationship):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Transcript, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Transcript, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(Gene, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(Gene, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4606,20 +4654,20 @@ class GeneToGeneProductRelationship(SequenceFeatureRelationship):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Gene, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Gene, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4637,16 +4685,16 @@ class ExonToTranscriptRelationship(SequenceFeatureRelationship):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(Exon, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(Exon, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(Transcript, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(Transcript, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4665,19 +4713,19 @@ class GeneRegulatoryRelationship(Association):
     # Validators
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4688,16 +4736,16 @@ class AnatomicalEntityToAnatomicalEntityAssociation(Association):
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(AnatomicalEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(AnatomicalEntity, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(AnatomicalEntity, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(AnatomicalEntity, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4720,21 +4768,21 @@ class AnatomicalEntityToAnatomicalEntityPartOfAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(AnatomicalEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(AnatomicalEntity, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(AnatomicalEntity, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(AnatomicalEntity, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4757,21 +4805,21 @@ class AnatomicalEntityToAnatomicalEntityOntogenicAssociation(
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(AnatomicalEntity, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(AnatomicalEntity, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(AnatomicalEntity, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(AnatomicalEntity, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4785,10 +4833,10 @@ class OrganismTaxonToEntityAssociation:
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(OrganismTaxon, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(OrganismTaxon, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4803,16 +4851,16 @@ class OrganismTaxonToOrganismTaxonAssociation(Association, OrganismTaxonToEntity
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(OrganismTaxon, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(OrganismTaxon, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(OrganismTaxon, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(OrganismTaxon, value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4831,21 +4879,21 @@ class OrganismTaxonToOrganismTaxonSpecialization(OrganismTaxonToOrganismTaxonAss
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(OrganismTaxon, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(OrganismTaxon, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(OrganismTaxon, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(OrganismTaxon, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4862,26 +4910,26 @@ class OrganismTaxonToOrganismTaxonInteraction(OrganismTaxonToOrganismTaxonAssoci
     subject: Union[URIorCURIE, OrganismTaxon] = None
     object: Union[URIorCURIE, OrganismTaxon] = None
     predicate: Predicate = None
-    associated_environmental_context: Optional[str] = None
+    associated_environmental_context: Optional[Union[str, str]] = None
 
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(OrganismTaxon, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(OrganismTaxon, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(OrganismTaxon, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(OrganismTaxon, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
 
 
 @dataclass(config=PydanticConfig)
@@ -4893,18 +4941,18 @@ class OrganismTaxonToEnvironmentAssociation(Association, OrganismTaxonToEntityAs
     # Validators
 
     @validator('subject')
-    def validate_required_subject(cls, field):
-        check_value_is_not_none("subject", field)
-        check_curie_prefix(OrganismTaxon, field)
-        return field
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        check_curie_prefix(OrganismTaxon, value)
+        return value
 
     @validator('object')
-    def validate_required_object(cls, field):
-        check_value_is_not_none("object", field)
-        check_curie_prefix(NamedThing, field)
-        return field
+    def validate_required_object(cls, value):
+        check_value_is_not_none("object", value)
+        check_curie_prefix(NamedThing, value)
+        return value
 
     @validator('predicate')
-    def validate_required_predicate(cls, field):
-        check_value_is_not_none("predicate", field)
-        return field
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value

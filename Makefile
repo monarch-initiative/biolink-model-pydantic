@@ -52,9 +52,9 @@ clean:
 
 .PHONY: lint
 lint:
-	flake8 --exit-zero --max-line-length 120 biolink/ tests/ scripts/
-	black --check --diff biolink_model_pydantic tests scripts
-	isort --check-only --diff biolink_model_pydantic tests scripts
+	flake8 --exit-zero --max-line-length 120 biolink/ tests/ pydanticgen/
+	black --check --diff biolink_model_pydantic tests pydanticgen
+	isort --check-only --diff biolink_model_pydantic tests pydanticgen
 
 .PHONY: format
 format:
@@ -63,12 +63,12 @@ format:
 		--remove-all-unused-imports \
 		--remove-unused-variables \
 		--ignore-init-module-imports \
-		--in-place biolink_model_pydantic tests scripts
-	isort biolink_model_pydantic tests scripts
-	black biolink_model_pydantic tests scripts
+		--in-place biolink_model_pydantic tests pydanticgen
+	isort biolink_model_pydantic tests pydanticgen
+	black biolink_model_pydantic tests pydanticgen
 
 biolink-model.yaml:
 	$(WGET) https://github.com/biolink/biolink-model/blob/master/biolink-model.yaml
 
 biolink_model_pydantic/model.py: install-dev biolink-model.yaml
-	scripts/pydanticgen.py biolink-model.yaml > biolink_model_pydantic/model.py
+	pydanticgen/pydanticgen.py biolink-model.yaml > biolink_model_pydantic/model.py
