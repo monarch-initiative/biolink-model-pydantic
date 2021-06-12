@@ -68,7 +68,7 @@ format:
 	black biolink_model_pydantic tests pydanticgen
 
 biolink-model.yaml:
-	$(WGET) https://github.com/biolink/biolink-model/blob/master/biolink-model.yaml
+	$(WGET) https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml
 
 biolink_model_pydantic/model.py: install-dev biolink-model.yaml
 	pydanticgen/pydanticgen.py biolink-model.yaml > biolink_model_pydantic/model.py
