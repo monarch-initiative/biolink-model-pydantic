@@ -463,13 +463,12 @@ Quotient = float
 
     def gen_namespaces(self) -> str:
 
-        namespaces = ',\n'.join(
-            [
-                f'\t"{pfx.replace(".", "_")}"'
-                for pfx in sorted(self.emit_prefixes)
-                if pfx in self.namespaces
-            ]
-        )
+        namespaces = [
+            f'\t"{pfx.replace(".", "_")}"' for pfx in self.namespaces if not pfx.startswith('@')
+        ]
+        namespaces.append('\t"uuid"')  # hack
+        namespaces = namespaces + [f'\t"{pfx.replace(".", "_")}"' for pfx in self.emit_prefixes]
+        namespaces = ',\n'.join(sorted(set(namespaces)))
 
         return f'''
 valid_prefix = [
