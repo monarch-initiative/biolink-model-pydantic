@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-06-12 15:07
+# Generation date: 2021-06-17 12:15
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -11,7 +11,7 @@ import inspect
 import logging
 import re
 from dataclasses import field
-from enum import Enum
+from enum import Enum, unique
 from typing import Any, ClassVar, List, Optional, Union
 
 from pydantic import constr, validator
@@ -1424,6 +1424,7 @@ class Predicate(str, Enum):
 
 
 # Enumerations
+@unique
 class LogicalInterpretationEnum(str, Enum):
 
     SomeSome = "SomeSome"
@@ -1431,6 +1432,7 @@ class LogicalInterpretationEnum(str, Enum):
     InverseAllSome = "InverseAllSome"
 
 
+@unique
 class ReactionDirectionEnum(str, Enum):
 
     left_to_right = "left_to_right"
@@ -1439,12 +1441,14 @@ class ReactionDirectionEnum(str, Enum):
     neutral = "neutral"
 
 
+@unique
 class ReactionSideEnum(str, Enum):
 
     left = "left"
     right = "right"
 
 
+@unique
 class PhaseEnum(str, Enum):
     """
     phase
@@ -1455,6 +1459,7 @@ class PhaseEnum(str, Enum):
     value_2 = "2"
 
 
+@unique
 class StrandEnum(str, Enum):
     """
     strand
@@ -1466,6 +1471,7 @@ class StrandEnum(str, Enum):
     value_3 = "?"
 
 
+@unique
 class SequenceEnum(str, Enum):
     """
     type of sequence

@@ -135,7 +135,7 @@ class PydanticGen(PythonGenerator):
 import datetime
 import inspect
 import logging
-from enum import Enum
+from enum import Enum, unique
 from dataclasses import field
 from typing import Any, ClassVar, List, Optional, Union
 import re
@@ -515,6 +515,7 @@ valid_prefix = [
         )
 
         return f'''
+@unique
 class {enum_name}(str, Enum):
     {self.gen_enum_comment(enum)}
 {formatted_pvalues}
