@@ -309,12 +309,12 @@ Quotient = float
         # All other cases
         if slot.multivalued:
             if slot.required:
-                return f'Union[{range_type}, List[{range_type}]]', (
+                return f'Union[List[{range_type}], {range_type}]', (
                     None if positional_allowed else 'None'
                 )
             else:
                 return (
-                    f'Optional[Union[{range_type}, List[{range_type}]]]',
+                    f'Optional[Union[List[{range_type}], {range_type}]]',
                     'field(default_factory=list)',
                 )
         elif slot.required:

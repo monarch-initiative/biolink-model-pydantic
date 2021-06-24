@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-06-23 20:07
+# Generation date: 2021-06-24 11:44
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -622,6 +622,7 @@ valid_prefix = [
     "NBO",
     "NBRC",
     "NCBIAssembly",
+    "NCBIGENE",
     "NCBIGI",
     "NCBIGene",
     "NCBIGenome",
@@ -1191,7 +1192,6 @@ class Predicate(str, Enum):
     coexists_with = "biolink:coexists_with"
     coexpressed_with = "biolink:coexpressed_with"
     colocalizes_with = "biolink:colocalizes_with"
-    completed_by = "biolink:completed_by"
     condition_associated_with_gene = "biolink:condition_associated_with_gene"
     consumes = "biolink:consumes"
     contraindicated_for = "biolink:contraindicated_for"
@@ -1356,7 +1356,6 @@ class Predicate(str, Enum):
     mutation_rate_decreased_by = "biolink:mutation_rate_decreased_by"
     narrow_match = "biolink:narrow_match"
     negatively_correlated_with = "biolink:negatively_correlated_with"
-    not_completed_by = "biolink:not_completed_by"
     nutrient_of = "biolink:nutrient_of"
     occurs_in = "biolink:occurs_in"
     opposite_of = "biolink:opposite_of"
@@ -1533,7 +1532,7 @@ class Attribute(Annotation, OntologyClass):
     has_attribute_type: Union[str, OntologyClass] = None
     name: Optional[Union[str, LabelType]] = None
     has_quantitative_value: Optional[
-        Union[Union[str, QuantityValue], List[Union[str, QuantityValue]]]
+        Union[List[Union[str, QuantityValue]], Union[str, QuantityValue]]
     ] = field(default_factory=list)
     has_qualitative_value: Optional[URIorCURIE] = None
     iri: Optional[IriType] = None
@@ -1642,13 +1641,13 @@ class Entity:
 
     id: URIorCURIE = None
     iri: Optional[IriType] = None
-    category: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
+    category: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
     type: Optional[Union[str, str]] = None
     name: Optional[Union[str, LabelType]] = None
     description: Optional[Union[str, NarrativeText]] = None
     source: Optional[Union[str, LabelType]] = None
-    provided_by: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
-    has_attribute: Optional[Union[Union[str, Attribute], List[Union[str, Attribute]]]] = field(
+    provided_by: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
+    has_attribute: Optional[Union[List[Union[str, Attribute]], Union[str, Attribute]]] = field(
         default_factory=list
     )
 
@@ -1694,7 +1693,7 @@ class NamedThing(Entity):
     # Class Variables
     _category: ClassVar[str] = "NamedThing"
 
-    category: Union[URIorCURIE, List[URIorCURIE]] = None
+    category: Union[List[URIorCURIE], URIorCURIE] = None
 
     # Validators
 
@@ -1752,23 +1751,13 @@ class OrganismTaxon(NamedThing):
     _id_prefixes: ClassVar[List[str]] = ["NCBITaxon", "MESH"]
 
     has_taxonomic_rank: Optional[Union[str, TaxonomicRank]] = None
-    subclass_of: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
+    subclass_of: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
 
     # Validators
 
     @validator('subclass_of')
     def convert_subclass_of_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
-
-
-@dataclass(config=PydanticConfig)
-class Event(NamedThing):
-    """
-    Something that happens at a given place and time.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "Event"
 
 
 @dataclass(config=PydanticConfig)
@@ -1788,7 +1777,7 @@ class Agent(AdministrativeEntity):
     _id_prefixes: ClassVar[List[str]] = ["isbn", "ORCID", "ScopusID", "ResearchID", "GSID", "isni"]
 
     id: URIorCURIE = None
-    affiliation: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = field(
+    affiliation: Optional[Union[List[Union[str, URIorCURIE]], Union[str, URIorCURIE]]] = field(
         default_factory=list
     )
     address: Optional[Union[str, str]] = None
@@ -1932,14 +1921,14 @@ class Publication(InformationContentEntity):
 
     id: URIorCURIE = None
     type: Union[str, str] = None
-    authors: Optional[Union[Union[str, str], List[Union[str, str]]]] = field(default_factory=list)
-    pages: Optional[Union[Union[str, str], List[Union[str, str]]]] = field(default_factory=list)
+    authors: Optional[Union[List[Union[str, str]], Union[str, str]]] = field(default_factory=list)
+    pages: Optional[Union[List[Union[str, str]], Union[str, str]]] = field(default_factory=list)
     summary: Optional[Union[str, str]] = None
-    keywords: Optional[Union[Union[str, str], List[Union[str, str]]]] = field(default_factory=list)
-    mesh_terms: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = field(
+    keywords: Optional[Union[List[Union[str, str]], Union[str, str]]] = field(default_factory=list)
+    mesh_terms: Optional[Union[List[Union[str, URIorCURIE]], Union[str, URIorCURIE]]] = field(
         default_factory=list
     )
-    xref: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
+    xref: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
     name: Optional[Union[str, LabelType]] = None
 
     # Validators
@@ -2235,7 +2224,7 @@ class ThingWithTaxon:
     """
 
     in_taxon: Optional[
-        Union[Union[URIorCURIE, OrganismTaxon], List[Union[URIorCURIE, OrganismTaxon]]]
+        Union[List[Union[URIorCURIE, OrganismTaxon]], Union[URIorCURIE, OrganismTaxon]]
     ] = field(default_factory=list)
 
     # Validators
@@ -2380,9 +2369,9 @@ class BiologicalProcessOrActivity(BiologicalEntity, Occurrent, OntologyClass):
     _category: ClassVar[str] = "BiologicalProcessOrActivity"
     _id_prefixes: ClassVar[List[str]] = ["GO", "REACT"]
 
-    has_input: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
-    has_output: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
-    enabled_by: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
+    has_input: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
+    has_output: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
+    enabled_by: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
 
     # Validators
 
@@ -2419,9 +2408,9 @@ class MolecularActivity(BiologicalProcessOrActivity, Occurrent, OntologyClass):
         "KEGG.ENZYME",
     ]
 
-    has_input: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
-    has_output: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
-    enabled_by: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
+    has_input: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
+    has_output: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
+    enabled_by: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
 
     # Validators
 
@@ -2602,7 +2591,7 @@ class OrganismalEntity(BiologicalEntity):
     chemical entities
     """
 
-    has_attribute: Optional[Union[Union[str, Attribute], List[Union[str, Attribute]]]] = field(
+    has_attribute: Optional[Union[List[Union[str, Attribute]], Union[str, Attribute]]] = field(
         default_factory=list
     )
 
@@ -2823,10 +2812,10 @@ class Gene(NucleicAcidEntity, GeneOrGeneProduct, ThingWithTaxon):
     ]
 
     symbol: Optional[Union[str, str]] = None
-    synonym: Optional[Union[Union[str, LabelType], List[Union[str, LabelType]]]] = field(
+    synonym: Optional[Union[List[Union[str, LabelType]], Union[str, LabelType]]] = field(
         default_factory=list
     )
-    xref: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
+    xref: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
 
     # Validators
 
@@ -2849,10 +2838,10 @@ class GeneProductMixin(GeneOrGeneProduct):
     # Class Variables
     _id_prefixes: ClassVar[List[str]] = ["UniProtKB", "gtpo", "PR"]
 
-    synonym: Optional[Union[Union[str, LabelType], List[Union[str, LabelType]]]] = field(
+    synonym: Optional[Union[List[Union[str, LabelType]], Union[str, LabelType]]] = field(
         default_factory=list
     )
-    xref: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
+    xref: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
 
     # Validators
 
@@ -3015,7 +3004,7 @@ class GeneGroupingMixin:
     """
 
     has_gene_or_gene_product: Optional[
-        Union[Union[URIorCURIE, Gene], List[Union[URIorCURIE, Gene]]]
+        Union[List[Union[URIorCURIE, Gene]], Union[URIorCURIE, Gene]]
     ] = field(default_factory=list)
 
     # Validators
@@ -3110,7 +3099,7 @@ class SequenceVariant(NucleicAcidEntity):
     ]
 
     id: URIorCURIE = None
-    has_gene: Optional[Union[Union[URIorCURIE, Gene], List[Union[URIorCURIE, Gene]]]] = field(
+    has_gene: Optional[Union[List[Union[URIorCURIE, Gene]], Union[URIorCURIE, Gene]]] = field(
         default_factory=list
     )
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
@@ -3248,7 +3237,7 @@ class ClinicalFinding(PhenotypicFeature):
     _id_prefixes: ClassVar[List[str]] = ["LOINC", "NCIT", "EFO"]
 
     has_attribute: Optional[
-        Union[Union[str, ClinicalAttribute], List[Union[str, ClinicalAttribute]]]
+        Union[List[Union[str, ClinicalAttribute]], Union[str, ClinicalAttribute]]
     ] = field(default_factory=list)
 
     # Validators
@@ -3436,14 +3425,14 @@ class Treatment(NamedThing, ExposureEvent, ChemicalOrDrugOrTreatment):
     # Class Variables
     _category: ClassVar[str] = "Treatment"
 
-    has_drug: Optional[Union[Union[URIorCURIE, Drug], List[Union[URIorCURIE, Drug]]]] = field(
+    has_drug: Optional[Union[List[Union[URIorCURIE, Drug]], Union[URIorCURIE, Drug]]] = field(
         default_factory=list
     )
-    has_device: Optional[Union[Union[URIorCURIE, Device], List[Union[URIorCURIE, Device]]]] = field(
+    has_device: Optional[Union[List[Union[URIorCURIE, Device]], Union[URIorCURIE, Device]]] = field(
         default_factory=list
     )
     has_procedure: Optional[
-        Union[Union[URIorCURIE, Procedure], List[Union[URIorCURIE, Procedure]]]
+        Union[List[Union[URIorCURIE, Procedure]], Union[URIorCURIE, Procedure]]
     ] = field(default_factory=list)
 
     # Validators
@@ -3513,7 +3502,7 @@ class SocioeconomicExposure(Behavior, ExposureEvent):
     _category: ClassVar[str] = "SocioeconomicExposure"
 
     has_attribute: Union[
-        Union[str, SocioeconomicAttribute], List[Union[str, SocioeconomicAttribute]]
+        List[Union[str, SocioeconomicAttribute]], Union[str, SocioeconomicAttribute]
     ] = None
 
     # Validators
@@ -3630,14 +3619,14 @@ class Association(Entity):
     object: Union[URIorCURIE, NamedThing] = None
     relation: Union[str, URIorCURIE] = None
     negated: Optional[bool] = None
-    qualifiers: Optional[Union[Union[str, OntologyClass], List[Union[str, OntologyClass]]]] = field(
+    qualifiers: Optional[Union[List[Union[str, OntologyClass]], Union[str, OntologyClass]]] = field(
         default_factory=list
     )
     publications: Optional[
-        Union[Union[URIorCURIE, Publication], List[Union[URIorCURIE, Publication]]]
+        Union[List[Union[URIorCURIE, Publication]], Union[URIorCURIE, Publication]]
     ] = field(default_factory=list)
     type: Optional[Union[str, str]] = None
-    category: Optional[Union[URIorCURIE, List[URIorCURIE]]] = field(default_factory=list)
+    category: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
 
     # Validators
 
@@ -3689,7 +3678,7 @@ class ContributorAssociation(Association):
     subject: Union[URIorCURIE, InformationContentEntity] = None
     predicate: Predicate = None
     object: Union[URIorCURIE, Agent] = None
-    qualifiers: Optional[Union[Union[str, OntologyClass], List[Union[str, OntologyClass]]]] = field(
+    qualifiers: Optional[Union[List[Union[str, OntologyClass]], Union[str, OntologyClass]]] = field(
         default_factory=list
     )
 
@@ -4147,7 +4136,7 @@ class ChemicalToChemicalDerivationAssociation(ChemicalToChemicalAssociation):
     object: Union[URIorCURIE, ChemicalEntity] = None
     predicate: Predicate = None
     catalyst_qualifier: Optional[
-        Union[Union[str, MacromolecularMachineMixin], List[Union[str, MacromolecularMachineMixin]]]
+        Union[List[Union[str, MacromolecularMachineMixin]], Union[str, MacromolecularMachineMixin]]
     ] = field(default_factory=list)
 
     # Validators
