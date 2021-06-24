@@ -59,3 +59,10 @@ def test_good_curie():
     """
     entity = Entity(id='HP:0000001')
     assert 'HP:0000001' == entity.id
+
+
+def test_taxon():
+    gene1 = Gene(id='MGI:1', in_taxon='NCBITaxon:1')
+    gene2 = Gene(id='MGI:1', in_taxon=['NCBITaxon:1'])
+
+    assert gene1.in_taxon == gene2.in_taxon
