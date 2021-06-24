@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-06-17 12:15
+# Generation date: 2021-06-17 13:51
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -1129,6 +1129,7 @@ def check_value_is_not_none(slotname: str, value: Any):
 
 
 # Predicates
+@unique
 class Predicate(str, Enum):
     """
     Enum for biolink predicates

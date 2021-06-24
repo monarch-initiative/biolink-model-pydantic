@@ -126,6 +126,14 @@ class PydanticGen(PythonGenerator):
             if self.schema.generation_date
             else ''
         )
+        predicates = (
+            f'''
+# Predicates
+{self.gen_predicate_enum()}
+'''
+            if self.schema.source_file == 'biolink-model.yaml'  # this is awful sorry
+            else ''
+        )
 
         return f'''{head}
 # id: {self.schema.id}
@@ -137,7 +145,7 @@ import inspect
 import logging
 from enum import Enum, unique
 from dataclasses import field
-from typing import Any, ClassVar, List, Optional, Union
+from typing import Any, ClassVar, List, Optional, Union, Dict
 import re
 
 from pydantic import constr, validator
@@ -171,8 +179,7 @@ Quotient = float
 # Pydantic config and validators
 {self._get_pydantic_config_and_validators()}
 
-# Predicates
-{self.gen_predicate_enum()}
+{predicates}
 
 # Enumerations
 {self.gen_enumerations()}
@@ -536,6 +543,7 @@ class {enum_name}(str, Enum):
         formatted_predicates = '\n'.join([f'    {pred} = "biolink:{pred}"' for pred in predicates])
 
         return f'''
+@unique
 class Predicate(str, Enum):
     """
     Enum for biolink predicates
