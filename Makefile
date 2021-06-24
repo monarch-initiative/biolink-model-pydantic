@@ -4,7 +4,7 @@ MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
 MAKEFLAGS += --no-builtin-variables
 
-WGET = /usr/bin/wget --timestamping --no-verbose
+WGET = /usr/bin/env wget --timestamping --no-verbose
 
 .DEFAULT_GOAL := all
 SHELL := bash

@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-06-17 12:15
+# Generation date: 2021-06-23 20:07
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -622,7 +622,6 @@ valid_prefix = [
     "NBO",
     "NBRC",
     "NCBIAssembly",
-    "NCBIGENE",
     "NCBIGI",
     "NCBIGene",
     "NCBIGenome",
@@ -1192,6 +1191,7 @@ class Predicate(str, Enum):
     coexists_with = "biolink:coexists_with"
     coexpressed_with = "biolink:coexpressed_with"
     colocalizes_with = "biolink:colocalizes_with"
+    completed_by = "biolink:completed_by"
     condition_associated_with_gene = "biolink:condition_associated_with_gene"
     consumes = "biolink:consumes"
     contraindicated_for = "biolink:contraindicated_for"
@@ -1356,6 +1356,7 @@ class Predicate(str, Enum):
     mutation_rate_decreased_by = "biolink:mutation_rate_decreased_by"
     narrow_match = "biolink:narrow_match"
     negatively_correlated_with = "biolink:negatively_correlated_with"
+    not_completed_by = "biolink:not_completed_by"
     nutrient_of = "biolink:nutrient_of"
     occurs_in = "biolink:occurs_in"
     opposite_of = "biolink:opposite_of"
@@ -1758,6 +1759,16 @@ class OrganismTaxon(NamedThing):
     @validator('subclass_of')
     def convert_subclass_of_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
+
+
+@dataclass(config=PydanticConfig)
+class Event(NamedThing):
+    """
+    Something that happens at a given place and time.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "Event"
 
 
 @dataclass(config=PydanticConfig)
