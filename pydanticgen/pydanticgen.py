@@ -8,7 +8,7 @@ Some key differences:
 - pydantic dataclasses instead of vanilla dataclasses,
   see https://pydantic-docs.helpmanual.io/usage/dataclasses/
 
-- PredicateType is replaced by a Predicate enum
+- PredicateType type is replaced by a PredicateType enum
 
 - UriOrCurie is replaced with a Curie type as a goal to represent
   all identifiers as curies, IriType is still included in a few attributes
@@ -143,6 +143,7 @@ class PydanticGen(PythonGenerator):
 import datetime
 import inspect
 import logging
+from collections import namedtuple
 from enum import Enum, unique
 from dataclasses import field
 from typing import Any, ClassVar, List, Optional, Union, Dict
@@ -381,9 +382,7 @@ Quotient = float
         """
         base = rangelist[0].split('.')[-1]
 
-        if slot_name == 'predicate':
-            class_ref = "Predicate"
-        elif slot_name in [
+        if slot_name in [
             'id',
             'category',
             'provided_by',
@@ -544,12 +543,16 @@ class {enum_name}(str, Enum):
 
         return f'''
 @unique
-class Predicate(str, Enum):
+class PredicateType(str, Enum):
     """
     Enum for biolink predicates
     """
 
 {formatted_predicates}
+
+Predicate = namedtuple(
+    'biolink_predicate', [pred.value.replace('biolink:', '') for pred in PredicateType]
+)(*[pred.value for pred in PredicateType])
 '''.strip()
 
     def gen_pydantic_validators(self, cls) -> str:

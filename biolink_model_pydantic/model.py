@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-06-24 11:44
+# Generation date: 2021-06-25 10:40
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -10,6 +10,7 @@ import datetime
 import inspect
 import logging
 import re
+from collections import namedtuple
 from dataclasses import field
 from enum import Enum, unique
 from typing import Any, ClassVar, List, Optional, Union
@@ -1129,7 +1130,8 @@ def check_value_is_not_none(slotname: str, value: Any):
 
 
 # Predicates
-class Predicate(str, Enum):
+@unique
+class PredicateType(str, Enum):
     """
     Enum for biolink predicates
     """
@@ -1421,6 +1423,11 @@ class Predicate(str, Enum):
     uptake_increased_by = "biolink:uptake_increased_by"
     variant_part_of = "biolink:variant_part_of"
     xenologous_to = "biolink:xenologous_to"
+
+
+Predicate = namedtuple(
+    'biolink_predicate', [pred.value.replace('biolink:', '') for pred in PredicateType]
+)(*[pred.value for pred in PredicateType])
 
 
 # Enumerations
@@ -3615,7 +3622,7 @@ class Association(Entity):
     _category: ClassVar[str] = "Association"
 
     subject: Union[URIorCURIE, NamedThing] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     object: Union[URIorCURIE, NamedThing] = None
     relation: Union[str, URIorCURIE] = None
     negated: Optional[bool] = None
@@ -3676,7 +3683,7 @@ class ContributorAssociation(Association):
     _category: ClassVar[str] = "ContributorAssociation"
 
     subject: Union[URIorCURIE, InformationContentEntity] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     object: Union[URIorCURIE, Agent] = None
     qualifiers: Optional[Union[List[Union[str, OntologyClass]], Union[str, OntologyClass]]] = field(
         default_factory=list
@@ -3715,7 +3722,7 @@ class GenotypeToGenotypePartAssociation(Association):
     # Class Variables
     _category: ClassVar[str] = "GenotypeToGenotypePartAssociation"
 
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     subject: Union[URIorCURIE, Genotype] = None
     object: Union[URIorCURIE, Genotype] = None
 
@@ -3749,7 +3756,7 @@ class GenotypeToGeneAssociation(Association):
     # Class Variables
     _category: ClassVar[str] = "GenotypeToGeneAssociation"
 
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     subject: Union[URIorCURIE, Genotype] = None
     object: Union[URIorCURIE, Gene] = None
 
@@ -3782,7 +3789,7 @@ class GenotypeToVariantAssociation(Association):
     # Class Variables
     _category: ClassVar[str] = "GenotypeToVariantAssociation"
 
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     subject: Union[URIorCURIE, Genotype] = None
     object: Union[URIorCURIE, SequenceVariant] = None
 
@@ -3839,7 +3846,7 @@ class GeneToGeneHomologyAssociation(GeneToGeneAssociation):
     # Class Variables
     _category: ClassVar[str] = "GeneToGeneHomologyAssociation"
 
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -3888,7 +3895,7 @@ class GeneToGeneCoexpressionAssociation(GeneToGeneAssociation, GeneExpressionMix
     # Class Variables
     _category: ClassVar[str] = "GeneToGeneCoexpressionAssociation"
 
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -3908,7 +3915,7 @@ class PairwiseGeneToGeneInteraction(GeneToGeneAssociation):
     # Class Variables
     _category: ClassVar[str] = "PairwiseGeneToGeneInteraction"
 
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     relation: Union[str, URIorCURIE] = None
 
     # Validators
@@ -3936,7 +3943,7 @@ class PairwiseMolecularInteraction(PairwiseGeneToGeneInteraction):
 
     subject: Union[URIorCURIE, MolecularEntity] = None
     id: URIorCURIE = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     relation: Union[str, URIorCURIE] = None
     object: Union[URIorCURIE, MolecularEntity] = None
     interacting_molecules_category: Optional[Union[str, OntologyClass]] = None
@@ -4134,7 +4141,7 @@ class ChemicalToChemicalDerivationAssociation(ChemicalToChemicalAssociation):
 
     subject: Union[URIorCURIE, ChemicalEntity] = None
     object: Union[URIorCURIE, ChemicalEntity] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     catalyst_qualifier: Optional[
         Union[List[Union[str, MacromolecularMachineMixin]], Union[str, MacromolecularMachineMixin]]
     ] = field(default_factory=list)
@@ -4249,7 +4256,7 @@ class MaterialSampleDerivationAssociation(Association):
 
     subject: Union[URIorCURIE, MaterialSample] = None
     object: Union[URIorCURIE, NamedThing] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -4416,7 +4423,7 @@ class NamedThingToInformationContentEntityAssociation(Association):
 
     subject: Union[URIorCURIE, NamedThing] = None
     object: Union[URIorCURIE, Publication] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -4593,7 +4600,7 @@ class GenotypeToPhenotypicFeatureAssociation(
     # Class Variables
     _category: ClassVar[str] = "GenotypeToPhenotypicFeatureAssociation"
 
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     subject: Union[URIorCURIE, Genotype] = None
 
     # Validators
@@ -4760,7 +4767,7 @@ class VariantToGeneAssociation(Association, VariantToEntityAssociationMixin):
     _category: ClassVar[str] = "VariantToGeneAssociation"
 
     object: Union[URIorCURIE, Gene] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -4785,7 +4792,7 @@ class VariantToGeneExpressionAssociation(VariantToGeneAssociation, GeneExpressio
     # Class Variables
     _category: ClassVar[str] = "VariantToGeneExpressionAssociation"
 
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -4838,7 +4845,7 @@ class PopulationToPopulationAssociation(Association):
 
     subject: Union[URIorCURIE, PopulationOfIndividualOrganisms] = None
     object: Union[URIorCURIE, PopulationOfIndividualOrganisms] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -4888,7 +4895,7 @@ class VariantToDiseaseAssociation(
     _category: ClassVar[str] = "VariantToDiseaseAssociation"
 
     subject: Union[URIorCURIE, NamedThing] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     object: Union[URIorCURIE, NamedThing] = None
 
     # Validators
@@ -4920,7 +4927,7 @@ class GenotypeToDiseaseAssociation(
     _category: ClassVar[str] = "GenotypeToDiseaseAssociation"
 
     subject: Union[URIorCURIE, NamedThing] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     object: Union[URIorCURIE, NamedThing] = None
 
     # Validators
@@ -4952,7 +4959,7 @@ class ModelToDiseaseAssociationMixin:
     """
 
     subject: Union[URIorCURIE, NamedThing] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -5159,7 +5166,7 @@ class GeneToExpressionSiteAssociation(Association):
 
     subject: Union[str, GeneOrGeneProduct] = None
     object: Union[URIorCURIE, AnatomicalEntity] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     stage_qualifier: Optional[Union[URIorCURIE, LifeStage]] = None
     quantifier_qualifier: Optional[Union[str, OntologyClass]] = None
 
@@ -5372,7 +5379,7 @@ class GenomicSequenceLocalization(SequenceAssociation):
 
     subject: Union[URIorCURIE, NucleicAcidEntity] = None
     object: Union[URIorCURIE, NucleicAcidEntity] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     start_interbase_coordinate: Optional[Union[int, int]] = None
     end_interbase_coordinate: Optional[Union[int, int]] = None
     genome_build: Optional[Union[str, StrandEnum]] = None
@@ -5464,7 +5471,7 @@ class GeneToGeneProductRelationship(SequenceFeatureRelationship):
 
     subject: Union[URIorCURIE, Gene] = None
     object: Union[str, GeneProductMixin] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -5521,7 +5528,7 @@ class GeneRegulatoryRelationship(Association):
     # Class Variables
     _category: ClassVar[str] = "GeneRegulatoryRelationship"
 
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     subject: Union[str, GeneOrGeneProduct] = None
     object: Union[str, GeneOrGeneProduct] = None
 
@@ -5578,7 +5585,7 @@ class AnatomicalEntityToAnatomicalEntityPartOfAssociation(
 
     subject: Union[URIorCURIE, AnatomicalEntity] = None
     object: Union[URIorCURIE, AnatomicalEntity] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -5615,7 +5622,7 @@ class AnatomicalEntityToAnatomicalEntityOntogenicAssociation(
 
     subject: Union[URIorCURIE, AnatomicalEntity] = None
     object: Union[URIorCURIE, AnatomicalEntity] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -5689,7 +5696,7 @@ class OrganismTaxonToOrganismTaxonSpecialization(OrganismTaxonToOrganismTaxonAss
 
     subject: Union[URIorCURIE, OrganismTaxon] = None
     object: Union[URIorCURIE, OrganismTaxon] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
@@ -5724,7 +5731,7 @@ class OrganismTaxonToOrganismTaxonInteraction(OrganismTaxonToOrganismTaxonAssoci
 
     subject: Union[URIorCURIE, OrganismTaxon] = None
     object: Union[URIorCURIE, OrganismTaxon] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
     associated_environmental_context: Optional[Union[str, str]] = None
 
     # Validators
@@ -5751,7 +5758,7 @@ class OrganismTaxonToOrganismTaxonInteraction(OrganismTaxonToOrganismTaxonAssoci
 class OrganismTaxonToEnvironmentAssociation(Association, OrganismTaxonToEntityAssociation):
     subject: Union[URIorCURIE, OrganismTaxon] = None
     object: Union[URIorCURIE, NamedThing] = None
-    predicate: Predicate = None
+    predicate: Union[str, PredicateType] = None
 
     # Validators
 
