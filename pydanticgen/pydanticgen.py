@@ -51,14 +51,14 @@ from typing import List, Optional, TextIO, Tuple, Union
 import typer
 from linkml.generators import PYTHON_GEN_VERSION
 from linkml.generators.pythongen import PythonGenerator
-from linkml.utils.formatutils import be, camelcase, split_line, wrapped_annotation
-from linkml_model.meta import (
+from linkml_runtime.linkml_model.meta import (
     ClassDefinition,
     ClassDefinitionName,
     EnumDefinition,
     SchemaDefinition,
     SlotDefinition,
 )
+from linkml_runtime.utils.formatutils import be, camelcase, split_line, wrapped_annotation
 
 
 class PydanticGen(PythonGenerator):
@@ -80,7 +80,7 @@ class PydanticGen(PythonGenerator):
             **kwargs,
         )
 
-    # Overriden methods
+    # Overridden methods
 
     def _sort_classes(self, clist: List[ClassDefinition]) -> List[ClassDefinition]:
         """
@@ -173,6 +173,7 @@ FrequencyValue = str
 PercentageFrequencyValue = float
 BiologicalSequence = str
 Quotient = float
+Bool = bool
 
 # Namespaces
 {self.gen_namespaces()}
@@ -403,8 +404,6 @@ Quotient = float
 
         elif 'Entity' in rangelist:
             class_ref = f"Union[URIorCURIE, {rangelist[-1]}]" if len(rangelist) > 1 else base
-        elif 'Bool' == rangelist[-1]:
-            class_ref = 'bool'
         else:
             if len(rangelist) > 1 and rangelist[-1] == 'IriType':
                 class_ref = 'IriType'

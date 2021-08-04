@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-06-25 10:40
+# Generation date: 2021-08-04 10:42
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -39,6 +39,7 @@ FrequencyValue = str
 PercentageFrequencyValue = float
 BiologicalSequence = str
 Quotient = float
+Bool = bool
 
 # Namespaces
 
@@ -2263,7 +2264,7 @@ class MolecularEntity(ChemicalEntity):
     # Class Variables
     _category: ClassVar[str] = "MolecularEntity"
 
-    is_metabolite: Optional[bool] = None
+    is_metabolite: Optional[Union[bool, Bool]] = None
 
 
 @dataclass(config=PydanticConfig)
@@ -3625,7 +3626,7 @@ class Association(Entity):
     predicate: Union[str, PredicateType] = None
     object: Union[URIorCURIE, NamedThing] = None
     relation: Union[str, URIorCURIE] = None
-    negated: Optional[bool] = None
+    negated: Optional[Union[bool, Bool]] = None
     qualifiers: Optional[Union[List[Union[str, OntologyClass]], Union[str, OntologyClass]]] = field(
         default_factory=list
     )
