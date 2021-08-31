@@ -43,6 +43,8 @@ Why pydantic over standard dataclasses?
 
   - Built in parsing of json or yaml into nested models (ie when attributes are reference types)
 
+  TODO create linkml root class similar to from linkml_runtime.utils.yamlutils import YAMLRoot
+
 """
 
 from pathlib import Path
@@ -203,15 +205,22 @@ Bool = bool
             parent_class_and_mixins = ', '.join(
                 [self.formatted_element_name(parent, True) for parent in parents]
             )
+            # See https://github.com/linkml/linkml/issues/290
+            # We need a more intelligent way to order inherited classes
+            # default: parent, mixin_1, mixin_2, etc
+
+            #
             parent_class_and_mixins = f'({parent_class_and_mixins})'
         elif cls.mixins:
             # Seems fine but more curious if this ever happens
+            # Follow up - it does happen
             self.logger.warning(f"class {cls.name} has mixins {cls.mixins} but no parent")
             mixins = ', '.join([self.formatted_element_name(mixin, True) for mixin in cls.mixins])
             parent_class_and_mixins = f'({mixins})'
 
         slotdefs = self.gen_class_variables(cls)
 
+        # TODO replace this with root class
         entity_post_init = (
             f'\n\t{self._get_entity_post_init()}'
             if self.class_or_type_name(cls.name) == 'Entity'
@@ -376,7 +385,9 @@ Bool = bool
         We have a union of str, Curie, and the class, eg
         Entity -> str, Curie, Entity
 
-        TODO clean this up
+        TODO
+        Replace this with something more generalizable across
+        all LinkMl schemas
 
         :param rangelist: List of types from distal to proximal
         :return:

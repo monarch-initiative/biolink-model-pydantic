@@ -19,6 +19,9 @@ all: \
 	format \
 	test
 
+.PHONY: FORCE
+FORCE:
+
 .PHONY: install-flit
 install-flit:
 	pip install flit
@@ -67,7 +70,7 @@ format:
 	isort biolink_model_pydantic tests pydanticgen
 	black biolink_model_pydantic tests pydanticgen
 
-biolink-model.yaml:
+biolink-model.yaml: FORCE
 	$(WGET) https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml
 
 biolink_model_pydantic/model.py: install-dev biolink-model.yaml

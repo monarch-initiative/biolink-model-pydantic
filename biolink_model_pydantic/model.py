@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-08-04 10:42
+# Generation date: 2021-08-10 10:56
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -189,6 +189,7 @@ valid_prefix = [
     "CMO",
     "CMR_GENE",
     "COAR_RESOURCE",
+    "COG",
     "COGS",
     "COGS_FUNCTION",
     "COMBINE_SPECIFICATIONS",
@@ -533,6 +534,7 @@ valid_prefix = [
     "MASSIVE",
     "MAT",
     "MATRIXDB_ASSOCIATION",
+    "MAXO",
     "MDM",
     "MEDDRA",
     "MEDLINEPLUS",
@@ -567,7 +569,6 @@ valid_prefix = [
     "MINT",
     "MIPMOD",
     "MIR",
-    "MIRBASE",
     "MIRBASE_MATURE",
     "MIREX",
     "MIRIAM_COLLECTION",
@@ -624,7 +625,6 @@ valid_prefix = [
     "NBO",
     "NBRC",
     "NCBIAssembly",
-    "NCBIGENE",
     "NCBIGI",
     "NCBIGene",
     "NCBIGenome",
@@ -985,7 +985,6 @@ valid_prefix = [
     "WormBase",
     "XAO",
     "XCO",
-    "XENBASE",
     "XL",
     "XPO",
     "Xenbase",
@@ -1036,6 +1035,7 @@ valid_prefix = [
     "issn",
     "linkml",
     "medgen",
+    "mirbase",
     "oa",
     "oboInOwl",
     "oboformat",
@@ -1195,6 +1195,7 @@ class PredicateType(str, Enum):
     coexists_with = "biolink:coexists_with"
     coexpressed_with = "biolink:coexpressed_with"
     colocalizes_with = "biolink:colocalizes_with"
+    completed_by = "biolink:completed_by"
     condition_associated_with_gene = "biolink:condition_associated_with_gene"
     consumes = "biolink:consumes"
     contraindicated_for = "biolink:contraindicated_for"
@@ -1283,6 +1284,9 @@ class PredicateType(str, Enum):
     has_phenotype = "biolink:has_phenotype"
     has_positive_upstream_actor = "biolink:has_positive_upstream_actor"
     has_positive_upstream_or_within_actor = "biolink:has_positive_upstream_or_within_actor"
+    has_real_world_evidence_of_association_with = (
+        "biolink:has_real_world_evidence_of_association_with"
+    )
     has_sequence_location = "biolink:has_sequence_location"
     has_sequence_variant = "biolink:has_sequence_variant"
     has_splice_site_variant = "biolink:has_splice_site_variant"
@@ -1359,6 +1363,7 @@ class PredicateType(str, Enum):
     mutation_rate_decreased_by = "biolink:mutation_rate_decreased_by"
     narrow_match = "biolink:narrow_match"
     negatively_correlated_with = "biolink:negatively_correlated_with"
+    not_completed_by = "biolink:not_completed_by"
     nutrient_of = "biolink:nutrient_of"
     occurs_in = "biolink:occurs_in"
     opposite_of = "biolink:opposite_of"
@@ -1487,6 +1492,48 @@ class SequenceEnum(str, Enum):
 
     NA = "NA"
     AA = "AA"
+
+
+@unique
+class PredicateQualifierEnum(str, Enum):
+    """
+    constrained list of qualifying terms that soften or expand the definition of the predicate used. can be used to
+    constrain or qualify any predicate (any child of related_to).
+    """
+
+    predicted = "predicted"
+    possibly = "possibly"
+    hypothesized = "hypothesized"
+    validated = "validated"
+    value_4 = "supported by real-world evidence"
+    value_5 = "supported by clinical evidence"
+
+
+@unique
+class DrugAvailabilityEnum(str, Enum):
+
+    value_0 = "over the counter"
+    prescription = "prescription"
+
+
+@unique
+class FDAApprovalStatusEnum(str, Enum):
+
+    value_0 = "Discovery & Development Phase"
+    value_1 = "Preclinical Research Phase"
+    value_2 = "FDA Clinical Research Phase"
+    value_3 = "FDA Review Phase 4"
+    value_4 = "FDA Post-Market Safety Monitoring"
+    value_5 = "FDA Clinical Research Phase 1"
+    value_6 = "FDA Clinical Research Phase 2"
+    value_7 = "FDA Clinical Research Phase 3"
+    value_8 = "FDA Clinical Research Phase 4"
+    value_9 = "FDA Fast Track"
+    value_10 = "FDA Breakthrough Therapy"
+    value_11 = "FDA Accelerated Approval"
+    value_12 = "FDA Priority Review"
+    value_13 = "regular approval"
+    value_14 = "post-approval withdrawal"
 
 
 # Classes
@@ -1766,6 +1813,16 @@ class OrganismTaxon(NamedThing):
     @validator('subclass_of')
     def convert_subclass_of_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
+
+
+@dataclass(config=PydanticConfig)
+class Event(NamedThing):
+    """
+    Something that happens at a given place and time.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "Event"
 
 
 @dataclass(config=PydanticConfig)
@@ -2244,27 +2301,7 @@ class ThingWithTaxon:
 
 @dataclass(config=PydanticConfig)
 class GenomicEntity(ThingWithTaxon):
-
-    pass
-
-
-@dataclass(config=PydanticConfig)
-class ChemicalEntity(NamedThing, PhysicalEssence, ChemicalOrDrugOrTreatment):
-    """
-    A chemical entity is a physical entity that pertains to chemistry or biochemistry.
-    """
-
-
-@dataclass(config=PydanticConfig)
-class MolecularEntity(ChemicalEntity):
-    """
-    A molecular entity is a chemical entity composed of individual or covalently bonded atoms.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "MolecularEntity"
-
-    is_metabolite: Optional[Union[bool, Bool]] = None
+    has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
 
 @dataclass(config=PydanticConfig)
@@ -2272,98 +2309,6 @@ class ChemicalSubstance:
 
     # Class Variables
     _category: ClassVar[str] = "ChemicalSubstance"
-
-
-@dataclass(config=PydanticConfig)
-class SmallMolecule(MolecularEntity):
-    """
-    A small molecule entity is a molecular entity characterized by availability in small-molecule databases of SMILES,
-    InChI, IUPAC, or other unambiguous representation of its precise chemical structure; for convenience of
-    representation, any valid chemical representation is included, even if it is not strictly molecular (e.g., sodium
-    ion).
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "SmallMolecule"
-    _id_prefixes: ClassVar[List[str]] = [
-        "PUBCHEM.COMPOUND",
-        "CHEMBL.COMPOUND",
-        "UNII",
-        "CHEBI",
-        "DRUGBANK",
-        "MESH",
-        "CAS",
-        "DrugCentral",
-        "GTOPDB",
-        "HMDB",
-        "KEGG.COMPOUND",
-        "ChemBank",
-        "Aeolus",
-        "PUBCHEM.SUBSTANCE",
-        "SIDER.DRUG",
-        "INCHI",
-        "INCHIKEY",
-        "KEGG.GLYCAN",
-        "KEGG.DRUG",
-        "KEGG.DGROUP",
-        "KEGG.ENVIRON",
-    ]
-
-    id: URIorCURIE = None
-
-    # Validators
-
-    @validator('id')
-    def validate_required_id(cls, value):
-        check_value_is_not_none("id", value)
-        check_curie_prefix(cls, value)
-        return value
-
-
-@dataclass(config=PydanticConfig)
-class ChemicalMixture(ChemicalEntity):
-    """
-    A chemical mixture is a chemical entity composed of two or more molecular entities.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "ChemicalMixture"
-
-
-@dataclass(config=PydanticConfig)
-class NucleicAcidEntity(MolecularEntity, GenomicEntity):
-    """
-    A nucleic acid entity is a molecular entity characterized by availability in gene databases of nucleotide-based
-    sequence representations of its precise sequence; for convenience of representation, partial sequences of various
-    kinds are included, even if they do not represent a physical molecule.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "NucleicAcidEntity"
-
-    has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
-
-
-@dataclass(config=PydanticConfig)
-class MolecularMixture(ChemicalMixture):
-    """
-    A molecular mixture is a chemical mixture composed of two or more molecular entities with known concentration and
-    stoichiometry.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "MolecularMixture"
-
-
-@dataclass(config=PydanticConfig)
-class ComplexMolecularMixture(ChemicalMixture):
-    """
-    A complex molecular mixture is a chemical mixture composed of two or more molecular entities with unknown
-    concentration and stoichiometry.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "ComplexMolecularMixture"
 
 
 @dataclass(config=PydanticConfig)
@@ -2414,6 +2359,8 @@ class MolecularActivity(BiologicalProcessOrActivity, Occurrent, OntologyClass):
         "KEGG.REACTION",
         "KEGG.RCLASS",
         "KEGG.ENZYME",
+        "UMLS",
+        "BIGG.REACTION",
     ]
 
     has_input: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
@@ -2473,92 +2420,10 @@ class PhysiologicalProcess(BiologicalProcess, OntologyClass):
 
 
 @dataclass(config=PydanticConfig)
-class Behavior(BiologicalProcess, OntologyClass):
+class Behavior(BiologicalProcess, OntologyClass, ActivityAndBehavior):
 
     # Class Variables
     _category: ClassVar[str] = "Behavior"
-
-
-@dataclass(config=PydanticConfig)
-class Death(BiologicalProcess):
-
-    # Class Variables
-    _category: ClassVar[str] = "Death"
-
-
-@dataclass(config=PydanticConfig)
-class ProcessedMaterial(ChemicalMixture):
-    """
-    A chemical entity (often a mixture) processed for consumption for nutritional, medical or technical use. Is a
-    material entity that is created or changed during material processing.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "ProcessedMaterial"
-
-
-@dataclass(config=PydanticConfig)
-class Drug(MolecularMixture, ChemicalOrDrugOrTreatment, OntologyClass):
-    """
-    A substance intended for use in the diagnosis, cure, mitigation, treatment, or prevention of disease
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "Drug"
-    _id_prefixes: ClassVar[List[str]] = ["RXCUI", "NDC", "PHARMGKB.DRUG"]
-
-
-@dataclass(config=PydanticConfig)
-class EnvironmentalFoodContaminant(ChemicalEntity):
-
-    # Class Variables
-    _category: ClassVar[str] = "EnvironmentalFoodContaminant"
-
-
-@dataclass(config=PydanticConfig)
-class FoodAdditive(ChemicalEntity):
-
-    # Class Variables
-    _category: ClassVar[str] = "FoodAdditive"
-
-
-@dataclass(config=PydanticConfig)
-class Nutrient(ChemicalEntity):
-
-    # Class Variables
-    _category: ClassVar[str] = "Nutrient"
-
-
-@dataclass(config=PydanticConfig)
-class Macronutrient(Nutrient):
-
-    # Class Variables
-    _category: ClassVar[str] = "Macronutrient"
-
-
-@dataclass(config=PydanticConfig)
-class Micronutrient(Nutrient):
-
-    # Class Variables
-    _category: ClassVar[str] = "Micronutrient"
-
-
-@dataclass(config=PydanticConfig)
-class Vitamin(Micronutrient):
-
-    # Class Variables
-    _category: ClassVar[str] = "Vitamin"
-
-
-@dataclass(config=PydanticConfig)
-class Food(ChemicalMixture):
-    """
-    A substance consumed by a living organism as a source of nutrition
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "Food"
-    _id_prefixes: ClassVar[List[str]] = ["foodb.compound"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2772,6 +2637,367 @@ class GrossAnatomicalStructure(AnatomicalEntity):
 
 
 @dataclass(config=PydanticConfig)
+class ChemicalEntityOrGeneOrGeneProduct:
+    """
+    A union of chemical entities and children, and gene or gene product. This mixin is helpful to use when searching
+    across chemical entities that must include genes and their children as chemical entities.
+    """
+
+
+@dataclass(config=PydanticConfig)
+class ChemicalEntityOrProteinOrPolypeptide:
+    """
+    A union of chemical entities and children, and protein and polypeptide. This mixin is helpful to use when
+    searching across chemical entities that must include genes and their children as chemical entities.
+    """
+
+
+@dataclass(config=PydanticConfig)
+class ChemicalEntity(
+    NamedThing,
+    PhysicalEssence,
+    ChemicalOrDrugOrTreatment,
+    ChemicalEntityOrGeneOrGeneProduct,
+    ChemicalEntityOrProteinOrPolypeptide,
+):
+    """
+    A chemical entity is a physical entity that pertains to chemistry or biochemistry.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "ChemicalEntity"
+    _id_prefixes: ClassVar[List[str]] = ["UNII", "MESH", "CAS"]
+
+    trade_name: Optional[Union[URIorCURIE, ChemicalEntity]] = None
+    available_from: Optional[
+        Union[List[Union[str, DrugAvailabilityEnum]], Union[str, DrugAvailabilityEnum]]
+    ] = field(default_factory=list)
+
+    # Validators
+
+    @validator('trade_name')
+    def check_trade_name_prefix(cls, value):
+        check_curie_prefix(ChemicalEntity, value)
+        return value
+
+    @validator('available_from')
+    def convert_available_from_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
+
+
+@dataclass(config=PydanticConfig)
+class MolecularEntity(ChemicalEntity):
+    """
+    A molecular entity is a chemical entity composed of individual or covalently bonded atoms.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "MolecularEntity"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+    ]
+
+    is_metabolite: Optional[Union[bool, Bool]] = None
+
+
+@dataclass(config=PydanticConfig)
+class SmallMolecule(MolecularEntity):
+    """
+    A small molecule entity is a molecular entity characterized by availability in small-molecule databases of SMILES,
+    InChI, IUPAC, or other unambiguous representation of its precise chemical structure; for convenience of
+    representation, any valid chemical representation is included, even if it is not strictly molecular (e.g., sodium
+    ion).
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "SmallMolecule"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+        "BIGG.METABOLITE",
+    ]
+
+    id: URIorCURIE = None
+
+    # Validators
+
+    @validator('id')
+    def validate_required_id(cls, value):
+        check_value_is_not_none("id", value)
+        check_curie_prefix(cls, value)
+        return value
+
+
+@dataclass(config=PydanticConfig)
+class ChemicalMixture(ChemicalEntity):
+    """
+    A chemical mixture is a chemical entity composed of two or more molecular entities.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "ChemicalMixture"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+    ]
+
+    is_supplement: Optional[Union[URIorCURIE, ChemicalMixture]] = None
+    highest_FDA_approval_status: Optional[Union[str, str]] = None
+
+    # Validators
+
+    @validator('is_supplement')
+    def check_is_supplement_prefix(cls, value):
+        check_curie_prefix(ChemicalMixture, value)
+        return value
+
+
+@dataclass(config=PydanticConfig)
+class NucleicAcidEntity(MolecularEntity, GenomicEntity, PhysicalEssence, OntologyClass):
+    """
+    A nucleic acid entity is a molecular entity characterized by availability in gene databases of nucleotide-based
+    sequence representations of its precise sequence; for convenience of representation, partial sequences of various
+    kinds are included.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "NucleicAcidEntity"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+    ]
+
+
+@dataclass(config=PydanticConfig)
+class MolecularMixture(ChemicalMixture):
+    """
+    A molecular mixture is a chemical mixture composed of two or more molecular entities with known concentration and
+    stoichiometry.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "MolecularMixture"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+    ]
+
+
+@dataclass(config=PydanticConfig)
+class ComplexMolecularMixture(ChemicalMixture):
+    """
+    A complex molecular mixture is a chemical mixture composed of two or more molecular entities with unknown
+    concentration and stoichiometry.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "ComplexMolecularMixture"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+    ]
+
+
+@dataclass(config=PydanticConfig)
+class ProcessedMaterial(ChemicalMixture):
+    """
+    A chemical entity (often a mixture) processed for consumption for nutritional, medical or technical use. Is a
+    material entity that is created or changed during material processing.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "ProcessedMaterial"
+
+
+@dataclass(config=PydanticConfig)
+class Drug(MolecularMixture, ChemicalOrDrugOrTreatment, OntologyClass):
+    """
+    A substance intended for use in the diagnosis, cure, mitigation, treatment, or prevention of disease
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "Drug"
+    _id_prefixes: ClassVar[List[str]] = [
+        "RXCUI",
+        "NDC",
+        "PHARMGKB.DRUG",
+        "DRUGBANK",
+        "DrugCentral",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "SIDER.DRUG",
+    ]
+
+
+@dataclass(config=PydanticConfig)
+class EnvironmentalFoodContaminant(ChemicalEntity):
+
+    # Class Variables
+    _category: ClassVar[str] = "EnvironmentalFoodContaminant"
+
+
+@dataclass(config=PydanticConfig)
+class FoodAdditive(ChemicalEntity):
+
+    # Class Variables
+    _category: ClassVar[str] = "FoodAdditive"
+
+
+@dataclass(config=PydanticConfig)
+class Nutrient(ChemicalEntity):
+
+    # Class Variables
+    _category: ClassVar[str] = "Nutrient"
+
+
+@dataclass(config=PydanticConfig)
+class Macronutrient(Nutrient):
+
+    # Class Variables
+    _category: ClassVar[str] = "Macronutrient"
+
+
+@dataclass(config=PydanticConfig)
+class Micronutrient(Nutrient):
+
+    # Class Variables
+    _category: ClassVar[str] = "Micronutrient"
+
+
+@dataclass(config=PydanticConfig)
+class Vitamin(Micronutrient):
+
+    # Class Variables
+    _category: ClassVar[str] = "Vitamin"
+
+
+@dataclass(config=PydanticConfig)
+class Food(ChemicalMixture):
+    """
+    A substance consumed by a living organism as a source of nutrition
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "Food"
+    _id_prefixes: ClassVar[List[str]] = ["foodb.compound"]
+
+
+@dataclass(config=PydanticConfig)
 class MacromolecularMachineMixin:
     """
     A union of gene locus, gene product, and macromolecular complex mixin. These are the basic units of function in a
@@ -2792,7 +3018,14 @@ class GeneOrGeneProduct(MacromolecularMachineMixin):
 
 
 @dataclass(config=PydanticConfig)
-class Gene(NucleicAcidEntity, GeneOrGeneProduct, ThingWithTaxon):
+class Gene(
+    BiologicalEntity,
+    GeneOrGeneProduct,
+    GenomicEntity,
+    ChemicalEntityOrGeneOrGeneProduct,
+    PhysicalEssence,
+    OntologyClass,
+):
     """
     A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A
     gene locus may include regulatory regions, transcribed regions and/or other functional sequence regions.
@@ -2883,7 +3116,7 @@ class MacromolecularComplexMixin(MacromolecularMachineMixin):
 
 
 @dataclass(config=PydanticConfig)
-class Genome(BiologicalEntity, GenomicEntity):
+class Genome(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass):
     """
     A genome is the sum of genetic material within a cell or virion.
     """
@@ -2922,7 +3155,12 @@ class CodingSequence(NucleicAcidEntity):
 
 
 @dataclass(config=PydanticConfig)
-class Polypeptide(MolecularEntity):
+class Polypeptide(
+    BiologicalEntity,
+    ThingWithTaxon,
+    ChemicalEntityOrGeneOrGeneProduct,
+    ChemicalEntityOrProteinOrPolypeptide,
+):
     """
     A polypeptide is a molecular entity characterized by availability in protein databases of amino-acid-based
     sequence representations of its precise primary structure; for convenience of representation, partial sequences of
@@ -2935,7 +3173,7 @@ class Polypeptide(MolecularEntity):
 
 
 @dataclass(config=PydanticConfig)
-class Protein(Polypeptide, GeneProductMixin):
+class Protein(Polypeptide, GeneProductMixin, ThingWithTaxon):
     """
     A gene product that is composed of a chain of amino acid sequences and is produced by ribosome-mediated
     translation of mRNA
@@ -2943,6 +3181,7 @@ class Protein(Polypeptide, GeneProductMixin):
 
     # Class Variables
     _category: ClassVar[str] = "Protein"
+    _id_prefixes: ClassVar[List[str]] = ["UniProtKB", "PR", "ENSEMBL", "FB", "UMLS"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3023,7 +3262,7 @@ class GeneGroupingMixin:
 
 
 @dataclass(config=PydanticConfig)
-class GeneFamily(NucleicAcidEntity, GeneGroupingMixin):
+class GeneFamily(BiologicalEntity, GeneGroupingMixin, ChemicalEntityOrGeneOrGeneProduct):
     """
     any grouping of multiple genes or gene products related by common descent
     """
@@ -3050,6 +3289,7 @@ class GeneFamily(NucleicAcidEntity, GeneGroupingMixin):
         "RFAM",
         "KEGG.ORTHOLOGY",
         "EGGNOG",
+        "COG",
     ]
 
 
@@ -3061,7 +3301,7 @@ class Zygosity(Attribute):
 
 
 @dataclass(config=PydanticConfig)
-class Genotype(BiologicalEntity, PhysicalEssence, GenomicEntity):
+class Genotype(BiologicalEntity, PhysicalEssence, GenomicEntity, PhysicalEssence, OntologyClass):
     """
     An information content entity that describes a genome by specifying the total variation in genomic sequence and/or
     gene expression, relative to some established background
@@ -3075,7 +3315,7 @@ class Genotype(BiologicalEntity, PhysicalEssence, GenomicEntity):
 
 
 @dataclass(config=PydanticConfig)
-class Haplotype(BiologicalEntity, GenomicEntity, PhysicalEssence):
+class Haplotype(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass):
     """
     A set of zero or more Alleles on a single instance of a Sequence[VMC]
     """
@@ -3085,7 +3325,7 @@ class Haplotype(BiologicalEntity, GenomicEntity, PhysicalEssence):
 
 
 @dataclass(config=PydanticConfig)
-class SequenceVariant(NucleicAcidEntity):
+class SequenceVariant(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass):
     """
     An allele that varies in its sequence from what is considered the reference allele at that locus.
     """
@@ -3136,7 +3376,7 @@ class Snv(SequenceVariant):
 
 
 @dataclass(config=PydanticConfig)
-class ReagentTargetedGene(NucleicAcidEntity):
+class ReagentTargetedGene(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass):
     """
     A gene altered in its expression level in the context of some experiment as a result of being targeted by
     gene-knockdown reagent(s) such as a morpholino or RNAi.
@@ -3305,7 +3545,7 @@ class ExposureEvent:
 
 @dataclass(config=PydanticConfig)
 class GenomicBackgroundExposure(
-    BiologicalEntity, ExposureEvent, GeneGroupingMixin, PhysicalEssence, GenomicEntity
+    ExposureEvent, GeneGroupingMixin, PhysicalEssence, GenomicEntity, OntologyClass
 ):
     """
     A genomic background exposure is where an individual's specific genomic background of genes, sequence variants or
@@ -3336,9 +3576,9 @@ class PathologicalProcess(BiologicalProcess, PathologicalEntityMixin):
 
 
 @dataclass(config=PydanticConfig)
-class PathologicalProcessExposure(PathologicalProcess, ExposureEvent):
+class PathologicalProcessExposure(ExposureEvent):
     """
-    A pathological process, when viewed as an exposure, representing an precondition, leading to or influencing an
+    A pathological process, when viewed as an exposure, representing a precondition, leading to or influencing an
     outcome, e.g. autoimmunity leading to disease.
     """
 
@@ -3358,7 +3598,7 @@ class PathologicalAnatomicalStructure(AnatomicalEntity, PathologicalEntityMixin)
 
 
 @dataclass(config=PydanticConfig)
-class PathologicalAnatomicalExposure(PathologicalAnatomicalStructure, ExposureEvent):
+class PathologicalAnatomicalExposure(ExposureEvent):
     """
     An abnormal anatomical structure, when viewed as an exposure, representing an precondition, leading to or
     influencing an outcome, e.g. thrombosis leading to an ischemic disease outcome.
@@ -3369,9 +3609,7 @@ class PathologicalAnatomicalExposure(PathologicalAnatomicalStructure, ExposureEv
 
 
 @dataclass(config=PydanticConfig)
-class DiseaseOrPhenotypicFeatureExposure(
-    DiseaseOrPhenotypicFeature, ExposureEvent, PathologicalEntityMixin
-):
+class DiseaseOrPhenotypicFeatureExposure(ExposureEvent, PathologicalEntityMixin):
     """
     A disease or phenotypic feature state, when viewed as an exposure, represents an precondition, leading to or
     influencing an outcome, e.g. HIV predisposing an individual to infections; a relative deficiency of skin
@@ -3383,9 +3621,9 @@ class DiseaseOrPhenotypicFeatureExposure(
 
 
 @dataclass(config=PydanticConfig)
-class ChemicalExposure(ChemicalEntity, ExposureEvent):
+class ChemicalExposure(ExposureEvent):
     """
-    A chemical exposure is an intake of a particular chemical entity, other than a drug.
+    A chemical exposure is an intake of a particular chemical entity.
     """
 
     # Class Variables
@@ -3393,7 +3631,7 @@ class ChemicalExposure(ChemicalEntity, ExposureEvent):
 
 
 @dataclass(config=PydanticConfig)
-class ComplexChemicalExposure(ChemicalExposure):
+class ComplexChemicalExposure:
     """
     A complex chemical exposure is an intake of a chemical mixture (e.g. gasoline), other than a drug.
     """
@@ -3403,7 +3641,7 @@ class ComplexChemicalExposure(ChemicalExposure):
 
 
 @dataclass(config=PydanticConfig)
-class DrugExposure(Drug, ExposureEvent):
+class DrugExposure(ChemicalExposure, ExposureEvent):
     """
     A drug exposure is an intake of a particular drug.
     """
@@ -3459,7 +3697,7 @@ class Treatment(NamedThing, ExposureEvent, ChemicalOrDrugOrTreatment):
 
 
 @dataclass(config=PydanticConfig)
-class BioticExposure(OrganismTaxon, ExposureEvent):
+class BioticExposure(ExposureEvent):
     """
     An external biotic exposure is an intake of (sometimes pathological) biological organisms (including viruses).
     """
@@ -3469,17 +3707,7 @@ class BioticExposure(OrganismTaxon, ExposureEvent):
 
 
 @dataclass(config=PydanticConfig)
-class GeographicExposure(GeographicLocation, ExposureEvent):
-    """
-    A geographic exposure is a factor relating to geographic proximity to some impactful entity.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "GeographicExposure"
-
-
-@dataclass(config=PydanticConfig)
-class EnvironmentalExposure(EnvironmentalProcess, ExposureEvent):
+class EnvironmentalExposure(ExposureEvent):
     """
     A environmental exposure is a factor relating to abiotic processes in the environment including sunlight (UV-B),
     atmospheric (heat, cold, general pollution) and water-born contaminants.
@@ -3490,7 +3718,17 @@ class EnvironmentalExposure(EnvironmentalProcess, ExposureEvent):
 
 
 @dataclass(config=PydanticConfig)
-class BehavioralExposure(Behavior, ExposureEvent):
+class GeographicExposure(EnvironmentalExposure, ExposureEvent):
+    """
+    A geographic exposure is a factor relating to geographic proximity to some impactful entity.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "GeographicExposure"
+
+
+@dataclass(config=PydanticConfig)
+class BehavioralExposure(ExposureEvent):
     """
     A behavioral exposure is a factor relating to behavior impacting an individual.
     """
@@ -3500,7 +3738,7 @@ class BehavioralExposure(Behavior, ExposureEvent):
 
 
 @dataclass(config=PydanticConfig)
-class SocioeconomicExposure(Behavior, ExposureEvent):
+class SocioeconomicExposure(ExposureEvent):
     """
     A socioeconomic exposure is a factor relating to social and financial status of an affected individual (e.g.
     poverty).
@@ -3531,7 +3769,7 @@ class Outcome:
 
 
 @dataclass(config=PydanticConfig)
-class PathologicalProcessOutcome(PathologicalProcess, Outcome):
+class PathologicalProcessOutcome(Outcome):
     """
     An outcome resulting from an exposure event which is the manifestation of a pathological process.
     """
@@ -3541,7 +3779,7 @@ class PathologicalProcessOutcome(PathologicalProcess, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class PathologicalAnatomicalOutcome(PathologicalAnatomicalStructure, Outcome):
+class PathologicalAnatomicalOutcome(Outcome):
     """
     An outcome resulting from an exposure event which is the manifestation of an abnormal anatomical structure.
     """
@@ -3551,7 +3789,7 @@ class PathologicalAnatomicalOutcome(PathologicalAnatomicalStructure, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class DiseaseOrPhenotypicFeatureOutcome(DiseaseOrPhenotypicFeature, Outcome):
+class DiseaseOrPhenotypicFeatureOutcome(Outcome):
     """
     Physiological outcomes resulting from an exposure event which is the manifestation of a disease or other
     characteristic phenotype.
@@ -3562,7 +3800,7 @@ class DiseaseOrPhenotypicFeatureOutcome(DiseaseOrPhenotypicFeature, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class BehavioralOutcome(Behavior, Outcome):
+class BehavioralOutcome(Outcome):
     """
     An outcome resulting from an exposure event which is the manifestation of human behavior.
     """
@@ -3572,7 +3810,7 @@ class BehavioralOutcome(Behavior, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class HospitalizationOutcome(Hospitalization, Outcome):
+class HospitalizationOutcome(Outcome):
     """
     An outcome resulting from an exposure event which is the increased manifestation of acute (e.g. emergency room
     visit) or chronic (inpatient) hospitalization.
@@ -3583,7 +3821,7 @@ class HospitalizationOutcome(Hospitalization, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class MortalityOutcome(Death, Outcome):
+class MortalityOutcome(Outcome):
     """
     An outcome of death from resulting from an exposure event.
     """
@@ -3593,7 +3831,7 @@ class MortalityOutcome(Death, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class EpidemiologicalOutcome(BiologicalEntity, Outcome):
+class EpidemiologicalOutcome(Outcome):
     """
     An epidemiological outcome, such as societal disease burden, resulting from an exposure event.
     """
@@ -3603,7 +3841,7 @@ class EpidemiologicalOutcome(BiologicalEntity, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class SocioeconomicOutcome(Behavior, Outcome):
+class SocioeconomicOutcome(Outcome):
     """
     An general social or economic outcome, such as healthcare costs, utilization, etc., resulting from an exposure
     event
@@ -3625,7 +3863,7 @@ class Association(Entity):
     subject: Union[URIorCURIE, NamedThing] = None
     predicate: Union[str, PredicateType] = None
     object: Union[URIorCURIE, NamedThing] = None
-    relation: Union[str, URIorCURIE] = None
+    relation: Optional[Union[str, str]] = None
     negated: Optional[Union[bool, Bool]] = None
     qualifiers: Optional[Union[List[Union[str, OntologyClass]], Union[str, OntologyClass]]] = field(
         default_factory=list
@@ -3653,12 +3891,6 @@ class Association(Entity):
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(NamedThing, value)
-        return value
-
-    @validator('relation')
-    def validate_required_relation(cls, value):
-        check_value_is_not_none("relation", value)
-        check_curie_prefix(cls, value)
         return value
 
     @validator('qualifiers')
@@ -3917,19 +4149,13 @@ class PairwiseGeneToGeneInteraction(GeneToGeneAssociation):
     _category: ClassVar[str] = "PairwiseGeneToGeneInteraction"
 
     predicate: Union[str, PredicateType] = None
-    relation: Union[str, URIorCURIE] = None
+    relation: Optional[Union[str, str]] = None
 
     # Validators
 
     @validator('predicate')
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
-        return value
-
-    @validator('relation')
-    def validate_required_relation(cls, value):
-        check_value_is_not_none("relation", value)
-        check_curie_prefix(cls, value)
         return value
 
 
@@ -3945,9 +4171,9 @@ class PairwiseMolecularInteraction(PairwiseGeneToGeneInteraction):
     subject: Union[URIorCURIE, MolecularEntity] = None
     id: URIorCURIE = None
     predicate: Union[str, PredicateType] = None
-    relation: Union[str, URIorCURIE] = None
     object: Union[URIorCURIE, MolecularEntity] = None
     interacting_molecules_category: Optional[Union[str, OntologyClass]] = None
+    relation: Optional[Union[str, str]] = None
 
     # Validators
 
@@ -3966,12 +4192,6 @@ class PairwiseMolecularInteraction(PairwiseGeneToGeneInteraction):
     @validator('predicate')
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
-        return value
-
-    @validator('relation')
-    def validate_required_relation(cls, value):
-        check_value_is_not_none("relation", value)
-        check_curie_prefix(cls, value)
         return value
 
     @validator('object')
@@ -4322,18 +4542,9 @@ class DiseaseToExposureEventAssociation(
 
 @dataclass(config=PydanticConfig)
 class ExposureEventToEntityAssociationMixin:
-    """
-    An association between some exposure event and some entity.
-    """
 
-    subject: Union[str, ExposureEvent] = None
-
-    # Validators
-
-    @validator('subject')
-    def validate_required_subject(cls, value):
-        check_value_is_not_none("subject", value)
-        return value
+    # Class Variables
+    _category: ClassVar[str] = "ExposureEventToEntityAssociationMixin"
 
 
 @dataclass(config=PydanticConfig)
@@ -5079,8 +5290,8 @@ class OrganismToOrganismAssociation(Association):
     _category: ClassVar[str] = "OrganismToOrganismAssociation"
 
     subject: Union[URIorCURIE, IndividualOrganism] = None
-    relation: Union[str, URIorCURIE] = None
     object: Union[URIorCURIE, IndividualOrganism] = None
+    relation: Optional[Union[str, str]] = None
 
     # Validators
 
@@ -5088,12 +5299,6 @@ class OrganismToOrganismAssociation(Association):
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(IndividualOrganism, value)
-        return value
-
-    @validator('relation')
-    def validate_required_relation(cls, value):
-        check_value_is_not_none("relation", value)
-        check_curie_prefix(cls, value)
         return value
 
     @validator('object')
@@ -5110,8 +5315,8 @@ class TaxonToTaxonAssociation(Association):
     _category: ClassVar[str] = "TaxonToTaxonAssociation"
 
     subject: Union[URIorCURIE, OrganismTaxon] = None
-    relation: Union[str, URIorCURIE] = None
     object: Union[URIorCURIE, OrganismTaxon] = None
+    relation: Optional[Union[str, str]] = None
 
     # Validators
 
@@ -5119,12 +5324,6 @@ class TaxonToTaxonAssociation(Association):
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(OrganismTaxon, value)
-        return value
-
-    @validator('relation')
-    def validate_required_relation(cls, value):
-        check_value_is_not_none("relation", value)
-        check_curie_prefix(cls, value)
         return value
 
     @validator('object')
@@ -5356,6 +5555,24 @@ class GeneToGoTermAssociation(FunctionalAssociation):
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         return value
+
+
+@dataclass(config=PydanticConfig)
+class EntityToDiseaseAssociation(Association):
+
+    # Class Variables
+    _category: ClassVar[str] = "EntityToDiseaseAssociation"
+
+    FDA_approval_status: Optional[Union[str, FDAApprovalStatusEnum]] = None
+
+
+@dataclass(config=PydanticConfig)
+class EntityToPhenotypicFeatureAssociation(Association):
+
+    # Class Variables
+    _category: ClassVar[str] = "EntityToPhenotypicFeatureAssociation"
+
+    FDA_approval_status: Optional[Union[str, FDAApprovalStatusEnum]] = None
 
 
 @dataclass(config=PydanticConfig)
