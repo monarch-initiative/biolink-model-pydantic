@@ -2,12 +2,14 @@ import re
 
 import pytest
 
-curie_regexp = re.compile(r'^[a-zA-Z_]?[a-zA-Z_0-9-]*:([A-Za-z0-9_][A-Za-z0-9_.-]*[A-Za-z0-9_]*)?$')
+curie_regexp = re.compile(
+    r'^[a-zA-Z_]?[a-zA-Z_0-9-]*:([A-Za-z0-9_][A-Za-z0-9_.-]*[A-Za-z0-9./_]*)?$'
+)
 
 
 @pytest.mark.parametrize(
     "curie",
-    ["foo:bar", "foo:123", "foo:", "123:456", "1-2:3-4", ":"],
+    ["foo:bar", "foo:123", "foo:", "123:456", "1-2:3-4", ":", "D:1.1/a.bcd.1900.1.1"],
 )
 def test_valid_curie(curie):
     assert re.match(curie_regexp, curie)
