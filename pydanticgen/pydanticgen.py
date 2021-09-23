@@ -43,6 +43,8 @@ Why pydantic over standard dataclasses?
 
   - Built in parsing of json or yaml into nested models (ie when attributes are reference types)
 
+  TODO create linkml root class similar to from linkml_runtime.utils.yamlutils import YAMLRoot
+
 """
 
 from pathlib import Path
@@ -140,14 +142,16 @@ class PydanticGen(PythonGenerator):
 # description: {split_descripton}
 # license: {be(self.schema.license)}
 
+from __future__ import annotations
+
 import datetime
 import inspect
 import logging
-from collections import namedtuple
-from enum import Enum, unique
-from dataclasses import field
-from typing import Any, ClassVar, List, Optional, Union, Dict
 import re
+from collections import namedtuple
+from dataclasses import field
+from enum import Enum, unique
+from typing import Any, ClassVar, List, Optional, Union
 
 from pydantic import constr, validator
 from pydantic.dataclasses import dataclass
@@ -189,7 +193,19 @@ Bool = bool
 # Classes
 {self.gen_classdefs()}
 
+# Update forward refs
+# see https://pydantic-docs.helpmanual.io/usage/postponed_annotations/
+{self.gen_forward_refs()}
+
 '''
+
+    def gen_forward_refs(self):
+        return '\n'.join(
+            [
+                f'{self.class_or_type_name(cls.name)}.__pydantic_model__.update_forward_refs()'
+                for cls in self._sort_classes(self.schema.classes.values())
+            ]
+        )
 
     def gen_classdef(self, cls: ClassDefinition) -> str:
         """ Generate python definition for class cls """
@@ -203,15 +219,29 @@ Bool = bool
             parent_class_and_mixins = ', '.join(
                 [self.formatted_element_name(parent, True) for parent in parents]
             )
+            # See https://github.com/linkml/linkml/issues/290
+            # We need a more intelligent way to order inherited classes
+            # default: parent, mixin_1, mixin_2, etc
+
             parent_class_and_mixins = f'({parent_class_and_mixins})'
         elif cls.mixins:
             # Seems fine but more curious if this ever happens
+            # Follow up - it does happen
             self.logger.warning(f"class {cls.name} has mixins {cls.mixins} but no parent")
             mixins = ', '.join([self.formatted_element_name(mixin, True) for mixin in cls.mixins])
             parent_class_and_mixins = f'({mixins})'
 
+        # This is a horrible hack to resolve our MRO issues in time for the koza hackathon
+        # see github issue above
+        if (
+            self.class_or_type_name(cls.name) == 'Behavior'
+            and parent_class_and_mixins == '(BiologicalProcess, OntologyClass, ActivityAndBehavior)'
+        ):
+            parent_class_and_mixins = '(BiologicalProcess, ActivityAndBehavior, OntologyClass)'
+
         slotdefs = self.gen_class_variables(cls)
 
+        # TODO replace this with root class
         entity_post_init = (
             f'\n\t{self._get_entity_post_init()}'
             if self.class_or_type_name(cls.name) == 'Entity'
@@ -376,7 +406,9 @@ Bool = bool
         We have a union of str, Curie, and the class, eg
         Entity -> str, Curie, Entity
 
-        TODO clean this up
+        TODO
+        Replace this with something more generalizable across
+        all LinkMl schemas
 
         :param rangelist: List of types from distal to proximal
         :return:
@@ -388,12 +420,12 @@ Bool = bool
             'category',
             'provided_by',
             'xref',
-            'has_qualitative_value',
-            'subclass_of',
-            'has_input',
-            'has_output',
-            'has_constituent',
-            'enabled_by',
+            #'has_qualitative_value',
+            #'subclass_of',
+            #'has_input',
+            #'has_output',
+            #'has_constituent',
+            #'enabled_by',
         ]:
             # id is here to override {ClassName}Id
             # The rest are due to import order errors in self._sort_classes
@@ -575,13 +607,13 @@ Predicate = namedtuple(
                     'id',
                     'category',
                     'provided_by',
-                    'xref',
-                    'has_qualitative_value',
-                    'subclass_of',
-                    'has_input',
-                    'has_output',
-                    'has_constituent',
-                    'enabled_by',
+                    #'xref',
+                    #'has_qualitative_value',
+                    #'subclass_of',
+                    #'has_input',
+                    #'has_output',
+                    #'has_constituent',
+                    #'enabled_by',
                 ]
                 or ('URIorCURIE' in rangelist and rangelist[-1] != 'IriType')
             ) and slotname != 'predicate':
@@ -637,7 +669,7 @@ Predicate = namedtuple(
         :return:
         """
         return f'''
-    @validator('{slotname}')
+    @validator('{slotname}', allow_reuse=True)
     def check_{slotname}_prefix(cls, value):
         check_curie_prefix({cls_name}, value)
         return value'''
@@ -649,7 +681,7 @@ Predicate = namedtuple(
         :return:
         """
         return f'''
-    @validator('{slotname}')
+    @validator('{slotname}', allow_reuse=True)
     def convert_{slotname}_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies({cls_name}, value)'''
 
@@ -662,7 +694,7 @@ Predicate = namedtuple(
         :return:
         """
         validator = f'''
-    @validator('{slotname}')
+    @validator('{slotname}', allow_reuse=True)
     def validate_required_{slotname}(cls, value):
         check_value_is_not_none("{slotname}", value)
 '''

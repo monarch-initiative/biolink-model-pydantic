@@ -1,10 +1,12 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-08-04 10:42
+# Generation date: 2021-09-23 12:58
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
 # description: Entity and association taxonomy and datamodel for life-sciences data
 # license: https://creativecommons.org/publicdomain/zero/1.0/
+
+from __future__ import annotations
 
 import datetime
 import inspect
@@ -189,6 +191,7 @@ valid_prefix = [
     "CMO",
     "CMR_GENE",
     "COAR_RESOURCE",
+    "COG",
     "COGS",
     "COGS_FUNCTION",
     "COMBINE_SPECIFICATIONS",
@@ -533,6 +536,7 @@ valid_prefix = [
     "MASSIVE",
     "MAT",
     "MATRIXDB_ASSOCIATION",
+    "MAXO",
     "MDM",
     "MEDDRA",
     "MEDLINEPLUS",
@@ -567,7 +571,6 @@ valid_prefix = [
     "MINT",
     "MIPMOD",
     "MIR",
-    "MIRBASE",
     "MIRBASE_MATURE",
     "MIREX",
     "MIRIAM_COLLECTION",
@@ -624,7 +627,6 @@ valid_prefix = [
     "NBO",
     "NBRC",
     "NCBIAssembly",
-    "NCBIGENE",
     "NCBIGI",
     "NCBIGene",
     "NCBIGenome",
@@ -874,6 +876,7 @@ valid_prefix = [
     "STITCH",
     "STOREDB",
     "STRING",
+    "STY",
     "SUBTILIST",
     "SUBTIWIKI",
     "SUGARBIND",
@@ -928,9 +931,7 @@ valid_prefix = [
     "UMBBD_REACTION",
     "UMBBD_RULE",
     "UMLS",
-    "UMLSSC",
     "UMLSSG",
-    "UMLSST",
     "UNIGENE",
     "UNII",
     "UNIMOD",
@@ -985,7 +986,6 @@ valid_prefix = [
     "WormBase",
     "XAO",
     "XCO",
-    "XENBASE",
     "XL",
     "XPO",
     "Xenbase",
@@ -1036,6 +1036,7 @@ valid_prefix = [
     "issn",
     "linkml",
     "medgen",
+    "mirbase",
     "oa",
     "oboInOwl",
     "oboformat",
@@ -1144,7 +1145,6 @@ class PredicateType(str, Enum):
     actively_involved_in = "biolink:actively_involved_in"
     actively_involves = "biolink:actively_involves"
     activity_affected_by = "biolink:activity_affected_by"
-    activity_affects = "biolink:activity_affects"
     activity_decreased_by = "biolink:activity_decreased_by"
     activity_increased_by = "biolink:activity_increased_by"
     acts_upstream_of = "biolink:acts_upstream_of"
@@ -1184,6 +1184,7 @@ class PredicateType(str, Enum):
     author = "biolink:author"
     biomarker_for = "biolink:biomarker_for"
     broad_match = "biolink:broad_match"
+    capability_of = "biolink:capability_of"
     capable_of = "biolink:capable_of"
     catalyzes = "biolink:catalyzes"
     caused_by = "biolink:caused_by"
@@ -1195,8 +1196,11 @@ class PredicateType(str, Enum):
     coexists_with = "biolink:coexists_with"
     coexpressed_with = "biolink:coexpressed_with"
     colocalizes_with = "biolink:colocalizes_with"
+    completed_by = "biolink:completed_by"
     condition_associated_with_gene = "biolink:condition_associated_with_gene"
+    consumed_by = "biolink:consumed_by"
     consumes = "biolink:consumes"
+    contains_process = "biolink:contains_process"
     contraindicated_for = "biolink:contraindicated_for"
     contributes_to = "biolink:contributes_to"
     contribution_from = "biolink:contribution_from"
@@ -1205,6 +1209,7 @@ class PredicateType(str, Enum):
     decreased_amount_in = "biolink:decreased_amount_in"
     decreases_abundance_of = "biolink:decreases_abundance_of"
     decreases_activity_of = "biolink:decreases_activity_of"
+    decreases_amount_or_activity_of = "biolink:decreases_amount_or_activity_of"
     decreases_degradation_of = "biolink:decreases_degradation_of"
     decreases_expression_of = "biolink:decreases_expression_of"
     decreases_folding_of = "biolink:decreases_folding_of"
@@ -1257,6 +1262,7 @@ class PredicateType(str, Enum):
     genetically_interacts_with = "biolink:genetically_interacts_with"
     has_active_ingredient = "biolink:has_active_ingredient"
     has_biomarker = "biolink:has_biomarker"
+    has_catalyst = "biolink:has_catalyst"
     has_completed = "biolink:has_completed"
     has_contraindication = "biolink:has_contraindication"
     has_decreased_amount = "biolink:has_decreased_amount"
@@ -1283,6 +1289,9 @@ class PredicateType(str, Enum):
     has_phenotype = "biolink:has_phenotype"
     has_positive_upstream_actor = "biolink:has_positive_upstream_actor"
     has_positive_upstream_or_within_actor = "biolink:has_positive_upstream_or_within_actor"
+    has_real_world_evidence_of_association_with = (
+        "biolink:has_real_world_evidence_of_association_with"
+    )
     has_sequence_location = "biolink:has_sequence_location"
     has_sequence_variant = "biolink:has_sequence_variant"
     has_splice_site_variant = "biolink:has_splice_site_variant"
@@ -1300,6 +1309,7 @@ class PredicateType(str, Enum):
     increased_amount_of = "biolink:increased_amount_of"
     increases_abundance_of = "biolink:increases_abundance_of"
     increases_activity_of = "biolink:increases_activity_of"
+    increases_amount_or_activity_of = "biolink:increases_amount_or_activity_of"
     increases_degradation_of = "biolink:increases_degradation_of"
     increases_expression_of = "biolink:increases_expression_of"
     increases_folding_of = "biolink:increases_folding_of"
@@ -1317,7 +1327,6 @@ class PredicateType(str, Enum):
     increases_uptake_of = "biolink:increases_uptake_of"
     interacts_with = "biolink:interacts_with"
     is_active_ingredient_of = "biolink:is_active_ingredient_of"
-    is_catalyst_of = "biolink:is_catalyst_of"
     is_excipient_of = "biolink:is_excipient_of"
     is_frameshift_variant_of = "biolink:is_frameshift_variant_of"
     is_input_of = "biolink:is_input_of"
@@ -1357,8 +1366,10 @@ class PredicateType(str, Enum):
     molecularly_interacts_with = "biolink:molecularly_interacts_with"
     mutation_rate_affected_by = "biolink:mutation_rate_affected_by"
     mutation_rate_decreased_by = "biolink:mutation_rate_decreased_by"
+    mutation_rate_increased_by = "biolink:mutation_rate_increased_by"
     narrow_match = "biolink:narrow_match"
     negatively_correlated_with = "biolink:negatively_correlated_with"
+    not_completed_by = "biolink:not_completed_by"
     nutrient_of = "biolink:nutrient_of"
     occurs_in = "biolink:occurs_in"
     opposite_of = "biolink:opposite_of"
@@ -1406,9 +1417,10 @@ class PredicateType(str, Enum):
     stability_increased_by = "biolink:stability_increased_by"
     subclass_of = "biolink:subclass_of"
     superclass_of = "biolink:superclass_of"
+    synthesis_affected_by = "biolink:synthesis_affected_by"
     synthesis_decreased_by = "biolink:synthesis_decreased_by"
     synthesis_increased_by = "biolink:synthesis_increased_by"
-    sythesis_affected_by = "biolink:sythesis_affected_by"
+    taxon_of = "biolink:taxon_of"
     temporally_related_to = "biolink:temporally_related_to"
     transcribed_from = "biolink:transcribed_from"
     transcribed_to = "biolink:transcribed_to"
@@ -1489,6 +1501,48 @@ class SequenceEnum(str, Enum):
     AA = "AA"
 
 
+@unique
+class PredicateQualifierEnum(str, Enum):
+    """
+    constrained list of qualifying terms that soften or expand the definition of the predicate used. can be used to
+    constrain or qualify any predicate (any child of related_to).
+    """
+
+    predicted = "predicted"
+    possibly = "possibly"
+    hypothesized = "hypothesized"
+    validated = "validated"
+    value_4 = "supported by real-world evidence"
+    value_5 = "supported by clinical evidence"
+
+
+@unique
+class DrugAvailabilityEnum(str, Enum):
+
+    value_0 = "over the counter"
+    prescription = "prescription"
+
+
+@unique
+class FDAApprovalStatusEnum(str, Enum):
+
+    value_0 = "Discovery & Development Phase"
+    value_1 = "Preclinical Research Phase"
+    value_2 = "FDA Clinical Research Phase"
+    value_3 = "FDA Review Phase 4"
+    value_4 = "FDA Post-Market Safety Monitoring"
+    value_5 = "FDA Clinical Research Phase 1"
+    value_6 = "FDA Clinical Research Phase 2"
+    value_7 = "FDA Clinical Research Phase 3"
+    value_8 = "FDA Clinical Research Phase 4"
+    value_9 = "FDA Fast Track"
+    value_10 = "FDA Breakthrough Therapy"
+    value_11 = "FDA Accelerated Approval"
+    value_12 = "FDA Priority Review"
+    value_13 = "regular approval"
+    value_14 = "post-approval withdrawal"
+
+
 # Classes
 
 
@@ -1542,24 +1596,24 @@ class Attribute(Annotation, OntologyClass):
     has_quantitative_value: Optional[
         Union[List[Union[str, QuantityValue]], Union[str, QuantityValue]]
     ] = field(default_factory=list)
-    has_qualitative_value: Optional[URIorCURIE] = None
+    has_qualitative_value: Optional[Union[URIorCURIE, NamedThing]] = None
     iri: Optional[IriType] = None
     source: Optional[Union[str, LabelType]] = None
 
     # Validators
 
-    @validator('has_attribute_type')
+    @validator('has_attribute_type', allow_reuse=True)
     def validate_required_has_attribute_type(cls, value):
         check_value_is_not_none("has_attribute_type", value)
         return value
 
-    @validator('has_quantitative_value')
+    @validator('has_quantitative_value', allow_reuse=True)
     def convert_has_quantitative_value_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('has_qualitative_value')
+    @validator('has_qualitative_value', allow_reuse=True)
     def check_has_qualitative_value_prefix(cls, value):
-        check_curie_prefix(cls, value)
+        check_curie_prefix(NamedThing, value)
         return value
 
 
@@ -1661,21 +1715,21 @@ class Entity:
 
     # Validators
 
-    @validator('id')
+    @validator('id', allow_reuse=True)
     def validate_required_id(cls, value):
         check_value_is_not_none("id", value)
         check_curie_prefix(cls, value)
         return value
 
-    @validator('category')
+    @validator('category', allow_reuse=True)
     def convert_category_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('provided_by')
+    @validator('provided_by', allow_reuse=True)
     def convert_provided_by_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('has_attribute')
+    @validator('has_attribute', allow_reuse=True)
     def convert_has_attribute_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
@@ -1705,7 +1759,7 @@ class NamedThing(Entity):
 
     # Validators
 
-    @validator('category')
+    @validator('category', allow_reuse=True)
     def validate_required_category(cls, value):
         check_value_is_not_none("category", value)
         convert_scalar_to_list_check_curies(cls, value)
@@ -1759,13 +1813,25 @@ class OrganismTaxon(NamedThing):
     _id_prefixes: ClassVar[List[str]] = ["NCBITaxon", "MESH"]
 
     has_taxonomic_rank: Optional[Union[str, TaxonomicRank]] = None
-    subclass_of: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
+    subclass_of: Optional[
+        Union[List[Union[URIorCURIE, OrganismTaxon]], Union[URIorCURIE, OrganismTaxon]]
+    ] = field(default_factory=list)
 
     # Validators
 
-    @validator('subclass_of')
+    @validator('subclass_of', allow_reuse=True)
     def convert_subclass_of_to_list_check_curies(cls, value):
-        return convert_scalar_to_list_check_curies(cls, value)
+        return convert_scalar_to_list_check_curies(OrganismTaxon, value)
+
+
+@dataclass(config=PydanticConfig)
+class Event(NamedThing):
+    """
+    Something that happens at a given place and time.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "Event"
 
 
 @dataclass(config=PydanticConfig)
@@ -1793,11 +1859,11 @@ class Agent(AdministrativeEntity):
 
     # Validators
 
-    @validator('affiliation')
+    @validator('affiliation', allow_reuse=True)
     def convert_affiliation_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('id')
+    @validator('id', allow_reuse=True)
     def validate_required_id(cls, value):
         check_value_is_not_none("id", value)
         check_curie_prefix(cls, value)
@@ -1856,12 +1922,12 @@ class DatasetVersion(InformationContentEntity):
 
     # Validators
 
-    @validator('has_dataset')
+    @validator('has_dataset', allow_reuse=True)
     def check_has_dataset_prefix(cls, value):
         check_curie_prefix(Dataset, value)
         return value
 
-    @validator('has_distribution')
+    @validator('has_distribution', allow_reuse=True)
     def check_has_distribution_prefix(cls, value):
         check_curie_prefix(DatasetDistribution, value)
         return value
@@ -1941,33 +2007,33 @@ class Publication(InformationContentEntity):
 
     # Validators
 
-    @validator('authors')
+    @validator('authors', allow_reuse=True)
     def convert_authors_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('pages')
+    @validator('pages', allow_reuse=True)
     def convert_pages_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('keywords')
+    @validator('keywords', allow_reuse=True)
     def convert_keywords_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('mesh_terms')
+    @validator('mesh_terms', allow_reuse=True)
     def convert_mesh_terms_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('xref')
+    @validator('xref', allow_reuse=True)
     def convert_xref_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('id')
+    @validator('id', allow_reuse=True)
     def validate_required_id(cls, value):
         check_value_is_not_none("id", value)
         check_curie_prefix(cls, value)
         return value
 
-    @validator('type')
+    @validator('type', allow_reuse=True)
     def validate_required_type(cls, value):
         check_value_is_not_none("type", value)
         return value
@@ -1988,13 +2054,13 @@ class Book(Publication):
 
     # Validators
 
-    @validator('id')
+    @validator('id', allow_reuse=True)
     def validate_required_id(cls, value):
         check_value_is_not_none("id", value)
         check_curie_prefix(cls, value)
         return value
 
-    @validator('type')
+    @validator('type', allow_reuse=True)
     def validate_required_type(cls, value):
         check_value_is_not_none("type", value)
         return value
@@ -2012,7 +2078,7 @@ class BookChapter(Publication):
 
     # Validators
 
-    @validator('published_in')
+    @validator('published_in', allow_reuse=True)
     def validate_required_published_in(cls, value):
         check_value_is_not_none("published_in", value)
         check_curie_prefix(cls, value)
@@ -2037,13 +2103,13 @@ class Serial(Publication):
 
     # Validators
 
-    @validator('id')
+    @validator('id', allow_reuse=True)
     def validate_required_id(cls, value):
         check_value_is_not_none("id", value)
         check_curie_prefix(cls, value)
         return value
 
-    @validator('type')
+    @validator('type', allow_reuse=True)
     def validate_required_type(cls, value):
         check_value_is_not_none("type", value)
         return value
@@ -2063,7 +2129,7 @@ class Article(Publication):
 
     # Validators
 
-    @validator('published_in')
+    @validator('published_in', allow_reuse=True)
     def validate_required_published_in(cls, value):
         check_value_is_not_none("published_in", value)
         check_curie_prefix(cls, value)
@@ -2237,34 +2303,14 @@ class ThingWithTaxon:
 
     # Validators
 
-    @validator('in_taxon')
+    @validator('in_taxon', allow_reuse=True)
     def convert_in_taxon_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(OrganismTaxon, value)
 
 
 @dataclass(config=PydanticConfig)
 class GenomicEntity(ThingWithTaxon):
-
-    pass
-
-
-@dataclass(config=PydanticConfig)
-class ChemicalEntity(NamedThing, PhysicalEssence, ChemicalOrDrugOrTreatment):
-    """
-    A chemical entity is a physical entity that pertains to chemistry or biochemistry.
-    """
-
-
-@dataclass(config=PydanticConfig)
-class MolecularEntity(ChemicalEntity):
-    """
-    A molecular entity is a chemical entity composed of individual or covalently bonded atoms.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "MolecularEntity"
-
-    is_metabolite: Optional[Union[bool, Bool]] = None
+    has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
 
 @dataclass(config=PydanticConfig)
@@ -2272,98 +2318,6 @@ class ChemicalSubstance:
 
     # Class Variables
     _category: ClassVar[str] = "ChemicalSubstance"
-
-
-@dataclass(config=PydanticConfig)
-class SmallMolecule(MolecularEntity):
-    """
-    A small molecule entity is a molecular entity characterized by availability in small-molecule databases of SMILES,
-    InChI, IUPAC, or other unambiguous representation of its precise chemical structure; for convenience of
-    representation, any valid chemical representation is included, even if it is not strictly molecular (e.g., sodium
-    ion).
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "SmallMolecule"
-    _id_prefixes: ClassVar[List[str]] = [
-        "PUBCHEM.COMPOUND",
-        "CHEMBL.COMPOUND",
-        "UNII",
-        "CHEBI",
-        "DRUGBANK",
-        "MESH",
-        "CAS",
-        "DrugCentral",
-        "GTOPDB",
-        "HMDB",
-        "KEGG.COMPOUND",
-        "ChemBank",
-        "Aeolus",
-        "PUBCHEM.SUBSTANCE",
-        "SIDER.DRUG",
-        "INCHI",
-        "INCHIKEY",
-        "KEGG.GLYCAN",
-        "KEGG.DRUG",
-        "KEGG.DGROUP",
-        "KEGG.ENVIRON",
-    ]
-
-    id: URIorCURIE = None
-
-    # Validators
-
-    @validator('id')
-    def validate_required_id(cls, value):
-        check_value_is_not_none("id", value)
-        check_curie_prefix(cls, value)
-        return value
-
-
-@dataclass(config=PydanticConfig)
-class ChemicalMixture(ChemicalEntity):
-    """
-    A chemical mixture is a chemical entity composed of two or more molecular entities.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "ChemicalMixture"
-
-
-@dataclass(config=PydanticConfig)
-class NucleicAcidEntity(MolecularEntity, GenomicEntity):
-    """
-    A nucleic acid entity is a molecular entity characterized by availability in gene databases of nucleotide-based
-    sequence representations of its precise sequence; for convenience of representation, partial sequences of various
-    kinds are included, even if they do not represent a physical molecule.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "NucleicAcidEntity"
-
-    has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
-
-
-@dataclass(config=PydanticConfig)
-class MolecularMixture(ChemicalMixture):
-    """
-    A molecular mixture is a chemical mixture composed of two or more molecular entities with known concentration and
-    stoichiometry.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "MolecularMixture"
-
-
-@dataclass(config=PydanticConfig)
-class ComplexMolecularMixture(ChemicalMixture):
-    """
-    A complex molecular mixture is a chemical mixture composed of two or more molecular entities with unknown
-    concentration and stoichiometry.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "ComplexMolecularMixture"
 
 
 @dataclass(config=PydanticConfig)
@@ -2377,23 +2331,35 @@ class BiologicalProcessOrActivity(BiologicalEntity, Occurrent, OntologyClass):
     _category: ClassVar[str] = "BiologicalProcessOrActivity"
     _id_prefixes: ClassVar[List[str]] = ["GO", "REACT"]
 
-    has_input: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
-    has_output: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
-    enabled_by: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
+    has_input: Optional[
+        Union[
+            List[Union[URIorCURIE, BiologicalProcessOrActivity]],
+            Union[URIorCURIE, BiologicalProcessOrActivity],
+        ]
+    ] = field(default_factory=list)
+    has_output: Optional[
+        Union[
+            List[Union[URIorCURIE, BiologicalProcessOrActivity]],
+            Union[URIorCURIE, BiologicalProcessOrActivity],
+        ]
+    ] = field(default_factory=list)
+    enabled_by: Optional[
+        Union[List[Union[URIorCURIE, PhysicalEntity]], Union[URIorCURIE, PhysicalEntity]]
+    ] = field(default_factory=list)
 
     # Validators
 
-    @validator('has_input')
+    @validator('has_input', allow_reuse=True)
     def convert_has_input_to_list_check_curies(cls, value):
-        return convert_scalar_to_list_check_curies(cls, value)
+        return convert_scalar_to_list_check_curies(BiologicalProcessOrActivity, value)
 
-    @validator('has_output')
+    @validator('has_output', allow_reuse=True)
     def convert_has_output_to_list_check_curies(cls, value):
-        return convert_scalar_to_list_check_curies(cls, value)
+        return convert_scalar_to_list_check_curies(BiologicalProcessOrActivity, value)
 
-    @validator('enabled_by')
+    @validator('enabled_by', allow_reuse=True)
     def convert_enabled_by_to_list_check_curies(cls, value):
-        return convert_scalar_to_list_check_curies(cls, value)
+        return convert_scalar_to_list_check_curies(PhysicalEntity, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -2414,23 +2380,31 @@ class MolecularActivity(BiologicalProcessOrActivity, Occurrent, OntologyClass):
         "KEGG.REACTION",
         "KEGG.RCLASS",
         "KEGG.ENZYME",
+        "UMLS",
+        "BIGG.REACTION",
     ]
 
-    has_input: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
-    has_output: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
-    enabled_by: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
+    has_input: Optional[
+        Union[List[Union[URIorCURIE, MolecularEntity]], Union[URIorCURIE, MolecularEntity]]
+    ] = field(default_factory=list)
+    has_output: Optional[
+        Union[List[Union[URIorCURIE, MolecularEntity]], Union[URIorCURIE, MolecularEntity]]
+    ] = field(default_factory=list)
+    enabled_by: Optional[
+        Union[List[Union[str, MacromolecularMachineMixin]], Union[str, MacromolecularMachineMixin]]
+    ] = field(default_factory=list)
 
     # Validators
 
-    @validator('has_input')
+    @validator('has_input', allow_reuse=True)
     def convert_has_input_to_list_check_curies(cls, value):
-        return convert_scalar_to_list_check_curies(cls, value)
+        return convert_scalar_to_list_check_curies(MolecularEntity, value)
 
-    @validator('has_output')
+    @validator('has_output', allow_reuse=True)
     def convert_has_output_to_list_check_curies(cls, value):
-        return convert_scalar_to_list_check_curies(cls, value)
+        return convert_scalar_to_list_check_curies(MolecularEntity, value)
 
-    @validator('enabled_by')
+    @validator('enabled_by', allow_reuse=True)
     def convert_enabled_by_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
@@ -2473,92 +2447,10 @@ class PhysiologicalProcess(BiologicalProcess, OntologyClass):
 
 
 @dataclass(config=PydanticConfig)
-class Behavior(BiologicalProcess, OntologyClass):
+class Behavior(BiologicalProcess, ActivityAndBehavior, OntologyClass):
 
     # Class Variables
     _category: ClassVar[str] = "Behavior"
-
-
-@dataclass(config=PydanticConfig)
-class Death(BiologicalProcess):
-
-    # Class Variables
-    _category: ClassVar[str] = "Death"
-
-
-@dataclass(config=PydanticConfig)
-class ProcessedMaterial(ChemicalMixture):
-    """
-    A chemical entity (often a mixture) processed for consumption for nutritional, medical or technical use. Is a
-    material entity that is created or changed during material processing.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "ProcessedMaterial"
-
-
-@dataclass(config=PydanticConfig)
-class Drug(MolecularMixture, ChemicalOrDrugOrTreatment, OntologyClass):
-    """
-    A substance intended for use in the diagnosis, cure, mitigation, treatment, or prevention of disease
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "Drug"
-    _id_prefixes: ClassVar[List[str]] = ["RXCUI", "NDC", "PHARMGKB.DRUG"]
-
-
-@dataclass(config=PydanticConfig)
-class EnvironmentalFoodContaminant(ChemicalEntity):
-
-    # Class Variables
-    _category: ClassVar[str] = "EnvironmentalFoodContaminant"
-
-
-@dataclass(config=PydanticConfig)
-class FoodAdditive(ChemicalEntity):
-
-    # Class Variables
-    _category: ClassVar[str] = "FoodAdditive"
-
-
-@dataclass(config=PydanticConfig)
-class Nutrient(ChemicalEntity):
-
-    # Class Variables
-    _category: ClassVar[str] = "Nutrient"
-
-
-@dataclass(config=PydanticConfig)
-class Macronutrient(Nutrient):
-
-    # Class Variables
-    _category: ClassVar[str] = "Macronutrient"
-
-
-@dataclass(config=PydanticConfig)
-class Micronutrient(Nutrient):
-
-    # Class Variables
-    _category: ClassVar[str] = "Micronutrient"
-
-
-@dataclass(config=PydanticConfig)
-class Vitamin(Micronutrient):
-
-    # Class Variables
-    _category: ClassVar[str] = "Vitamin"
-
-
-@dataclass(config=PydanticConfig)
-class Food(ChemicalMixture):
-    """
-    A substance consumed by a living organism as a source of nutrition
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "Food"
-    _id_prefixes: ClassVar[List[str]] = ["foodb.compound"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2605,7 +2497,7 @@ class OrganismalEntity(BiologicalEntity):
 
     # Validators
 
-    @validator('has_attribute')
+    @validator('has_attribute', allow_reuse=True)
     def convert_has_attribute_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
@@ -2712,6 +2604,7 @@ class PhenotypicFeature(DiseaseOrPhenotypicFeature):
         "SNOMEDCT",
         "MESH",
         "XPO",
+        "FYPO",
     ]
 
 
@@ -2772,6 +2665,369 @@ class GrossAnatomicalStructure(AnatomicalEntity):
 
 
 @dataclass(config=PydanticConfig)
+class ChemicalEntityOrGeneOrGeneProduct:
+    """
+    A union of chemical entities and children, and gene or gene product. This mixin is helpful to use when searching
+    across chemical entities that must include genes and their children as chemical entities.
+    """
+
+
+@dataclass(config=PydanticConfig)
+class ChemicalEntityOrProteinOrPolypeptide:
+    """
+    A union of chemical entities and children, and protein and polypeptide. This mixin is helpful to use when
+    searching across chemical entities that must include genes and their children as chemical entities.
+    """
+
+
+@dataclass(config=PydanticConfig)
+class ChemicalEntity(
+    NamedThing,
+    PhysicalEssence,
+    ChemicalOrDrugOrTreatment,
+    ChemicalEntityOrGeneOrGeneProduct,
+    ChemicalEntityOrProteinOrPolypeptide,
+):
+    """
+    A chemical entity is a physical entity that pertains to chemistry or biochemistry.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "ChemicalEntity"
+    _id_prefixes: ClassVar[List[str]] = ["UNII", "MESH", "CAS"]
+
+    trade_name: Optional[Union[URIorCURIE, ChemicalEntity]] = None
+    available_from: Optional[
+        Union[List[Union[str, DrugAvailabilityEnum]], Union[str, DrugAvailabilityEnum]]
+    ] = field(default_factory=list)
+    max_tolerated_dose: Optional[Union[str, str]] = None
+    is_toxic: Optional[Union[bool, Bool]] = None
+
+    # Validators
+
+    @validator('trade_name', allow_reuse=True)
+    def check_trade_name_prefix(cls, value):
+        check_curie_prefix(ChemicalEntity, value)
+        return value
+
+    @validator('available_from', allow_reuse=True)
+    def convert_available_from_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
+
+
+@dataclass(config=PydanticConfig)
+class MolecularEntity(ChemicalEntity):
+    """
+    A molecular entity is a chemical entity composed of individual or covalently bonded atoms.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "MolecularEntity"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+    ]
+
+    is_metabolite: Optional[Union[bool, Bool]] = None
+
+
+@dataclass(config=PydanticConfig)
+class SmallMolecule(MolecularEntity):
+    """
+    A small molecule entity is a molecular entity characterized by availability in small-molecule databases of SMILES,
+    InChI, IUPAC, or other unambiguous representation of its precise chemical structure; for convenience of
+    representation, any valid chemical representation is included, even if it is not strictly molecular (e.g., sodium
+    ion).
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "SmallMolecule"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+        "BIGG.METABOLITE",
+    ]
+
+    id: URIorCURIE = None
+
+    # Validators
+
+    @validator('id', allow_reuse=True)
+    def validate_required_id(cls, value):
+        check_value_is_not_none("id", value)
+        check_curie_prefix(cls, value)
+        return value
+
+
+@dataclass(config=PydanticConfig)
+class ChemicalMixture(ChemicalEntity):
+    """
+    A chemical mixture is a chemical entity composed of two or more molecular entities.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "ChemicalMixture"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+    ]
+
+    is_supplement: Optional[Union[URIorCURIE, ChemicalMixture]] = None
+    highest_FDA_approval_status: Optional[Union[str, str]] = None
+
+    # Validators
+
+    @validator('is_supplement', allow_reuse=True)
+    def check_is_supplement_prefix(cls, value):
+        check_curie_prefix(ChemicalMixture, value)
+        return value
+
+
+@dataclass(config=PydanticConfig)
+class NucleicAcidEntity(MolecularEntity, GenomicEntity, PhysicalEssence, OntologyClass):
+    """
+    A nucleic acid entity is a molecular entity characterized by availability in gene databases of nucleotide-based
+    sequence representations of its precise sequence; for convenience of representation, partial sequences of various
+    kinds are included.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "NucleicAcidEntity"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+    ]
+
+
+@dataclass(config=PydanticConfig)
+class MolecularMixture(ChemicalMixture):
+    """
+    A molecular mixture is a chemical mixture composed of two or more molecular entities with known concentration and
+    stoichiometry.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "MolecularMixture"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+    ]
+
+
+@dataclass(config=PydanticConfig)
+class ComplexMolecularMixture(ChemicalMixture):
+    """
+    A complex molecular mixture is a chemical mixture composed of two or more molecular entities with unknown
+    concentration and stoichiometry.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "ComplexMolecularMixture"
+    _id_prefixes: ClassVar[List[str]] = [
+        "PUBCHEM.COMPOUND",
+        "CHEMBL.COMPOUND",
+        "UNII",
+        "CHEBI",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
+        "DrugCentral",
+        "GTOPDB",
+        "HMDB",
+        "KEGG.COMPOUND",
+        "ChemBank",
+        "Aeolus",
+        "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
+        "INCHI",
+        "INCHIKEY",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "KEGG.ENVIRON",
+    ]
+
+
+@dataclass(config=PydanticConfig)
+class ProcessedMaterial(ChemicalMixture):
+    """
+    A chemical entity (often a mixture) processed for consumption for nutritional, medical or technical use. Is a
+    material entity that is created or changed during material processing.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "ProcessedMaterial"
+
+
+@dataclass(config=PydanticConfig)
+class Drug(MolecularMixture, ChemicalOrDrugOrTreatment, OntologyClass):
+    """
+    A substance intended for use in the diagnosis, cure, mitigation, treatment, or prevention of disease
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "Drug"
+    _id_prefixes: ClassVar[List[str]] = [
+        "RXCUI",
+        "NDC",
+        "PHARMGKB.DRUG",
+        "DRUGBANK",
+        "DrugCentral",
+        "KEGG.DRUG",
+        "KEGG.DGROUP",
+        "SIDER.DRUG",
+    ]
+
+
+@dataclass(config=PydanticConfig)
+class EnvironmentalFoodContaminant(ChemicalEntity):
+
+    # Class Variables
+    _category: ClassVar[str] = "EnvironmentalFoodContaminant"
+
+
+@dataclass(config=PydanticConfig)
+class FoodAdditive(ChemicalEntity):
+
+    # Class Variables
+    _category: ClassVar[str] = "FoodAdditive"
+
+
+@dataclass(config=PydanticConfig)
+class Nutrient(ChemicalEntity):
+
+    # Class Variables
+    _category: ClassVar[str] = "Nutrient"
+
+
+@dataclass(config=PydanticConfig)
+class Macronutrient(Nutrient):
+
+    # Class Variables
+    _category: ClassVar[str] = "Macronutrient"
+
+
+@dataclass(config=PydanticConfig)
+class Micronutrient(Nutrient):
+
+    # Class Variables
+    _category: ClassVar[str] = "Micronutrient"
+
+
+@dataclass(config=PydanticConfig)
+class Vitamin(Micronutrient):
+
+    # Class Variables
+    _category: ClassVar[str] = "Vitamin"
+
+
+@dataclass(config=PydanticConfig)
+class Food(ChemicalMixture):
+    """
+    A substance consumed by a living organism as a source of nutrition
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "Food"
+    _id_prefixes: ClassVar[List[str]] = ["foodb.compound"]
+
+
+@dataclass(config=PydanticConfig)
 class MacromolecularMachineMixin:
     """
     A union of gene locus, gene product, and macromolecular complex mixin. These are the basic units of function in a
@@ -2792,7 +3048,14 @@ class GeneOrGeneProduct(MacromolecularMachineMixin):
 
 
 @dataclass(config=PydanticConfig)
-class Gene(NucleicAcidEntity, GeneOrGeneProduct, ThingWithTaxon):
+class Gene(
+    BiologicalEntity,
+    GeneOrGeneProduct,
+    GenomicEntity,
+    ChemicalEntityOrGeneOrGeneProduct,
+    PhysicalEssence,
+    OntologyClass,
+):
     """
     A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A
     gene locus may include regulatory regions, transcribed regions and/or other functional sequence regions.
@@ -2827,11 +3090,11 @@ class Gene(NucleicAcidEntity, GeneOrGeneProduct, ThingWithTaxon):
 
     # Validators
 
-    @validator('synonym')
+    @validator('synonym', allow_reuse=True)
     def convert_synonym_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('xref')
+    @validator('xref', allow_reuse=True)
     def convert_xref_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
@@ -2853,11 +3116,11 @@ class GeneProductMixin(GeneOrGeneProduct):
 
     # Validators
 
-    @validator('synonym')
+    @validator('synonym', allow_reuse=True)
     def convert_synonym_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('xref')
+    @validator('xref', allow_reuse=True)
     def convert_xref_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
@@ -2883,7 +3146,7 @@ class MacromolecularComplexMixin(MacromolecularMachineMixin):
 
 
 @dataclass(config=PydanticConfig)
-class Genome(BiologicalEntity, GenomicEntity):
+class Genome(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass):
     """
     A genome is the sum of genetic material within a cell or virion.
     """
@@ -2922,7 +3185,12 @@ class CodingSequence(NucleicAcidEntity):
 
 
 @dataclass(config=PydanticConfig)
-class Polypeptide(MolecularEntity):
+class Polypeptide(
+    BiologicalEntity,
+    ThingWithTaxon,
+    ChemicalEntityOrGeneOrGeneProduct,
+    ChemicalEntityOrProteinOrPolypeptide,
+):
     """
     A polypeptide is a molecular entity characterized by availability in protein databases of amino-acid-based
     sequence representations of its precise primary structure; for convenience of representation, partial sequences of
@@ -2935,7 +3203,7 @@ class Polypeptide(MolecularEntity):
 
 
 @dataclass(config=PydanticConfig)
-class Protein(Polypeptide, GeneProductMixin):
+class Protein(Polypeptide, GeneProductMixin, ThingWithTaxon):
     """
     A gene product that is composed of a chain of amino acid sequences and is produced by ribosome-mediated
     translation of mRNA
@@ -2943,6 +3211,7 @@ class Protein(Polypeptide, GeneProductMixin):
 
     # Class Variables
     _category: ClassVar[str] = "Protein"
+    _id_prefixes: ClassVar[List[str]] = ["UniProtKB", "PR", "ENSEMBL", "FB", "UMLS", "MESH"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3017,13 +3286,13 @@ class GeneGroupingMixin:
 
     # Validators
 
-    @validator('has_gene_or_gene_product')
+    @validator('has_gene_or_gene_product', allow_reuse=True)
     def convert_has_gene_or_gene_product_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(Gene, value)
 
 
 @dataclass(config=PydanticConfig)
-class GeneFamily(NucleicAcidEntity, GeneGroupingMixin):
+class GeneFamily(BiologicalEntity, GeneGroupingMixin, ChemicalEntityOrGeneOrGeneProduct):
     """
     any grouping of multiple genes or gene products related by common descent
     """
@@ -3050,6 +3319,7 @@ class GeneFamily(NucleicAcidEntity, GeneGroupingMixin):
         "RFAM",
         "KEGG.ORTHOLOGY",
         "EGGNOG",
+        "COG",
     ]
 
 
@@ -3061,7 +3331,7 @@ class Zygosity(Attribute):
 
 
 @dataclass(config=PydanticConfig)
-class Genotype(BiologicalEntity, PhysicalEssence, GenomicEntity):
+class Genotype(BiologicalEntity, PhysicalEssence, GenomicEntity, OntologyClass):
     """
     An information content entity that describes a genome by specifying the total variation in genomic sequence and/or
     gene expression, relative to some established background
@@ -3075,7 +3345,7 @@ class Genotype(BiologicalEntity, PhysicalEssence, GenomicEntity):
 
 
 @dataclass(config=PydanticConfig)
-class Haplotype(BiologicalEntity, GenomicEntity, PhysicalEssence):
+class Haplotype(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass):
     """
     A set of zero or more Alleles on a single instance of a Sequence[VMC]
     """
@@ -3085,7 +3355,7 @@ class Haplotype(BiologicalEntity, GenomicEntity, PhysicalEssence):
 
 
 @dataclass(config=PydanticConfig)
-class SequenceVariant(NucleicAcidEntity):
+class SequenceVariant(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass):
     """
     An allele that varies in its sequence from what is considered the reference allele at that locus.
     """
@@ -3097,7 +3367,6 @@ class SequenceVariant(NucleicAcidEntity):
         "CLINVAR",
         "ClinVarVariant",
         "WIKIDATA",
-        "DBSNP",
         "DBSNP",
         "MGI",
         "ZFIN",
@@ -3114,11 +3383,11 @@ class SequenceVariant(NucleicAcidEntity):
 
     # Validators
 
-    @validator('has_gene')
+    @validator('has_gene', allow_reuse=True)
     def convert_has_gene_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(Gene, value)
 
-    @validator('id')
+    @validator('id', allow_reuse=True)
     def validate_required_id(cls, value):
         check_value_is_not_none("id", value)
         check_curie_prefix(cls, value)
@@ -3136,7 +3405,7 @@ class Snv(SequenceVariant):
 
 
 @dataclass(config=PydanticConfig)
-class ReagentTargetedGene(NucleicAcidEntity):
+class ReagentTargetedGene(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass):
     """
     A gene altered in its expression level in the context of some experiment as a result of being targeted by
     gene-knockdown reagent(s) such as a morpholino or RNAi.
@@ -3170,7 +3439,7 @@ class ClinicalMeasurement(ClinicalAttribute):
 
     # Validators
 
-    @validator('has_attribute_type')
+    @validator('has_attribute_type', allow_reuse=True)
     def validate_required_has_attribute_type(cls, value):
         check_value_is_not_none("has_attribute_type", value)
         return value
@@ -3250,7 +3519,7 @@ class ClinicalFinding(PhenotypicFeature):
 
     # Validators
 
-    @validator('has_attribute')
+    @validator('has_attribute', allow_reuse=True)
     def convert_has_attribute_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
@@ -3305,7 +3574,7 @@ class ExposureEvent:
 
 @dataclass(config=PydanticConfig)
 class GenomicBackgroundExposure(
-    BiologicalEntity, ExposureEvent, GeneGroupingMixin, PhysicalEssence, GenomicEntity
+    ExposureEvent, GeneGroupingMixin, PhysicalEssence, GenomicEntity, OntologyClass
 ):
     """
     A genomic background exposure is where an individual's specific genomic background of genes, sequence variants or
@@ -3336,9 +3605,9 @@ class PathologicalProcess(BiologicalProcess, PathologicalEntityMixin):
 
 
 @dataclass(config=PydanticConfig)
-class PathologicalProcessExposure(PathologicalProcess, ExposureEvent):
+class PathologicalProcessExposure(ExposureEvent):
     """
-    A pathological process, when viewed as an exposure, representing an precondition, leading to or influencing an
+    A pathological process, when viewed as an exposure, representing a precondition, leading to or influencing an
     outcome, e.g. autoimmunity leading to disease.
     """
 
@@ -3358,7 +3627,7 @@ class PathologicalAnatomicalStructure(AnatomicalEntity, PathologicalEntityMixin)
 
 
 @dataclass(config=PydanticConfig)
-class PathologicalAnatomicalExposure(PathologicalAnatomicalStructure, ExposureEvent):
+class PathologicalAnatomicalExposure(ExposureEvent):
     """
     An abnormal anatomical structure, when viewed as an exposure, representing an precondition, leading to or
     influencing an outcome, e.g. thrombosis leading to an ischemic disease outcome.
@@ -3369,9 +3638,7 @@ class PathologicalAnatomicalExposure(PathologicalAnatomicalStructure, ExposureEv
 
 
 @dataclass(config=PydanticConfig)
-class DiseaseOrPhenotypicFeatureExposure(
-    DiseaseOrPhenotypicFeature, ExposureEvent, PathologicalEntityMixin
-):
+class DiseaseOrPhenotypicFeatureExposure(ExposureEvent, PathologicalEntityMixin):
     """
     A disease or phenotypic feature state, when viewed as an exposure, represents an precondition, leading to or
     influencing an outcome, e.g. HIV predisposing an individual to infections; a relative deficiency of skin
@@ -3383,9 +3650,9 @@ class DiseaseOrPhenotypicFeatureExposure(
 
 
 @dataclass(config=PydanticConfig)
-class ChemicalExposure(ChemicalEntity, ExposureEvent):
+class ChemicalExposure(ExposureEvent):
     """
-    A chemical exposure is an intake of a particular chemical entity, other than a drug.
+    A chemical exposure is an intake of a particular chemical entity.
     """
 
     # Class Variables
@@ -3393,7 +3660,7 @@ class ChemicalExposure(ChemicalEntity, ExposureEvent):
 
 
 @dataclass(config=PydanticConfig)
-class ComplexChemicalExposure(ChemicalExposure):
+class ComplexChemicalExposure:
     """
     A complex chemical exposure is an intake of a chemical mixture (e.g. gasoline), other than a drug.
     """
@@ -3403,7 +3670,7 @@ class ComplexChemicalExposure(ChemicalExposure):
 
 
 @dataclass(config=PydanticConfig)
-class DrugExposure(Drug, ExposureEvent):
+class DrugExposure(ChemicalExposure, ExposureEvent):
     """
     A drug exposure is an intake of a particular drug.
     """
@@ -3445,21 +3712,21 @@ class Treatment(NamedThing, ExposureEvent, ChemicalOrDrugOrTreatment):
 
     # Validators
 
-    @validator('has_drug')
+    @validator('has_drug', allow_reuse=True)
     def convert_has_drug_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(Drug, value)
 
-    @validator('has_device')
+    @validator('has_device', allow_reuse=True)
     def convert_has_device_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(Device, value)
 
-    @validator('has_procedure')
+    @validator('has_procedure', allow_reuse=True)
     def convert_has_procedure_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(Procedure, value)
 
 
 @dataclass(config=PydanticConfig)
-class BioticExposure(OrganismTaxon, ExposureEvent):
+class BioticExposure(ExposureEvent):
     """
     An external biotic exposure is an intake of (sometimes pathological) biological organisms (including viruses).
     """
@@ -3469,17 +3736,7 @@ class BioticExposure(OrganismTaxon, ExposureEvent):
 
 
 @dataclass(config=PydanticConfig)
-class GeographicExposure(GeographicLocation, ExposureEvent):
-    """
-    A geographic exposure is a factor relating to geographic proximity to some impactful entity.
-    """
-
-    # Class Variables
-    _category: ClassVar[str] = "GeographicExposure"
-
-
-@dataclass(config=PydanticConfig)
-class EnvironmentalExposure(EnvironmentalProcess, ExposureEvent):
+class EnvironmentalExposure(ExposureEvent):
     """
     A environmental exposure is a factor relating to abiotic processes in the environment including sunlight (UV-B),
     atmospheric (heat, cold, general pollution) and water-born contaminants.
@@ -3490,7 +3747,17 @@ class EnvironmentalExposure(EnvironmentalProcess, ExposureEvent):
 
 
 @dataclass(config=PydanticConfig)
-class BehavioralExposure(Behavior, ExposureEvent):
+class GeographicExposure(EnvironmentalExposure, ExposureEvent):
+    """
+    A geographic exposure is a factor relating to geographic proximity to some impactful entity.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "GeographicExposure"
+
+
+@dataclass(config=PydanticConfig)
+class BehavioralExposure(ExposureEvent):
     """
     A behavioral exposure is a factor relating to behavior impacting an individual.
     """
@@ -3500,7 +3767,7 @@ class BehavioralExposure(Behavior, ExposureEvent):
 
 
 @dataclass(config=PydanticConfig)
-class SocioeconomicExposure(Behavior, ExposureEvent):
+class SocioeconomicExposure(ExposureEvent):
     """
     A socioeconomic exposure is a factor relating to social and financial status of an affected individual (e.g.
     poverty).
@@ -3515,7 +3782,7 @@ class SocioeconomicExposure(Behavior, ExposureEvent):
 
     # Validators
 
-    @validator('has_attribute')
+    @validator('has_attribute', allow_reuse=True)
     def validate_required_has_attribute(cls, value):
         check_value_is_not_none("has_attribute", value)
         convert_scalar_to_list_check_curies(cls, value)
@@ -3531,7 +3798,7 @@ class Outcome:
 
 
 @dataclass(config=PydanticConfig)
-class PathologicalProcessOutcome(PathologicalProcess, Outcome):
+class PathologicalProcessOutcome(Outcome):
     """
     An outcome resulting from an exposure event which is the manifestation of a pathological process.
     """
@@ -3541,7 +3808,7 @@ class PathologicalProcessOutcome(PathologicalProcess, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class PathologicalAnatomicalOutcome(PathologicalAnatomicalStructure, Outcome):
+class PathologicalAnatomicalOutcome(Outcome):
     """
     An outcome resulting from an exposure event which is the manifestation of an abnormal anatomical structure.
     """
@@ -3551,7 +3818,7 @@ class PathologicalAnatomicalOutcome(PathologicalAnatomicalStructure, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class DiseaseOrPhenotypicFeatureOutcome(DiseaseOrPhenotypicFeature, Outcome):
+class DiseaseOrPhenotypicFeatureOutcome(Outcome):
     """
     Physiological outcomes resulting from an exposure event which is the manifestation of a disease or other
     characteristic phenotype.
@@ -3562,7 +3829,7 @@ class DiseaseOrPhenotypicFeatureOutcome(DiseaseOrPhenotypicFeature, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class BehavioralOutcome(Behavior, Outcome):
+class BehavioralOutcome(Outcome):
     """
     An outcome resulting from an exposure event which is the manifestation of human behavior.
     """
@@ -3572,7 +3839,7 @@ class BehavioralOutcome(Behavior, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class HospitalizationOutcome(Hospitalization, Outcome):
+class HospitalizationOutcome(Outcome):
     """
     An outcome resulting from an exposure event which is the increased manifestation of acute (e.g. emergency room
     visit) or chronic (inpatient) hospitalization.
@@ -3583,7 +3850,7 @@ class HospitalizationOutcome(Hospitalization, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class MortalityOutcome(Death, Outcome):
+class MortalityOutcome(Outcome):
     """
     An outcome of death from resulting from an exposure event.
     """
@@ -3593,7 +3860,7 @@ class MortalityOutcome(Death, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class EpidemiologicalOutcome(BiologicalEntity, Outcome):
+class EpidemiologicalOutcome(Outcome):
     """
     An epidemiological outcome, such as societal disease burden, resulting from an exposure event.
     """
@@ -3603,7 +3870,7 @@ class EpidemiologicalOutcome(BiologicalEntity, Outcome):
 
 
 @dataclass(config=PydanticConfig)
-class SocioeconomicOutcome(Behavior, Outcome):
+class SocioeconomicOutcome(Outcome):
     """
     An general social or economic outcome, such as healthcare costs, utilization, etc., resulting from an exposure
     event
@@ -3625,7 +3892,7 @@ class Association(Entity):
     subject: Union[URIorCURIE, NamedThing] = None
     predicate: Union[str, PredicateType] = None
     object: Union[URIorCURIE, NamedThing] = None
-    relation: Union[str, URIorCURIE] = None
+    relation: Optional[Union[str, str]] = None
     negated: Optional[Union[bool, Bool]] = None
     qualifiers: Optional[Union[List[Union[str, OntologyClass]], Union[str, OntologyClass]]] = field(
         default_factory=list
@@ -3638,38 +3905,32 @@ class Association(Entity):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(NamedThing, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(NamedThing, value)
         return value
 
-    @validator('relation')
-    def validate_required_relation(cls, value):
-        check_value_is_not_none("relation", value)
-        check_curie_prefix(cls, value)
-        return value
-
-    @validator('qualifiers')
+    @validator('qualifiers', allow_reuse=True)
     def convert_qualifiers_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('publications')
+    @validator('publications', allow_reuse=True)
     def convert_publications_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(Publication, value)
 
-    @validator('category')
+    @validator('category', allow_reuse=True)
     def convert_category_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
@@ -3692,24 +3953,24 @@ class ContributorAssociation(Association):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(InformationContentEntity, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(Agent, value)
         return value
 
-    @validator('qualifiers')
+    @validator('qualifiers', allow_reuse=True)
     def convert_qualifiers_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
@@ -3729,18 +3990,18 @@ class GenotypeToGenotypePartAssociation(Association):
 
     # Validators
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Genotype, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(Genotype, value)
@@ -3763,18 +4024,18 @@ class GenotypeToGeneAssociation(Association):
 
     # Validators
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Genotype, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(Gene, value)
@@ -3796,18 +4057,18 @@ class GenotypeToVariantAssociation(Association):
 
     # Validators
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Genotype, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(SequenceVariant, value)
@@ -3826,12 +4087,12 @@ class GeneToGeneAssociation(Association):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         return value
@@ -3851,7 +4112,7 @@ class GeneToGeneHomologyAssociation(GeneToGeneAssociation):
 
     # Validators
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -3871,17 +4132,17 @@ class GeneExpressionMixin:
 
     # Validators
 
-    @validator('expression_site')
+    @validator('expression_site', allow_reuse=True)
     def check_expression_site_prefix(cls, value):
         check_curie_prefix(AnatomicalEntity, value)
         return value
 
-    @validator('stage_qualifier')
+    @validator('stage_qualifier', allow_reuse=True)
     def check_stage_qualifier_prefix(cls, value):
         check_curie_prefix(LifeStage, value)
         return value
 
-    @validator('phenotypic_state')
+    @validator('phenotypic_state', allow_reuse=True)
     def check_phenotypic_state_prefix(cls, value):
         check_curie_prefix(DiseaseOrPhenotypicFeature, value)
         return value
@@ -3900,7 +4161,7 @@ class GeneToGeneCoexpressionAssociation(GeneToGeneAssociation, GeneExpressionMix
 
     # Validators
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -3917,19 +4178,13 @@ class PairwiseGeneToGeneInteraction(GeneToGeneAssociation):
     _category: ClassVar[str] = "PairwiseGeneToGeneInteraction"
 
     predicate: Union[str, PredicateType] = None
-    relation: Union[str, URIorCURIE] = None
+    relation: Optional[Union[str, str]] = None
 
     # Validators
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
-        return value
-
-    @validator('relation')
-    def validate_required_relation(cls, value):
-        check_value_is_not_none("relation", value)
-        check_curie_prefix(cls, value)
         return value
 
 
@@ -3945,36 +4200,30 @@ class PairwiseMolecularInteraction(PairwiseGeneToGeneInteraction):
     subject: Union[URIorCURIE, MolecularEntity] = None
     id: URIorCURIE = None
     predicate: Union[str, PredicateType] = None
-    relation: Union[str, URIorCURIE] = None
     object: Union[URIorCURIE, MolecularEntity] = None
     interacting_molecules_category: Optional[Union[str, OntologyClass]] = None
+    relation: Optional[Union[str, str]] = None
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(MolecularEntity, value)
         return value
 
-    @validator('id')
+    @validator('id', allow_reuse=True)
     def validate_required_id(cls, value):
         check_value_is_not_none("id", value)
         check_curie_prefix(cls, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
 
-    @validator('relation')
-    def validate_required_relation(cls, value):
-        check_value_is_not_none("relation", value)
-        check_curie_prefix(cls, value)
-        return value
-
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(MolecularEntity, value)
@@ -3991,7 +4240,7 @@ class CellLineToEntityAssociationMixin:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(CellLine, value)
@@ -4008,7 +4257,7 @@ class ChemicalEntityToEntityAssociationMixin:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(ChemicalEntity, value)
@@ -4025,7 +4274,7 @@ class DrugToEntityAssociationMixin(ChemicalEntityToEntityAssociationMixin):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Drug, value)
@@ -4042,7 +4291,7 @@ class ChemicalToEntityAssociationMixin(ChemicalEntityToEntityAssociationMixin):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(ChemicalEntity, value)
@@ -4059,7 +4308,7 @@ class CaseToEntityAssociationMixin:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Case, value)
@@ -4080,7 +4329,7 @@ class ChemicalToChemicalAssociation(Association, ChemicalToEntityAssociationMixi
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(ChemicalEntity, value)
@@ -4100,7 +4349,7 @@ class ReactionToParticipantAssociation(ChemicalToChemicalAssociation):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(MolecularEntity, value)
@@ -4117,7 +4366,7 @@ class ReactionToCatalystAssociation(ReactionToParticipantAssociation):
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         return value
@@ -4149,23 +4398,23 @@ class ChemicalToChemicalDerivationAssociation(ChemicalToChemicalAssociation):
 
     # Validators
 
-    @validator('catalyst_qualifier')
+    @validator('catalyst_qualifier', allow_reuse=True)
     def convert_catalyst_qualifier_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(ChemicalEntity, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(ChemicalEntity, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -4184,7 +4433,7 @@ class ChemicalToPathwayAssociation(Association, ChemicalToEntityAssociationMixin
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(Pathway, value)
@@ -4204,7 +4453,7 @@ class ChemicalToGeneAssociation(Association, ChemicalToEntityAssociationMixin):
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         return value
@@ -4223,7 +4472,7 @@ class DrugToGeneAssociation(Association, DrugToEntityAssociationMixin):
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         return value
@@ -4239,7 +4488,7 @@ class MaterialSampleToEntityAssociationMixin:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(MaterialSample, value)
@@ -4261,19 +4510,19 @@ class MaterialSampleDerivationAssociation(Association):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(MaterialSample, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(NamedThing, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -4285,7 +4534,7 @@ class DiseaseToEntityAssociationMixin:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Disease, value)
@@ -4302,7 +4551,7 @@ class EntityToExposureEventAssociationMixin:
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         return value
@@ -4322,18 +4571,9 @@ class DiseaseToExposureEventAssociation(
 
 @dataclass(config=PydanticConfig)
 class ExposureEventToEntityAssociationMixin:
-    """
-    An association between some exposure event and some entity.
-    """
 
-    subject: Union[str, ExposureEvent] = None
-
-    # Validators
-
-    @validator('subject')
-    def validate_required_subject(cls, value):
-        check_value_is_not_none("subject", value)
-        return value
+    # Class Variables
+    _category: ClassVar[str] = "ExposureEventToEntityAssociationMixin"
 
 
 @dataclass(config=PydanticConfig)
@@ -4346,7 +4586,7 @@ class EntityToOutcomeAssociationMixin:
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         return value
@@ -4368,7 +4608,7 @@ class ExposureEventToOutcomeAssociation(
 
     # Validators
 
-    @validator('has_population_context')
+    @validator('has_population_context', allow_reuse=True)
     def check_has_population_context_prefix(cls, value):
         check_curie_prefix(PopulationOfIndividualOrganisms, value)
         return value
@@ -4401,7 +4641,7 @@ class EntityToPhenotypicFeatureAssociationMixin(EntityToFeatureOrDiseaseQualifie
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(PhenotypicFeature, value)
@@ -4428,19 +4668,19 @@ class NamedThingToInformationContentEntityAssociation(Association):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(NamedThing, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(Publication, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -4456,7 +4696,7 @@ class EntityToDiseaseAssociationMixin(EntityToFeatureOrDiseaseQualifiersMixin):
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(Disease, value)
@@ -4469,7 +4709,7 @@ class DiseaseOrPhenotypicFeatureToEntityAssociationMixin:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(DiseaseOrPhenotypicFeature, value)
@@ -4492,7 +4732,7 @@ class DiseaseOrPhenotypicFeatureToLocationAssociation(
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(AnatomicalEntity, value)
@@ -4505,7 +4745,7 @@ class EntityToDiseaseOrPhenotypicFeatureAssociationMixin:
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(DiseaseOrPhenotypicFeature, value)
@@ -4530,7 +4770,7 @@ class CellLineToDiseaseOrPhenotypicFeatureAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(DiseaseOrPhenotypicFeature, value)
@@ -4555,7 +4795,7 @@ class ChemicalToDiseaseOrPhenotypicFeatureAssociation(
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(DiseaseOrPhenotypicFeature, value)
@@ -4582,7 +4822,7 @@ class GenotypeToEntityAssociationMixin:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Genotype, value)
@@ -4606,12 +4846,12 @@ class GenotypeToPhenotypicFeatureAssociation(
 
     # Validators
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Genotype, value)
@@ -4634,7 +4874,7 @@ class ExposureEventToPhenotypicFeatureAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         return value
@@ -4683,13 +4923,13 @@ class BehaviorToBehavioralFeatureAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Behavior, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(BehavioralFeature, value)
@@ -4702,7 +4942,7 @@ class GeneToEntityAssociationMixin:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         return value
@@ -4714,7 +4954,7 @@ class VariantToEntityAssociationMixin:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(SequenceVariant, value)
@@ -4733,7 +4973,7 @@ class GeneToPhenotypicFeatureAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         return value
@@ -4751,7 +4991,7 @@ class GeneToDiseaseAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         return value
@@ -4772,13 +5012,13 @@ class VariantToGeneAssociation(Association, VariantToEntityAssociationMixin):
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(Gene, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -4797,7 +5037,7 @@ class VariantToGeneExpressionAssociation(VariantToGeneAssociation, GeneExpressio
 
     # Validators
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -4822,13 +5062,13 @@ class VariantToPopulationAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(SequenceVariant, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(PopulationOfIndividualOrganisms, value)
@@ -4850,19 +5090,19 @@ class PopulationToPopulationAssociation(Association):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(PopulationOfIndividualOrganisms, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(PopulationOfIndividualOrganisms, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -4880,7 +5120,7 @@ class VariantToPhenotypicFeatureAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(SequenceVariant, value)
@@ -4901,18 +5141,18 @@ class VariantToDiseaseAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(NamedThing, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(NamedThing, value)
@@ -4933,18 +5173,18 @@ class GenotypeToDiseaseAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(NamedThing, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(NamedThing, value)
@@ -4964,13 +5204,13 @@ class ModelToDiseaseAssociationMixin:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(NamedThing, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -4988,7 +5228,7 @@ class GeneAsAModelOfDiseaseAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         return value
@@ -5006,7 +5246,7 @@ class VariantAsAModelOfDiseaseAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(SequenceVariant, value)
@@ -5025,7 +5265,7 @@ class GenotypeAsAModelOfDiseaseAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Genotype, value)
@@ -5046,7 +5286,7 @@ class CellLineAsAModelOfDiseaseAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(CellLine, value)
@@ -5065,7 +5305,7 @@ class OrganismalEntityAsAModelOfDiseaseAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(OrganismalEntity, value)
@@ -5079,24 +5319,18 @@ class OrganismToOrganismAssociation(Association):
     _category: ClassVar[str] = "OrganismToOrganismAssociation"
 
     subject: Union[URIorCURIE, IndividualOrganism] = None
-    relation: Union[str, URIorCURIE] = None
     object: Union[URIorCURIE, IndividualOrganism] = None
+    relation: Optional[Union[str, str]] = None
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(IndividualOrganism, value)
         return value
 
-    @validator('relation')
-    def validate_required_relation(cls, value):
-        check_value_is_not_none("relation", value)
-        check_curie_prefix(cls, value)
-        return value
-
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(IndividualOrganism, value)
@@ -5110,24 +5344,18 @@ class TaxonToTaxonAssociation(Association):
     _category: ClassVar[str] = "TaxonToTaxonAssociation"
 
     subject: Union[URIorCURIE, OrganismTaxon] = None
-    relation: Union[str, URIorCURIE] = None
     object: Union[URIorCURIE, OrganismTaxon] = None
+    relation: Optional[Union[str, str]] = None
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(OrganismTaxon, value)
         return value
 
-    @validator('relation')
-    def validate_required_relation(cls, value):
-        check_value_is_not_none("relation", value)
-        check_curie_prefix(cls, value)
-        return value
-
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(OrganismTaxon, value)
@@ -5145,12 +5373,12 @@ class GeneHasVariantThatContributesToDiseaseAssociation(GeneToDiseaseAssociation
 
     # Validators
 
-    @validator('sequence_variant_qualifier')
+    @validator('sequence_variant_qualifier', allow_reuse=True)
     def check_sequence_variant_qualifier_prefix(cls, value):
         check_curie_prefix(SequenceVariant, value)
         return value
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         return value
@@ -5173,23 +5401,23 @@ class GeneToExpressionSiteAssociation(Association):
 
     # Validators
 
-    @validator('stage_qualifier')
+    @validator('stage_qualifier', allow_reuse=True)
     def check_stage_qualifier_prefix(cls, value):
         check_curie_prefix(LifeStage, value)
         return value
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(AnatomicalEntity, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -5207,13 +5435,13 @@ class SequenceVariantModulatesTreatmentAssociation(Association):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(SequenceVariant, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(Treatment, value)
@@ -5235,12 +5463,12 @@ class FunctionalAssociation(Association):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         return value
@@ -5256,7 +5484,7 @@ class MacromolecularMachineToEntityAssociationMixin:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(NamedThing, value)
@@ -5280,7 +5508,7 @@ class MacromolecularMachineToMolecularActivityAssociation(
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(MolecularActivity, value)
@@ -5304,7 +5532,7 @@ class MacromolecularMachineToBiologicalProcessAssociation(
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(BiologicalProcess, value)
@@ -5328,7 +5556,7 @@ class MacromolecularMachineToCellularComponentAssociation(
 
     # Validators
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(CellularComponent, value)
@@ -5346,16 +5574,34 @@ class GeneToGoTermAssociation(FunctionalAssociation):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Gene, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         return value
+
+
+@dataclass(config=PydanticConfig)
+class EntityToDiseaseAssociation(Association):
+
+    # Class Variables
+    _category: ClassVar[str] = "EntityToDiseaseAssociation"
+
+    FDA_approval_status: Optional[Union[str, FDAApprovalStatusEnum]] = None
+
+
+@dataclass(config=PydanticConfig)
+class EntityToPhenotypicFeatureAssociation(Association):
+
+    # Class Variables
+    _category: ClassVar[str] = "EntityToPhenotypicFeatureAssociation"
+
+    FDA_approval_status: Optional[Union[str, FDAApprovalStatusEnum]] = None
 
 
 @dataclass(config=PydanticConfig)
@@ -5389,19 +5635,19 @@ class GenomicSequenceLocalization(SequenceAssociation):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(NucleicAcidEntity, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(NucleicAcidEntity, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -5421,13 +5667,13 @@ class SequenceFeatureRelationship(Association):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(NucleicAcidEntity, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(NucleicAcidEntity, value)
@@ -5448,13 +5694,13 @@ class TranscriptToGeneRelationship(SequenceFeatureRelationship):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Transcript, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(Gene, value)
@@ -5476,18 +5722,18 @@ class GeneToGeneProductRelationship(SequenceFeatureRelationship):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Gene, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -5507,13 +5753,13 @@ class ExonToTranscriptRelationship(SequenceFeatureRelationship):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(Exon, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(Transcript, value)
@@ -5535,17 +5781,17 @@ class GeneRegulatoryRelationship(Association):
 
     # Validators
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         return value
@@ -5558,13 +5804,13 @@ class AnatomicalEntityToAnatomicalEntityAssociation(Association):
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(AnatomicalEntity, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(AnatomicalEntity, value)
@@ -5590,19 +5836,19 @@ class AnatomicalEntityToAnatomicalEntityPartOfAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(AnatomicalEntity, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(AnatomicalEntity, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -5627,19 +5873,19 @@ class AnatomicalEntityToAnatomicalEntityOntogenicAssociation(
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(AnatomicalEntity, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(AnatomicalEntity, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -5655,7 +5901,7 @@ class OrganismTaxonToEntityAssociation:
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(OrganismTaxon, value)
@@ -5673,13 +5919,13 @@ class OrganismTaxonToOrganismTaxonAssociation(Association, OrganismTaxonToEntity
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(OrganismTaxon, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(OrganismTaxon, value)
@@ -5701,19 +5947,19 @@ class OrganismTaxonToOrganismTaxonSpecialization(OrganismTaxonToOrganismTaxonAss
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(OrganismTaxon, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(OrganismTaxon, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -5737,19 +5983,19 @@ class OrganismTaxonToOrganismTaxonInteraction(OrganismTaxonToOrganismTaxonAssoci
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(OrganismTaxon, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(OrganismTaxon, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
@@ -5763,19 +6009,280 @@ class OrganismTaxonToEnvironmentAssociation(Association, OrganismTaxonToEntityAs
 
     # Validators
 
-    @validator('subject')
+    @validator('subject', allow_reuse=True)
     def validate_required_subject(cls, value):
         check_value_is_not_none("subject", value)
         check_curie_prefix(OrganismTaxon, value)
         return value
 
-    @validator('object')
+    @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
         check_curie_prefix(NamedThing, value)
         return value
 
-    @validator('predicate')
+    @validator('predicate', allow_reuse=True)
     def validate_required_predicate(cls, value):
         check_value_is_not_none("predicate", value)
         return value
+
+
+# Update forward refs
+# see https://pydantic-docs.helpmanual.io/usage/postponed_annotations/
+OntologyClass.__pydantic_model__.update_forward_refs()
+Annotation.__pydantic_model__.update_forward_refs()
+QuantityValue.__pydantic_model__.update_forward_refs()
+Attribute.__pydantic_model__.update_forward_refs()
+BiologicalSex.__pydantic_model__.update_forward_refs()
+PhenotypicSex.__pydantic_model__.update_forward_refs()
+GenotypicSex.__pydantic_model__.update_forward_refs()
+SeverityValue.__pydantic_model__.update_forward_refs()
+RelationshipQuantifier.__pydantic_model__.update_forward_refs()
+SensitivityQuantifier.__pydantic_model__.update_forward_refs()
+SpecificityQuantifier.__pydantic_model__.update_forward_refs()
+PathognomonicityQuantifier.__pydantic_model__.update_forward_refs()
+FrequencyQuantifier.__pydantic_model__.update_forward_refs()
+ChemicalOrDrugOrTreatment.__pydantic_model__.update_forward_refs()
+Entity.__pydantic_model__.update_forward_refs()
+NamedThing.__pydantic_model__.update_forward_refs()
+RelationshipType.__pydantic_model__.update_forward_refs()
+GeneOntologyClass.__pydantic_model__.update_forward_refs()
+UnclassifiedOntologyClass.__pydantic_model__.update_forward_refs()
+TaxonomicRank.__pydantic_model__.update_forward_refs()
+OrganismTaxon.__pydantic_model__.update_forward_refs()
+Event.__pydantic_model__.update_forward_refs()
+AdministrativeEntity.__pydantic_model__.update_forward_refs()
+Agent.__pydantic_model__.update_forward_refs()
+InformationContentEntity.__pydantic_model__.update_forward_refs()
+Dataset.__pydantic_model__.update_forward_refs()
+DatasetDistribution.__pydantic_model__.update_forward_refs()
+DatasetVersion.__pydantic_model__.update_forward_refs()
+DatasetSummary.__pydantic_model__.update_forward_refs()
+ConfidenceLevel.__pydantic_model__.update_forward_refs()
+EvidenceType.__pydantic_model__.update_forward_refs()
+InformationResource.__pydantic_model__.update_forward_refs()
+Publication.__pydantic_model__.update_forward_refs()
+Book.__pydantic_model__.update_forward_refs()
+BookChapter.__pydantic_model__.update_forward_refs()
+Serial.__pydantic_model__.update_forward_refs()
+Article.__pydantic_model__.update_forward_refs()
+PhysicalEssenceOrOccurrent.__pydantic_model__.update_forward_refs()
+PhysicalEssence.__pydantic_model__.update_forward_refs()
+PhysicalEntity.__pydantic_model__.update_forward_refs()
+Occurrent.__pydantic_model__.update_forward_refs()
+ActivityAndBehavior.__pydantic_model__.update_forward_refs()
+Activity.__pydantic_model__.update_forward_refs()
+Procedure.__pydantic_model__.update_forward_refs()
+Phenomenon.__pydantic_model__.update_forward_refs()
+Device.__pydantic_model__.update_forward_refs()
+SubjectOfInvestigation.__pydantic_model__.update_forward_refs()
+MaterialSample.__pydantic_model__.update_forward_refs()
+PlanetaryEntity.__pydantic_model__.update_forward_refs()
+EnvironmentalProcess.__pydantic_model__.update_forward_refs()
+EnvironmentalFeature.__pydantic_model__.update_forward_refs()
+GeographicLocation.__pydantic_model__.update_forward_refs()
+GeographicLocationAtTime.__pydantic_model__.update_forward_refs()
+BiologicalEntity.__pydantic_model__.update_forward_refs()
+ThingWithTaxon.__pydantic_model__.update_forward_refs()
+GenomicEntity.__pydantic_model__.update_forward_refs()
+ChemicalSubstance.__pydantic_model__.update_forward_refs()
+BiologicalProcessOrActivity.__pydantic_model__.update_forward_refs()
+MolecularActivity.__pydantic_model__.update_forward_refs()
+BiologicalProcess.__pydantic_model__.update_forward_refs()
+Pathway.__pydantic_model__.update_forward_refs()
+PhysiologicalProcess.__pydantic_model__.update_forward_refs()
+Behavior.__pydantic_model__.update_forward_refs()
+OrganismAttribute.__pydantic_model__.update_forward_refs()
+PhenotypicQuality.__pydantic_model__.update_forward_refs()
+Inheritance.__pydantic_model__.update_forward_refs()
+OrganismalEntity.__pydantic_model__.update_forward_refs()
+LifeStage.__pydantic_model__.update_forward_refs()
+IndividualOrganism.__pydantic_model__.update_forward_refs()
+PopulationOfIndividualOrganisms.__pydantic_model__.update_forward_refs()
+StudyPopulation.__pydantic_model__.update_forward_refs()
+DiseaseOrPhenotypicFeature.__pydantic_model__.update_forward_refs()
+Disease.__pydantic_model__.update_forward_refs()
+PhenotypicFeature.__pydantic_model__.update_forward_refs()
+BehavioralFeature.__pydantic_model__.update_forward_refs()
+AnatomicalEntity.__pydantic_model__.update_forward_refs()
+CellularComponent.__pydantic_model__.update_forward_refs()
+Cell.__pydantic_model__.update_forward_refs()
+CellLine.__pydantic_model__.update_forward_refs()
+GrossAnatomicalStructure.__pydantic_model__.update_forward_refs()
+ChemicalEntityOrGeneOrGeneProduct.__pydantic_model__.update_forward_refs()
+ChemicalEntityOrProteinOrPolypeptide.__pydantic_model__.update_forward_refs()
+ChemicalEntity.__pydantic_model__.update_forward_refs()
+MolecularEntity.__pydantic_model__.update_forward_refs()
+SmallMolecule.__pydantic_model__.update_forward_refs()
+ChemicalMixture.__pydantic_model__.update_forward_refs()
+NucleicAcidEntity.__pydantic_model__.update_forward_refs()
+MolecularMixture.__pydantic_model__.update_forward_refs()
+ComplexMolecularMixture.__pydantic_model__.update_forward_refs()
+ProcessedMaterial.__pydantic_model__.update_forward_refs()
+Drug.__pydantic_model__.update_forward_refs()
+EnvironmentalFoodContaminant.__pydantic_model__.update_forward_refs()
+FoodAdditive.__pydantic_model__.update_forward_refs()
+Nutrient.__pydantic_model__.update_forward_refs()
+Macronutrient.__pydantic_model__.update_forward_refs()
+Micronutrient.__pydantic_model__.update_forward_refs()
+Vitamin.__pydantic_model__.update_forward_refs()
+Food.__pydantic_model__.update_forward_refs()
+MacromolecularMachineMixin.__pydantic_model__.update_forward_refs()
+GeneOrGeneProduct.__pydantic_model__.update_forward_refs()
+Gene.__pydantic_model__.update_forward_refs()
+GeneProductMixin.__pydantic_model__.update_forward_refs()
+GeneProductIsoformMixin.__pydantic_model__.update_forward_refs()
+MacromolecularComplexMixin.__pydantic_model__.update_forward_refs()
+Genome.__pydantic_model__.update_forward_refs()
+Exon.__pydantic_model__.update_forward_refs()
+Transcript.__pydantic_model__.update_forward_refs()
+CodingSequence.__pydantic_model__.update_forward_refs()
+Polypeptide.__pydantic_model__.update_forward_refs()
+Protein.__pydantic_model__.update_forward_refs()
+ProteinIsoform.__pydantic_model__.update_forward_refs()
+RNAProduct.__pydantic_model__.update_forward_refs()
+RNAProductIsoform.__pydantic_model__.update_forward_refs()
+NoncodingRNAProduct.__pydantic_model__.update_forward_refs()
+MicroRNA.__pydantic_model__.update_forward_refs()
+SiRNA.__pydantic_model__.update_forward_refs()
+GeneGroupingMixin.__pydantic_model__.update_forward_refs()
+GeneFamily.__pydantic_model__.update_forward_refs()
+Zygosity.__pydantic_model__.update_forward_refs()
+Genotype.__pydantic_model__.update_forward_refs()
+Haplotype.__pydantic_model__.update_forward_refs()
+SequenceVariant.__pydantic_model__.update_forward_refs()
+Snv.__pydantic_model__.update_forward_refs()
+ReagentTargetedGene.__pydantic_model__.update_forward_refs()
+ClinicalAttribute.__pydantic_model__.update_forward_refs()
+ClinicalMeasurement.__pydantic_model__.update_forward_refs()
+ClinicalModifier.__pydantic_model__.update_forward_refs()
+ClinicalCourse.__pydantic_model__.update_forward_refs()
+Onset.__pydantic_model__.update_forward_refs()
+ClinicalEntity.__pydantic_model__.update_forward_refs()
+ClinicalTrial.__pydantic_model__.update_forward_refs()
+ClinicalIntervention.__pydantic_model__.update_forward_refs()
+ClinicalFinding.__pydantic_model__.update_forward_refs()
+Hospitalization.__pydantic_model__.update_forward_refs()
+SocioeconomicAttribute.__pydantic_model__.update_forward_refs()
+Case.__pydantic_model__.update_forward_refs()
+Cohort.__pydantic_model__.update_forward_refs()
+ExposureEvent.__pydantic_model__.update_forward_refs()
+GenomicBackgroundExposure.__pydantic_model__.update_forward_refs()
+PathologicalEntityMixin.__pydantic_model__.update_forward_refs()
+PathologicalProcess.__pydantic_model__.update_forward_refs()
+PathologicalProcessExposure.__pydantic_model__.update_forward_refs()
+PathologicalAnatomicalStructure.__pydantic_model__.update_forward_refs()
+PathologicalAnatomicalExposure.__pydantic_model__.update_forward_refs()
+DiseaseOrPhenotypicFeatureExposure.__pydantic_model__.update_forward_refs()
+ChemicalExposure.__pydantic_model__.update_forward_refs()
+ComplexChemicalExposure.__pydantic_model__.update_forward_refs()
+DrugExposure.__pydantic_model__.update_forward_refs()
+DrugToGeneInteractionExposure.__pydantic_model__.update_forward_refs()
+Treatment.__pydantic_model__.update_forward_refs()
+BioticExposure.__pydantic_model__.update_forward_refs()
+EnvironmentalExposure.__pydantic_model__.update_forward_refs()
+GeographicExposure.__pydantic_model__.update_forward_refs()
+BehavioralExposure.__pydantic_model__.update_forward_refs()
+SocioeconomicExposure.__pydantic_model__.update_forward_refs()
+Outcome.__pydantic_model__.update_forward_refs()
+PathologicalProcessOutcome.__pydantic_model__.update_forward_refs()
+PathologicalAnatomicalOutcome.__pydantic_model__.update_forward_refs()
+DiseaseOrPhenotypicFeatureOutcome.__pydantic_model__.update_forward_refs()
+BehavioralOutcome.__pydantic_model__.update_forward_refs()
+HospitalizationOutcome.__pydantic_model__.update_forward_refs()
+MortalityOutcome.__pydantic_model__.update_forward_refs()
+EpidemiologicalOutcome.__pydantic_model__.update_forward_refs()
+SocioeconomicOutcome.__pydantic_model__.update_forward_refs()
+Association.__pydantic_model__.update_forward_refs()
+ContributorAssociation.__pydantic_model__.update_forward_refs()
+GenotypeToGenotypePartAssociation.__pydantic_model__.update_forward_refs()
+GenotypeToGeneAssociation.__pydantic_model__.update_forward_refs()
+GenotypeToVariantAssociation.__pydantic_model__.update_forward_refs()
+GeneToGeneAssociation.__pydantic_model__.update_forward_refs()
+GeneToGeneHomologyAssociation.__pydantic_model__.update_forward_refs()
+GeneExpressionMixin.__pydantic_model__.update_forward_refs()
+GeneToGeneCoexpressionAssociation.__pydantic_model__.update_forward_refs()
+PairwiseGeneToGeneInteraction.__pydantic_model__.update_forward_refs()
+PairwiseMolecularInteraction.__pydantic_model__.update_forward_refs()
+CellLineToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+ChemicalEntityToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+DrugToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+ChemicalToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+CaseToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+ChemicalToChemicalAssociation.__pydantic_model__.update_forward_refs()
+ReactionToParticipantAssociation.__pydantic_model__.update_forward_refs()
+ReactionToCatalystAssociation.__pydantic_model__.update_forward_refs()
+ChemicalToChemicalDerivationAssociation.__pydantic_model__.update_forward_refs()
+ChemicalToPathwayAssociation.__pydantic_model__.update_forward_refs()
+ChemicalToGeneAssociation.__pydantic_model__.update_forward_refs()
+DrugToGeneAssociation.__pydantic_model__.update_forward_refs()
+MaterialSampleToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+MaterialSampleDerivationAssociation.__pydantic_model__.update_forward_refs()
+DiseaseToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+EntityToExposureEventAssociationMixin.__pydantic_model__.update_forward_refs()
+DiseaseToExposureEventAssociation.__pydantic_model__.update_forward_refs()
+ExposureEventToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+EntityToOutcomeAssociationMixin.__pydantic_model__.update_forward_refs()
+ExposureEventToOutcomeAssociation.__pydantic_model__.update_forward_refs()
+FrequencyQualifierMixin.__pydantic_model__.update_forward_refs()
+EntityToFeatureOrDiseaseQualifiersMixin.__pydantic_model__.update_forward_refs()
+EntityToPhenotypicFeatureAssociationMixin.__pydantic_model__.update_forward_refs()
+NamedThingToInformationContentEntityAssociation.__pydantic_model__.update_forward_refs()
+EntityToDiseaseAssociationMixin.__pydantic_model__.update_forward_refs()
+DiseaseOrPhenotypicFeatureToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+DiseaseOrPhenotypicFeatureToLocationAssociation.__pydantic_model__.update_forward_refs()
+EntityToDiseaseOrPhenotypicFeatureAssociationMixin.__pydantic_model__.update_forward_refs()
+CellLineToDiseaseOrPhenotypicFeatureAssociation.__pydantic_model__.update_forward_refs()
+ChemicalToDiseaseOrPhenotypicFeatureAssociation.__pydantic_model__.update_forward_refs()
+MaterialSampleToDiseaseOrPhenotypicFeatureAssociation.__pydantic_model__.update_forward_refs()
+GenotypeToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+GenotypeToPhenotypicFeatureAssociation.__pydantic_model__.update_forward_refs()
+ExposureEventToPhenotypicFeatureAssociation.__pydantic_model__.update_forward_refs()
+DiseaseToPhenotypicFeatureAssociation.__pydantic_model__.update_forward_refs()
+CaseToPhenotypicFeatureAssociation.__pydantic_model__.update_forward_refs()
+BehaviorToBehavioralFeatureAssociation.__pydantic_model__.update_forward_refs()
+GeneToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+VariantToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+GeneToPhenotypicFeatureAssociation.__pydantic_model__.update_forward_refs()
+GeneToDiseaseAssociation.__pydantic_model__.update_forward_refs()
+VariantToGeneAssociation.__pydantic_model__.update_forward_refs()
+VariantToGeneExpressionAssociation.__pydantic_model__.update_forward_refs()
+VariantToPopulationAssociation.__pydantic_model__.update_forward_refs()
+PopulationToPopulationAssociation.__pydantic_model__.update_forward_refs()
+VariantToPhenotypicFeatureAssociation.__pydantic_model__.update_forward_refs()
+VariantToDiseaseAssociation.__pydantic_model__.update_forward_refs()
+GenotypeToDiseaseAssociation.__pydantic_model__.update_forward_refs()
+ModelToDiseaseAssociationMixin.__pydantic_model__.update_forward_refs()
+GeneAsAModelOfDiseaseAssociation.__pydantic_model__.update_forward_refs()
+VariantAsAModelOfDiseaseAssociation.__pydantic_model__.update_forward_refs()
+GenotypeAsAModelOfDiseaseAssociation.__pydantic_model__.update_forward_refs()
+CellLineAsAModelOfDiseaseAssociation.__pydantic_model__.update_forward_refs()
+OrganismalEntityAsAModelOfDiseaseAssociation.__pydantic_model__.update_forward_refs()
+OrganismToOrganismAssociation.__pydantic_model__.update_forward_refs()
+TaxonToTaxonAssociation.__pydantic_model__.update_forward_refs()
+GeneHasVariantThatContributesToDiseaseAssociation.__pydantic_model__.update_forward_refs()
+GeneToExpressionSiteAssociation.__pydantic_model__.update_forward_refs()
+SequenceVariantModulatesTreatmentAssociation.__pydantic_model__.update_forward_refs()
+FunctionalAssociation.__pydantic_model__.update_forward_refs()
+MacromolecularMachineToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
+MacromolecularMachineToMolecularActivityAssociation.__pydantic_model__.update_forward_refs()
+MacromolecularMachineToBiologicalProcessAssociation.__pydantic_model__.update_forward_refs()
+MacromolecularMachineToCellularComponentAssociation.__pydantic_model__.update_forward_refs()
+GeneToGoTermAssociation.__pydantic_model__.update_forward_refs()
+EntityToDiseaseAssociation.__pydantic_model__.update_forward_refs()
+EntityToPhenotypicFeatureAssociation.__pydantic_model__.update_forward_refs()
+SequenceAssociation.__pydantic_model__.update_forward_refs()
+GenomicSequenceLocalization.__pydantic_model__.update_forward_refs()
+SequenceFeatureRelationship.__pydantic_model__.update_forward_refs()
+TranscriptToGeneRelationship.__pydantic_model__.update_forward_refs()
+GeneToGeneProductRelationship.__pydantic_model__.update_forward_refs()
+ExonToTranscriptRelationship.__pydantic_model__.update_forward_refs()
+GeneRegulatoryRelationship.__pydantic_model__.update_forward_refs()
+AnatomicalEntityToAnatomicalEntityAssociation.__pydantic_model__.update_forward_refs()
+AnatomicalEntityToAnatomicalEntityPartOfAssociation.__pydantic_model__.update_forward_refs()
+AnatomicalEntityToAnatomicalEntityOntogenicAssociation.__pydantic_model__.update_forward_refs()
+OrganismTaxonToEntityAssociation.__pydantic_model__.update_forward_refs()
+OrganismTaxonToOrganismTaxonAssociation.__pydantic_model__.update_forward_refs()
+OrganismTaxonToOrganismTaxonSpecialization.__pydantic_model__.update_forward_refs()
+OrganismTaxonToOrganismTaxonInteraction.__pydantic_model__.update_forward_refs()
+OrganismTaxonToEnvironmentAssociation.__pydantic_model__.update_forward_refs()
