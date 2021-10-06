@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-09-23 12:02
+# Generation date: 2021-10-06 10:33
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -3899,6 +3899,9 @@ class Association(Entity):
     publications: Optional[
         Union[List[Union[URIorCURIE, Publication]], Union[URIorCURIE, Publication]]
     ] = field(default_factory=list)
+    has_evidence: Optional[
+        Union[List[Union[URIorCURIE, EvidenceType]], Union[URIorCURIE, EvidenceType]]
+    ] = field(default_factory=list)
     type: Optional[Union[str, str]] = None
     category: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
 
@@ -3928,6 +3931,10 @@ class Association(Entity):
     @validator('publications', allow_reuse=True)
     def convert_publications_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(Publication, value)
+
+    @validator('has_evidence', allow_reuse=True)
+    def convert_has_evidence_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(EvidenceType, value)
 
     @validator('category', allow_reuse=True)
     def convert_category_to_list_check_curies(cls, value):
