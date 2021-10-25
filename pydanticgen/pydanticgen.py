@@ -568,7 +568,7 @@ class {enum_name}(str, Enum):
             if 'related to' in self.ancestors(slot):
                 predicates.append(slot.name)
 
-        predicates = [pred.replace(' ', '_') for pred in sorted(predicates)]
+        predicates = [pred.replace(' ', '_').replace('-', '_') for pred in sorted(predicates)]
         formatted_predicates = '\n'.join([f'    {pred} = "biolink:{pred}"' for pred in predicates])
 
         return f'''
