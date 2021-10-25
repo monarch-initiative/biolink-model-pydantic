@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-10-06 10:33
+# Generation date: 2021-10-21 15:08
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -23,7 +23,7 @@ from pydantic.dataclasses import dataclass
 LOG = logging.getLogger(__name__)
 
 metamodel_version = "1.7.0"
-curie_regexp = r'^[a-zA-Z_]?[a-zA-Z_0-9-]*:([A-Za-z0-9_][A-Za-z0-9_.-]*[A-Za-z0-9./_]*)?$'
+curie_regexp = r'^[a-zA-Z_]?[a-zA-Z_0-9-]*:([A-Za-z0-9_][A-Za-z0-9_.-]*[A-Za-z0-9./\(\)\-><_:;]*)?$'
 curie_pattern = re.compile(curie_regexp)
 
 # Type Aliases
@@ -1538,8 +1538,8 @@ class FDAApprovalStatusEnum(str, Enum):
     value_10 = "FDA Breakthrough Therapy"
     value_11 = "FDA Accelerated Approval"
     value_12 = "FDA Priority Review"
-    value_13 = "regular approval"
-    value_14 = "post-approval withdrawal"
+    value_13 = "Regular FDA Approval"
+    value_14 = "Post-Approval Withdrawal"
 
 
 # Classes
