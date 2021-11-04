@@ -74,4 +74,5 @@ biolink-model.yaml: FORCE
 	$(WGET) https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml
 
 biolink_model_pydantic/model.py: install-dev biolink-model.yaml
-	pydanticgen/pydanticgen.py biolink-model.yaml > biolink_model_pydantic/model.py
+	pydanticgen/pydanticgen.py biolink-model.yaml \
+	    --skip-field-validator category > biolink_model_pydantic/model.py

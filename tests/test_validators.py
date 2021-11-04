@@ -52,6 +52,15 @@ def test_bad_curie_prefix(caplog):
     assert caplog.records[1].msg.startswith("Consider one of ['NCBITaxon', 'MESH']")
 
 
+def test_empty_local_id_emits_warning(caplog):
+    """
+    Test that misformatted curie in a list returns a validation error
+    """
+    gen_ent = Gene(id='NCBIGene:')
+    assert caplog.records[0].levelname == 'WARNING'
+    assert caplog.records[0].msg.startswith("NCBIGene: does not have a local identifier")
+
+
 def test_good_curie():
     """
     Tests that a properly formatted curie works, and

@@ -72,7 +72,13 @@ class PydanticGen(PythonGenerator):
     generatorname = Path(__file__).name
     generatorversion = PYTHON_GEN_VERSION
 
-    def __init__(self, schema: Union[str, TextIO, SchemaDefinition], **kwargs):
+    def __init__(
+        self,
+        schema: Union[str, TextIO, SchemaDefinition],
+        skip_all_validators: bool = False,
+        skip_field_validator: List[str] = None,
+        **kwargs,
+    ):
         super().__init__(
             schema=schema,
             format='py',
@@ -81,6 +87,8 @@ class PydanticGen(PythonGenerator):
             gen_slots=False,
             **kwargs,
         )
+        self.skip_all_validators = skip_all_validators
+        self.skip_field_validador = skip_field_validator
 
     # Overridden methods
 
@@ -120,6 +128,11 @@ class PydanticGen(PythonGenerator):
         split_descripton = '\n#              '.join(
             split_line(be(self.schema.description), split_len=100)
         )
+
+        validators = ''
+        if not self.skip_all_validators:
+            validators = self._get_pydantic_validators()
+
         head = (
             f'''# Auto generated from {self.schema.source_file} by {self.generatorname} version: {self.generatorversion}
 # Generation date: {self.schema.generation_date}
@@ -137,7 +150,8 @@ class PydanticGen(PythonGenerator):
             else ''
         )
 
-        return f'''{head}
+        return f'''
+{head}
 # id: {self.schema.id}
 # description: {split_descripton}
 # license: {be(self.schema.license)}
@@ -168,6 +182,7 @@ LabelType = str
 IriType = constr(regex=r'^(http|ftp)')
 Curie = constr(regex=curie_regexp)
 URIorCURIE = Union[Curie, IriType]
+CategoryType = URIorCURIE
 NarrativeText = str
 XSDDate = datetime.date
 TimeType = datetime.time
@@ -181,8 +196,9 @@ Bool = bool
 # Namespaces
 {self.gen_namespaces()}
 
-# Pydantic config and validators
-{self._get_pydantic_config_and_validators()}
+{self._get_pydantic_config()}
+
+{validators}
 
 {predicates}
 
@@ -196,7 +212,7 @@ Bool = bool
 # see https://pydantic-docs.helpmanual.io/usage/postponed_annotations/
 {self.gen_forward_refs()}
 
-'''
+'''.strip()
 
     def gen_forward_refs(self):
         return '\n'.join(
@@ -255,7 +271,9 @@ Bool = bool
 
         pydantic_classvars = self.gen_pydantic_classvars(cls)
 
-        pydantic_validators = self.gen_pydantic_validators(cls)
+        pydantic_validators = ''
+        if not self.skip_all_validators:
+            pydantic_validators = self.gen_pydantic_validators(cls)
 
         return (
             ('\n@dataclass(config=PydanticConfig)')
@@ -414,26 +432,7 @@ Bool = bool
         """
         base = rangelist[0].split('.')[-1]
 
-        if slot_name in [
-            'id',
-            'category',
-            'provided_by',
-            'xref',
-            #'has_qualitative_value',
-            #'subclass_of',
-            #'has_input',
-            #'has_output',
-            #'has_constituent',
-            #'enabled_by',
-        ]:
-            # id is here to override {ClassName}Id
-            # The rest are due to import order errors in self._sort_classes
-            # From changing {ClassName}Id to {ClassName}
-
-            # Check if base is str? for now just assume it is
-            class_ref = "URIorCURIE"
-
-        elif 'Entity' in rangelist:
+        if 'Entity' in rangelist:
             class_ref = f"Union[URIorCURIE, {rangelist[-1]}]" if len(rangelist) > 1 else base
         else:
             if len(rangelist) > 1 and rangelist[-1] == 'IriType':
@@ -507,14 +506,14 @@ Bool = bool
         namespaces = ',\n'.join(sorted(set(namespaces)))
 
         return f'''
-valid_prefix = [
+valid_prefix = {{
 {namespaces}
-]
+}}
 '''
 
     # New Methods
-
-    def gen_pydantic_classvars(self, cls: ClassDefinition) -> str:
+    @staticmethod
+    def gen_pydantic_classvars(cls: ClassDefinition) -> str:
         """
         Generate classvars specific to the pydantic dataclasses
         """
@@ -600,30 +599,8 @@ Predicate = namedtuple(
                 if slot.key or slot.identifier
                 else self.slot_range_path(slot)
             )
-            if (
-                slotname
-                in [
-                    'id',
-                    'category',
-                    'provided_by',
-                    #'xref',
-                    #'has_qualitative_value',
-                    #'subclass_of',
-                    #'has_input',
-                    #'has_output',
-                    #'has_constituent',
-                    #'enabled_by',
-                ]
-                or ('URIorCURIE' in rangelist and rangelist[-1] != 'IriType')
-            ) and slotname != 'predicate':
-                if slot.required:
-                    validators.append(
-                        self._gen_required_validator(slotname, is_multivalued=slot.multivalued)
-                    )
-                elif slot.multivalued:
-                    validators.append(self._gen_scalar_to_list_check_curies_validator(slotname))
-                else:
-                    validators.append(self._gen_curie_prefix_validator(slotname))
+            if slotname in self.skip_field_validador:
+                continue
             elif 'Entity' in rangelist:
                 if len(rangelist) > 1:
                     if slot.required:
@@ -728,13 +705,9 @@ Predicate = namedtuple(
         '''
 
     @staticmethod
-    def _get_pydantic_config_and_validators() -> str:
-        """
-        Pydantic config class and validator methods
-
-        See https://pydantic-docs.helpmanual.io/usage/validators/#reuse-validators
-        """
+    def _get_pydantic_config() -> str:
         return '''
+# Pydantic Config
 class PydanticConfig:
     """
     Pydantic config
@@ -746,8 +719,17 @@ class PydanticConfig:
     underscore_attrs_are_private = True
     extra = 'forbid'
     arbitrary_types_allowed = True  # TODO re-evaluate this
+'''.strip()
 
+    @staticmethod
+    def _get_pydantic_validators() -> str:
+        """
+        Pydantic config class and validator methods
 
+        See https://pydantic-docs.helpmanual.io/usage/validators/#reuse-validators
+        """
+        return '''
+# Pydantic Validators
 def check_curie_prefix(cls, curie: Union[List, str, None]):
     if isinstance(curie, list):
         for cur in curie:
@@ -763,7 +745,7 @@ def check_curie_prefix(cls, curie: Union[List, str, None]):
                         f"for a list of valid curie prefixes"
                     )
     elif curie:
-        prefix = curie.split(':')[0]
+        prefix, local_id = curie.split(':')
         if prefix not in valid_prefix:
             LOG.warning(f"{curie} prefix '{prefix}' not in curie map")
             if hasattr(cls, '_id_prefixes') and cls._id_prefixes:
@@ -772,7 +754,10 @@ def check_curie_prefix(cls, curie: Union[List, str, None]):
                 LOG.warning(
                     f"See https://biolink.github.io/biolink-model/context.jsonld "
                     f"for a list of valid curie prefixes"
-                )          
+                )
+        if local_id == '':
+            LOG.warning(f"{curie} does not have a local identifier")
+        
 
 
 def convert_scalar_to_list_check_curies(cls, value: Any) -> List[str]:
@@ -805,8 +790,12 @@ def check_value_is_not_none(slotname: str, value: Any):
 '''.strip()
 
 
-def main(yamlfile: str):
-    pydantic_generator = PydanticGen(yamlfile)
+def main(
+    yamlfile: str,
+    skip_all_validators: bool = typer.Option(False),
+    skip_field_validator: List[str] = typer.Option(None),
+):
+    pydantic_generator = PydanticGen(yamlfile, skip_all_validators, skip_field_validator)
     print(pydantic_generator.serialize())
 
 
