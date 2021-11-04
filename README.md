@@ -1,3 +1,7 @@
+[![Pyversions](https://img.shields.io/pypi/pyversions/biolink_model_pydantic.svg)](https://pypi.python.org/pypi/biolink_model_pydantic)
+![](https://github.com/monarch-initiative/biolink-model-pydantic/actions/workflows/test.yml/badge.svg)
+[![PyPi](https://img.shields.io/pypi/v/biolink_model_pydantic.svg)](https://pypi.python.org/pypi/biolink_model_pydantic)
+
 # biolink-model-pydantic
 Pydantic dataclasses for the Biolink model
 
