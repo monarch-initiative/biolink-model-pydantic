@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-11-04 12:34
+# Generation date: 2021-12-01T16:30:38
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -92,7 +92,6 @@ valid_prefix = {
     "ATFDB_FAMILY",
     "ATO",
     "AUTDB",
-    "Aeolus",
     "BACMAP_BIOG",
     "BACMAP_MAP",
     "BAO",
@@ -252,6 +251,7 @@ valid_prefix = {
     "DIP",
     "DISPROT",
     "DOID",
+    "DOID-PROPERTY",
     "DOMMINO",
     "DOOR",
     "DOQCS_MODEL",
@@ -441,7 +441,6 @@ valid_prefix = {
     "HsapDv",
     "IAO",
     "ICD",
-    "ICD0",
     "ICD10",
     "ICD9",
     "ICEBERG_ELEMENT",
@@ -548,7 +547,6 @@ valid_prefix = {
     "MESH_2013",
     "METABOLIGHTS",
     "METACYC_COMPOUND",
-    "METACYC_REACTION",
     "METANETX_CHEMICAL",
     "METANETX_COMPARTMENT",
     "METANETX_REACTION",
@@ -616,7 +614,6 @@ valid_prefix = {
     "MYCO_SMEG",
     "MYCO_TUBER",
     "MZSPEC",
-    "MetaCyc",
     "MonarchArchive",
     "MonarchData",
     "NAPDI",
@@ -625,6 +622,7 @@ valid_prefix = {
     "NASC",
     "NBN",
     "NBO",
+    "NBO-PROPERTY",
     "NBRC",
     "NCBIAssembly",
     "NCBIGI",
@@ -635,6 +633,7 @@ valid_prefix = {
     "NCIM",
     "NCIMR",
     "NCIT",
+    "NCIT-OBO",
     "NCRO",
     "NDC",
     "NDDF",
@@ -720,7 +719,6 @@ valid_prefix = {
     "PATHEMA",
     "PATHWAYCOMMONS",
     "PATO",
-    "PATO-PROPERTY",
     "PAXDB_ORGANISM",
     "PAXDB_PROTEIN",
     "PAZAR",
@@ -728,7 +726,6 @@ valid_prefix = {
     "PDB",
     "PDB-CCD",
     "PDB_LIGAND",
-    "PDQ",
     "PDRO",
     "PDUMDV",
     "PD_ST",
@@ -826,7 +823,6 @@ valid_prefix = {
     "ROUGE",
     "RRID",
     "RS",
-    "RTXKG1",
     "RXCUI",
     "RXNO",
     "RXNORM",
@@ -865,7 +861,6 @@ valid_prefix = {
     "SMPDB",
     "SNOMED",
     "SNOMEDCT",
-    "SNPEFF",
     "SO",
     "SOPHARM",
     "SOYBASE",
@@ -924,6 +919,7 @@ valid_prefix = {
     "UBERGRAPH",
     "UBERON",
     "UBERON_CORE",
+    "UBERON_NONAMESPACE",
     "UBIO_NAMEBANK",
     "UCSC",
     "UMBBD_COMPOUND",
@@ -945,6 +941,7 @@ valid_prefix = {
     "UNISTS",
     "UNITE",
     "UO",
+    "UO-PROPERTY",
     "UPHENO",
     "USPTO",
     "UniProtKB",
@@ -1008,14 +1005,15 @@ valid_prefix = {
     "alliancegenome",
     "apollo",
     "biolink",
+    "bioschemas",
     "catfishQTL",
     "cattleQTL",
-    "chembio",
     "chickenQTL",
     "dbSNPIndividual",
     "dbVar",
     "dc",
     "dcat",
+    "dcid",
     "dct",
     "dcterms",
     "dctypes",
@@ -1028,7 +1026,6 @@ valid_prefix = {
     "gff3",
     "gpi",
     "gtpo",
-    "hetio",
     "horseQTL",
     "idot",
     "interpro",
@@ -1037,6 +1034,7 @@ valid_prefix = {
     "issn",
     "linkml",
     "medgen",
+    "metacyc_reaction",
     "mirbase",
     "oa",
     "oboInOwl",
@@ -1185,6 +1183,9 @@ class PredicateType(str, Enum):
     ameliorates = "biolink:ameliorates"
     approved_for_treatment_by = "biolink:approved_for_treatment_by"
     approved_to_treat = "biolink:approved_to_treat"
+    associated_with = "biolink:associated_with"
+    associated_with_resistance_to = "biolink:associated_with_resistance_to"
+    associated_with_sensitivity_to = "biolink:associated_with_sensitivity_to"
     author = "biolink:author"
     biomarker_for = "biolink:biomarker_for"
     broad_match = "biolink:broad_match"
@@ -1197,11 +1198,11 @@ class PredicateType(str, Enum):
     chemically_interacts_with = "biolink:chemically_interacts_with"
     chemically_similar_to = "biolink:chemically_similar_to"
     close_match = "biolink:close_match"
-    co_occurs_in_literature_with = "biolink:co_occurs_in_literature_with"
     coexists_with = "biolink:coexists_with"
     coexpressed_with = "biolink:coexpressed_with"
     colocalizes_with = "biolink:colocalizes_with"
     completed_by = "biolink:completed_by"
+    composed_primarily_of = "biolink:composed_primarily_of"
     condition_associated_with_gene = "biolink:condition_associated_with_gene"
     consumed_by = "biolink:consumed_by"
     consumes = "biolink:consumes"
@@ -1237,8 +1238,10 @@ class PredicateType(str, Enum):
     derives_into = "biolink:derives_into"
     develops_from = "biolink:develops_from"
     develops_into = "biolink:develops_into"
+    diagnoses = "biolink:diagnoses"
     directly_interacts_with = "biolink:directly_interacts_with"
     disease_has_basis_in = "biolink:disease_has_basis_in"
+    disease_has_location = "biolink:disease_has_location"
     disrupted_by = "biolink:disrupted_by"
     disrupts = "biolink:disrupts"
     editor = "biolink:editor"
@@ -1292,6 +1295,7 @@ class PredicateType(str, Enum):
     has_part = "biolink:has_part"
     has_participant = "biolink:has_participant"
     has_phenotype = "biolink:has_phenotype"
+    has_plasma_membrane_part = "biolink:has_plasma_membrane_part"
     has_positive_upstream_actor = "biolink:has_positive_upstream_actor"
     has_positive_upstream_or_within_actor = "biolink:has_positive_upstream_or_within_actor"
     has_real_world_evidence_of_association_with = (
@@ -1332,6 +1336,7 @@ class PredicateType(str, Enum):
     increases_uptake_of = "biolink:increases_uptake_of"
     interacts_with = "biolink:interacts_with"
     is_active_ingredient_of = "biolink:is_active_ingredient_of"
+    is_diagnosed_by = "biolink:is_diagnosed_by"
     is_excipient_of = "biolink:is_excipient_of"
     is_frameshift_variant_of = "biolink:is_frameshift_variant_of"
     is_input_of = "biolink:is_input_of"
@@ -1353,6 +1358,7 @@ class PredicateType(str, Enum):
     located_in = "biolink:located_in"
     location_of = "biolink:location_of"
     manifestation_of = "biolink:manifestation_of"
+    mentioned_by = "biolink:mentioned_by"
     mentions = "biolink:mentions"
     metabolic_processing_affected_by = "biolink:metabolic_processing_affected_by"
     metabolic_processing_decreased_by = "biolink:metabolic_processing_decreased_by"
@@ -1377,6 +1383,7 @@ class PredicateType(str, Enum):
     not_completed_by = "biolink:not_completed_by"
     nutrient_of = "biolink:nutrient_of"
     occurs_in = "biolink:occurs_in"
+    occurs_together_in_literature_with = "biolink:occurs_together_in_literature_with"
     opposite_of = "biolink:opposite_of"
     organism_taxon_subclass_of = "biolink:organism_taxon_subclass_of"
     orthologous_to = "biolink:orthologous_to"
@@ -1386,6 +1393,7 @@ class PredicateType(str, Enum):
     participates_in = "biolink:participates_in"
     phenotype_of = "biolink:phenotype_of"
     physically_interacts_with = "biolink:physically_interacts_with"
+    plasma_membrane_part_of = "biolink:plasma_membrane_part_of"
     positively_correlated_with = "biolink:positively_correlated_with"
     preceded_by = "biolink:preceded_by"
     precedes = "biolink:precedes"
@@ -1406,6 +1414,7 @@ class PredicateType(str, Enum):
     related_to = "biolink:related_to"
     related_to_at_concept_level = "biolink:related_to_at_concept_level"
     related_to_at_instance_level = "biolink:related_to_at_instance_level"
+    resistance_associated_with = "biolink:resistance_associated_with"
     response_affected_by = "biolink:response_affected_by"
     response_decreased_by = "biolink:response_decreased_by"
     response_increased_by = "biolink:response_increased_by"
@@ -1414,6 +1423,7 @@ class PredicateType(str, Enum):
     secretion_affected_by = "biolink:secretion_affected_by"
     secretion_decreased_by = "biolink:secretion_decreased_by"
     secretion_increased_by = "biolink:secretion_increased_by"
+    sensitivity_associated_with = "biolink:sensitivity_associated_with"
     sequence_location_of = "biolink:sequence_location_of"
     similar_to = "biolink:similar_to"
     splicing_affected_by = "biolink:splicing_affected_by"
@@ -2373,7 +2383,7 @@ class MolecularActivity(BiologicalProcessOrActivity, Occurrent, OntologyClass):
         "GO",
         "REACT",
         "RHEA",
-        "MetaCyc",
+        "metacyc.reaction",
         "EC",
         "TCDB",
         "KEGG.REACTION",
@@ -2419,7 +2429,7 @@ class BiologicalProcess(BiologicalProcessOrActivity, Occurrent, OntologyClass):
 
     # Class Variables
     _category: ClassVar[str] = "BiologicalProcess"
-    _id_prefixes: ClassVar[List[str]] = ["GO", "REACT", "MetaCyc", "KEGG.MODULE"]
+    _id_prefixes: ClassVar[List[str]] = ["GO", "REACT", "metacyc.reaction", "KEGG.MODULE"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2531,8 +2541,7 @@ class IndividualOrganism(OrganismalEntity, ThingWithTaxon):
 class PopulationOfIndividualOrganisms(OrganismalEntity, ThingWithTaxon):
     """
     A collection of individuals from the same taxonomic class distinguished by one or more characteristics.
-    Characteristics can include, but are not limited to, shared geographic location, genetics, phenotypes [Alliance
-    for Genome Resources]
+    Characteristics can include, but are not limited to, shared geographic location, genetics, phenotypes.
     """
 
     # Class Variables
@@ -2580,7 +2589,6 @@ class Disease(DiseaseOrPhenotypicFeature):
         "medgen",
         "ICD10",
         "ICD9",
-        "ICD0",
         "KEGG.DISEASE",
         "HP",
         "MP",
@@ -2589,6 +2597,9 @@ class Disease(DiseaseOrPhenotypicFeature):
 
 @dataclass(config=PydanticConfig)
 class PhenotypicFeature(DiseaseOrPhenotypicFeature):
+    """
+    A combination of entity and quality that makes up a phenotyping statement.
+    """
 
     # Class Variables
     _category: ClassVar[str] = "PhenotypicFeature"
@@ -2739,7 +2750,6 @@ class MolecularEntity(ChemicalEntity):
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
@@ -2778,7 +2788,6 @@ class SmallMolecule(MolecularEntity):
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
@@ -2823,7 +2832,6 @@ class ChemicalMixture(ChemicalEntity):
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
@@ -2868,7 +2876,6 @@ class NucleicAcidEntity(MolecularEntity, GenomicEntity, PhysicalEssence, Ontolog
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "INCHI",
         "INCHIKEY",
@@ -2899,7 +2906,6 @@ class MolecularMixture(ChemicalMixture):
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
@@ -2934,7 +2940,6 @@ class ComplexMolecularMixture(ChemicalMixture):
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
@@ -3227,6 +3232,17 @@ class ProteinIsoform(Protein, GeneProductIsoformMixin):
 
 
 @dataclass(config=PydanticConfig)
+class NucleicAcidSequenceMotif(BiologicalEntity):
+    """
+    A linear nucleotide sequence pattern that is widespread and has, or is conjectured to have, a biological
+    significance. e.g. the TATA box promoter motif, transcription factor binding consensus sequences.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "NucleicAcidSequenceMotif"
+
+
+@dataclass(config=PydanticConfig)
 class RNAProduct(Transcript, GeneProductMixin):
 
     # Class Variables
@@ -3289,6 +3305,25 @@ class GeneGroupingMixin:
     @validator('has_gene_or_gene_product', allow_reuse=True)
     def convert_has_gene_or_gene_product_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(Gene, value)
+
+
+@dataclass(config=PydanticConfig)
+class ProteinDomain(BiologicalEntity, GeneGroupingMixin, ChemicalEntityOrGeneOrGeneProduct):
+    """
+    A conserved part of protein sequence and (tertiary) structure that can evolve, function, and exist independently
+    of the rest of the protein chain. Protein domains maintain their structure and function independently of the
+    proteins in which they are found. e.g. an SH3 domain.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "ProteinDomain"
+
+
+@dataclass(config=PydanticConfig)
+class ProteinFamily(BiologicalEntity, GeneGroupingMixin, ChemicalEntityOrGeneOrGeneProduct):
+
+    # Class Variables
+    _category: ClassVar[str] = "ProteinFamily"
 
 
 @dataclass(config=PydanticConfig)
@@ -4652,7 +4687,7 @@ class EntityToPhenotypicFeatureAssociationMixin(EntityToFeatureOrDiseaseQualifie
 
 
 @dataclass(config=PydanticConfig)
-class NamedThingToInformationContentEntityAssociation(Association):
+class InformationContentEntityToNamedThingAssociation(Association):
     """
     association between a named thing and a information content entity where the specific context of the relationship
     between that named thing and the publication is unknown. For example, model organisms databases often capture the
@@ -4663,10 +4698,10 @@ class NamedThingToInformationContentEntityAssociation(Association):
     """
 
     # Class Variables
-    _category: ClassVar[str] = "NamedThingToInformationContentEntityAssociation"
+    _category: ClassVar[str] = "InformationContentEntityToNamedThingAssociation"
 
     subject: Union[URIorCURIE, NamedThing] = None
-    object: Union[URIorCURIE, Publication] = None
+    object: Union[URIorCURIE, NamedThing] = None
     predicate: Union[str, PredicateType] = None
 
     # Validators
@@ -4680,7 +4715,7 @@ class NamedThingToInformationContentEntityAssociation(Association):
     @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
-        check_curie_prefix(Publication, value)
+        check_curie_prefix(NamedThing, value)
         return value
 
     @validator('predicate', allow_reuse=True)
@@ -6199,12 +6234,15 @@ CodingSequence.__pydantic_model__.update_forward_refs()
 Polypeptide.__pydantic_model__.update_forward_refs()
 Protein.__pydantic_model__.update_forward_refs()
 ProteinIsoform.__pydantic_model__.update_forward_refs()
+NucleicAcidSequenceMotif.__pydantic_model__.update_forward_refs()
 RNAProduct.__pydantic_model__.update_forward_refs()
 RNAProductIsoform.__pydantic_model__.update_forward_refs()
 NoncodingRNAProduct.__pydantic_model__.update_forward_refs()
 MicroRNA.__pydantic_model__.update_forward_refs()
 SiRNA.__pydantic_model__.update_forward_refs()
 GeneGroupingMixin.__pydantic_model__.update_forward_refs()
+ProteinDomain.__pydantic_model__.update_forward_refs()
+ProteinFamily.__pydantic_model__.update_forward_refs()
 GeneFamily.__pydantic_model__.update_forward_refs()
 Zygosity.__pydantic_model__.update_forward_refs()
 Genotype.__pydantic_model__.update_forward_refs()
@@ -6286,7 +6324,7 @@ ExposureEventToOutcomeAssociation.__pydantic_model__.update_forward_refs()
 FrequencyQualifierMixin.__pydantic_model__.update_forward_refs()
 EntityToFeatureOrDiseaseQualifiersMixin.__pydantic_model__.update_forward_refs()
 EntityToPhenotypicFeatureAssociationMixin.__pydantic_model__.update_forward_refs()
-NamedThingToInformationContentEntityAssociation.__pydantic_model__.update_forward_refs()
+InformationContentEntityToNamedThingAssociation.__pydantic_model__.update_forward_refs()
 EntityToDiseaseAssociationMixin.__pydantic_model__.update_forward_refs()
 DiseaseOrPhenotypicFeatureToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
 DiseaseOrPhenotypicFeatureToLocationAssociation.__pydantic_model__.update_forward_refs()
