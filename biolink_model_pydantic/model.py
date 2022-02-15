@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-10-25 12:16
+# Generation date: 2022-02-14T17:11:53
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -91,7 +91,6 @@ valid_prefix = [
     "ATFDB_FAMILY",
     "ATO",
     "AUTDB",
-    "Aeolus",
     "BACMAP_BIOG",
     "BACMAP_MAP",
     "BAO",
@@ -251,6 +250,7 @@ valid_prefix = [
     "DIP",
     "DISPROT",
     "DOID",
+    "DOID-PROPERTY",
     "DOMMINO",
     "DOOR",
     "DOQCS_MODEL",
@@ -440,7 +440,6 @@ valid_prefix = [
     "HsapDv",
     "IAO",
     "ICD",
-    "ICD0",
     "ICD10",
     "ICD9",
     "ICEBERG_ELEMENT",
@@ -547,7 +546,6 @@ valid_prefix = [
     "MESH_2013",
     "METABOLIGHTS",
     "METACYC_COMPOUND",
-    "METACYC_REACTION",
     "METANETX_CHEMICAL",
     "METANETX_COMPARTMENT",
     "METANETX_REACTION",
@@ -615,7 +613,6 @@ valid_prefix = [
     "MYCO_SMEG",
     "MYCO_TUBER",
     "MZSPEC",
-    "MetaCyc",
     "MonarchArchive",
     "MonarchData",
     "NAPDI",
@@ -624,6 +621,7 @@ valid_prefix = [
     "NASC",
     "NBN",
     "NBO",
+    "NBO-PROPERTY",
     "NBRC",
     "NCBIAssembly",
     "NCBIGI",
@@ -634,6 +632,7 @@ valid_prefix = [
     "NCIM",
     "NCIMR",
     "NCIT",
+    "NCIT-OBO",
     "NCRO",
     "NDC",
     "NDDF",
@@ -719,7 +718,6 @@ valid_prefix = [
     "PATHEMA",
     "PATHWAYCOMMONS",
     "PATO",
-    "PATO-PROPERTY",
     "PAXDB_ORGANISM",
     "PAXDB_PROTEIN",
     "PAZAR",
@@ -727,7 +725,6 @@ valid_prefix = [
     "PDB",
     "PDB-CCD",
     "PDB_LIGAND",
-    "PDQ",
     "PDRO",
     "PDUMDV",
     "PD_ST",
@@ -825,7 +822,6 @@ valid_prefix = [
     "ROUGE",
     "RRID",
     "RS",
-    "RTXKG1",
     "RXCUI",
     "RXNO",
     "RXNORM",
@@ -864,7 +860,6 @@ valid_prefix = [
     "SMPDB",
     "SNOMED",
     "SNOMEDCT",
-    "SNPEFF",
     "SO",
     "SOPHARM",
     "SOYBASE",
@@ -923,6 +918,7 @@ valid_prefix = [
     "UBERGRAPH",
     "UBERON",
     "UBERON_CORE",
+    "UBERON_NONAMESPACE",
     "UBIO_NAMEBANK",
     "UCSC",
     "UMBBD_COMPOUND",
@@ -944,6 +940,7 @@ valid_prefix = [
     "UNISTS",
     "UNITE",
     "UO",
+    "UO-PROPERTY",
     "UPHENO",
     "USPTO",
     "UniProtKB",
@@ -1007,14 +1004,15 @@ valid_prefix = [
     "alliancegenome",
     "apollo",
     "biolink",
+    "bioschemas",
     "catfishQTL",
     "cattleQTL",
-    "chembio",
     "chickenQTL",
     "dbSNPIndividual",
     "dbVar",
     "dc",
     "dcat",
+    "dcid",
     "dct",
     "dcterms",
     "dctypes",
@@ -1027,7 +1025,6 @@ valid_prefix = [
     "gff3",
     "gpi",
     "gtpo",
-    "hetio",
     "horseQTL",
     "idot",
     "interpro",
@@ -1036,6 +1033,7 @@ valid_prefix = [
     "issn",
     "linkml",
     "medgen",
+    "metacyc_reaction",
     "mirbase",
     "oa",
     "oboInOwl",
@@ -1057,7 +1055,7 @@ valid_prefix = [
     "void",
     "wgs",
     "xml",
-    "xsd"
+    "xsd",
 ]
 
 
@@ -1150,8 +1148,12 @@ class PredicateType(str, Enum):
     acts_upstream_of = "biolink:acts_upstream_of"
     acts_upstream_of_negative_effect = "biolink:acts_upstream_of_negative_effect"
     acts_upstream_of_or_within = "biolink:acts_upstream_of_or_within"
-    acts_upstream_of_or_within_negative_effect = "biolink:acts_upstream_of_or_within_negative_effect"
-    acts_upstream_of_or_within_positive_effect = "biolink:acts_upstream_of_or_within_positive_effect"
+    acts_upstream_of_or_within_negative_effect = (
+        "biolink:acts_upstream_of_or_within_negative_effect"
+    )
+    acts_upstream_of_or_within_positive_effect = (
+        "biolink:acts_upstream_of_or_within_positive_effect"
+    )
     acts_upstream_of_positive_effect = "biolink:acts_upstream_of_positive_effect"
     adverse_event_caused_by = "biolink:adverse_event_caused_by"
     affected_by = "biolink:affected_by"
@@ -1177,6 +1179,9 @@ class PredicateType(str, Enum):
     ameliorates = "biolink:ameliorates"
     approved_for_treatment_by = "biolink:approved_for_treatment_by"
     approved_to_treat = "biolink:approved_to_treat"
+    associated_with = "biolink:associated_with"
+    associated_with_resistance_to = "biolink:associated_with_resistance_to"
+    associated_with_sensitivity_to = "biolink:associated_with_sensitivity_to"
     author = "biolink:author"
     biomarker_for = "biolink:biomarker_for"
     broad_match = "biolink:broad_match"
@@ -1189,11 +1194,11 @@ class PredicateType(str, Enum):
     chemically_interacts_with = "biolink:chemically_interacts_with"
     chemically_similar_to = "biolink:chemically_similar_to"
     close_match = "biolink:close_match"
-    co_occurs_in_literature_with = "biolink:co_occurs_in_literature_with"
     coexists_with = "biolink:coexists_with"
     coexpressed_with = "biolink:coexpressed_with"
     colocalizes_with = "biolink:colocalizes_with"
     completed_by = "biolink:completed_by"
+    composed_primarily_of = "biolink:composed_primarily_of"
     condition_associated_with_gene = "biolink:condition_associated_with_gene"
     consumed_by = "biolink:consumed_by"
     consumes = "biolink:consumes"
@@ -1229,8 +1234,10 @@ class PredicateType(str, Enum):
     derives_into = "biolink:derives_into"
     develops_from = "biolink:develops_from"
     develops_into = "biolink:develops_into"
+    diagnoses = "biolink:diagnoses"
     directly_interacts_with = "biolink:directly_interacts_with"
     disease_has_basis_in = "biolink:disease_has_basis_in"
+    disease_has_location = "biolink:disease_has_location"
     disrupted_by = "biolink:disrupted_by"
     disrupts = "biolink:disrupts"
     editor = "biolink:editor"
@@ -1284,9 +1291,12 @@ class PredicateType(str, Enum):
     has_part = "biolink:has_part"
     has_participant = "biolink:has_participant"
     has_phenotype = "biolink:has_phenotype"
+    has_plasma_membrane_part = "biolink:has_plasma_membrane_part"
     has_positive_upstream_actor = "biolink:has_positive_upstream_actor"
     has_positive_upstream_or_within_actor = "biolink:has_positive_upstream_or_within_actor"
-    has_real_world_evidence_of_association_with = "biolink:has_real_world_evidence_of_association_with"
+    has_real_world_evidence_of_association_with = (
+        "biolink:has_real_world_evidence_of_association_with"
+    )
     has_sequence_location = "biolink:has_sequence_location"
     has_sequence_variant = "biolink:has_sequence_variant"
     has_splice_site_variant = "biolink:has_splice_site_variant"
@@ -1322,6 +1332,7 @@ class PredicateType(str, Enum):
     increases_uptake_of = "biolink:increases_uptake_of"
     interacts_with = "biolink:interacts_with"
     is_active_ingredient_of = "biolink:is_active_ingredient_of"
+    is_diagnosed_by = "biolink:is_diagnosed_by"
     is_excipient_of = "biolink:is_excipient_of"
     is_frameshift_variant_of = "biolink:is_frameshift_variant_of"
     is_input_of = "biolink:is_input_of"
@@ -1343,6 +1354,7 @@ class PredicateType(str, Enum):
     located_in = "biolink:located_in"
     location_of = "biolink:location_of"
     manifestation_of = "biolink:manifestation_of"
+    mentioned_by = "biolink:mentioned_by"
     mentions = "biolink:mentions"
     metabolic_processing_affected_by = "biolink:metabolic_processing_affected_by"
     metabolic_processing_decreased_by = "biolink:metabolic_processing_decreased_by"
@@ -1367,8 +1379,8 @@ class PredicateType(str, Enum):
     not_completed_by = "biolink:not_completed_by"
     nutrient_of = "biolink:nutrient_of"
     occurs_in = "biolink:occurs_in"
+    occurs_together_in_literature_with = "biolink:occurs_together_in_literature_with"
     opposite_of = "biolink:opposite_of"
-    organism_taxon_subclass_of = "biolink:organism_taxon_subclass_of"
     orthologous_to = "biolink:orthologous_to"
     overlaps = "biolink:overlaps"
     paralogous_to = "biolink:paralogous_to"
@@ -1376,6 +1388,7 @@ class PredicateType(str, Enum):
     participates_in = "biolink:participates_in"
     phenotype_of = "biolink:phenotype_of"
     physically_interacts_with = "biolink:physically_interacts_with"
+    plasma_membrane_part_of = "biolink:plasma_membrane_part_of"
     positively_correlated_with = "biolink:positively_correlated_with"
     preceded_by = "biolink:preceded_by"
     precedes = "biolink:precedes"
@@ -1396,6 +1409,7 @@ class PredicateType(str, Enum):
     related_to = "biolink:related_to"
     related_to_at_concept_level = "biolink:related_to_at_concept_level"
     related_to_at_instance_level = "biolink:related_to_at_instance_level"
+    resistance_associated_with = "biolink:resistance_associated_with"
     response_affected_by = "biolink:response_affected_by"
     response_decreased_by = "biolink:response_decreased_by"
     response_increased_by = "biolink:response_increased_by"
@@ -1404,6 +1418,7 @@ class PredicateType(str, Enum):
     secretion_affected_by = "biolink:secretion_affected_by"
     secretion_decreased_by = "biolink:secretion_decreased_by"
     secretion_increased_by = "biolink:secretion_increased_by"
+    sensitivity_associated_with = "biolink:sensitivity_associated_with"
     sequence_location_of = "biolink:sequence_location_of"
     similar_to = "biolink:similar_to"
     splicing_affected_by = "biolink:splicing_affected_by"
@@ -1434,6 +1449,7 @@ class PredicateType(str, Enum):
     variant_part_of = "biolink:variant_part_of"
     xenologous_to = "biolink:xenologous_to"
 
+
 Predicate = namedtuple(
     'biolink_predicate', [pred.value.replace('biolink:', '') for pred in PredicateType]
 )(*[pred.value for pred in PredicateType])
@@ -1447,6 +1463,7 @@ class LogicalInterpretationEnum(str, Enum):
     AllSome = "AllSome"
     InverseAllSome = "InverseAllSome"
 
+
 @unique
 class ReactionDirectionEnum(str, Enum):
 
@@ -1455,38 +1472,46 @@ class ReactionDirectionEnum(str, Enum):
     bidirectional = "bidirectional"
     neutral = "neutral"
 
+
 @unique
 class ReactionSideEnum(str, Enum):
 
     left = "left"
     right = "right"
 
+
 @unique
 class PhaseEnum(str, Enum):
     """
     phase
     """
+
     value_0 = "0"
     value_1 = "1"
     value_2 = "2"
+
 
 @unique
 class StrandEnum(str, Enum):
     """
     strand
     """
+
     value_0 = "+"
     value_1 = "-"
     value_2 = "."
     value_3 = "?"
+
 
 @unique
 class SequenceEnum(str, Enum):
     """
     type of sequence
     """
+
     NA = "NA"
     AA = "AA"
+
 
 @unique
 class PredicateQualifierEnum(str, Enum):
@@ -1494,6 +1519,7 @@ class PredicateQualifierEnum(str, Enum):
     constrained list of qualifying terms that soften or expand the definition of the predicate used. can be used to
     constrain or qualify any predicate (any child of related_to).
     """
+
     predicted = "predicted"
     possibly = "possibly"
     hypothesized = "hypothesized"
@@ -1501,11 +1527,13 @@ class PredicateQualifierEnum(str, Enum):
     value_4 = "supported by real-world evidence"
     value_5 = "supported by clinical evidence"
 
+
 @unique
 class DrugAvailabilityEnum(str, Enum):
 
     value_0 = "over the counter"
     prescription = "prescription"
+
 
 @unique
 class FDAApprovalStatusEnum(str, Enum):
@@ -1526,7 +1554,9 @@ class FDAApprovalStatusEnum(str, Enum):
     value_13 = "Regular FDA Approval"
     value_14 = "Post-Approval Withdrawal"
 
+
 # Classes
+
 
 @dataclass(config=PydanticConfig)
 class OntologyClass:
@@ -1538,13 +1568,7 @@ class OntologyClass:
     """
 
     # Class Variables
-    _id_prefixes: ClassVar[List[str]] = [
-        "MESH",
-        "UMLS",
-        "KEGG.BRITE"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["MESH", "UMLS", "KEGG.BRITE"]
 
 
 @dataclass(config=PydanticConfig)
@@ -1552,8 +1576,6 @@ class Annotation:
     """
     Biolink Model root class for entity annotations.
     """
-
-    pass
 
 
 @dataclass(config=PydanticConfig)
@@ -1570,7 +1592,6 @@ class QuantityValue(Annotation):
     has_numeric_value: Optional[Union[float, float]] = None
 
 
-
 @dataclass(config=PydanticConfig)
 class Attribute(Annotation, OntologyClass):
     """
@@ -1580,16 +1601,13 @@ class Attribute(Annotation, OntologyClass):
 
     # Class Variables
     _category: ClassVar[str] = "Attribute"
-    _id_prefixes: ClassVar[List[str]] = [
-        "EDAM-DATA",
-        "EDAM-FORMAT",
-        "EDAM-OPERATION",
-        "EDAM-TOPIC"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["EDAM-DATA", "EDAM-FORMAT", "EDAM-OPERATION", "EDAM-TOPIC"]
 
     has_attribute_type: Union[str, OntologyClass] = None
     name: Optional[Union[str, LabelType]] = None
-    has_quantitative_value: Optional[Union[List[Union[str, QuantityValue]], Union[str, QuantityValue]]] = field(default_factory=list)
+    has_quantitative_value: Optional[
+        Union[List[Union[str, QuantityValue]], Union[str, QuantityValue]]
+    ] = field(default_factory=list)
     has_qualitative_value: Optional[Union[URIorCURIE, NamedThing]] = None
     iri: Optional[IriType] = None
     source: Optional[Union[str, LabelType]] = None
@@ -1618,8 +1636,6 @@ class BiologicalSex(Attribute):
     _category: ClassVar[str] = "BiologicalSex"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class PhenotypicSex(BiologicalSex):
     """
@@ -1628,8 +1644,6 @@ class PhenotypicSex(BiologicalSex):
 
     # Class Variables
     _category: ClassVar[str] = "PhenotypicSex"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -1643,8 +1657,6 @@ class GenotypicSex(BiologicalSex):
     _category: ClassVar[str] = "GenotypicSex"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class SeverityValue(Attribute):
     """
@@ -1653,8 +1665,6 @@ class SeverityValue(Attribute):
 
     # Class Variables
     _category: ClassVar[str] = "SeverityValue"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -1682,8 +1692,6 @@ class PathognomonicityQuantifier(SpecificityQuantifier):
     feature implies the existence of the disease
     """
 
-    pass
-
 
 @dataclass(config=PydanticConfig)
 class FrequencyQuantifier(RelationshipQuantifier):
@@ -1691,7 +1699,6 @@ class FrequencyQuantifier(RelationshipQuantifier):
     has_total: Optional[Union[int, int]] = None
     has_quotient: Optional[Union[float, float]] = None
     has_percentage: Optional[Union[float, float]] = None
-
 
 
 @dataclass(config=PydanticConfig)
@@ -1705,6 +1712,7 @@ class Entity:
     """
     Root Biolink Model class for all things and informational relationships, real or imagined.
     """
+
     id: URIorCURIE = None
     iri: Optional[IriType] = None
     category: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
@@ -1713,7 +1721,9 @@ class Entity:
     description: Optional[Union[str, NarrativeText]] = None
     source: Optional[Union[str, LabelType]] = None
     provided_by: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
-    has_attribute: Optional[Union[List[Union[str, Attribute]], Union[str, Attribute]]] = field(default_factory=list)
+    has_attribute: Optional[Union[List[Union[str, Attribute]], Union[str, Attribute]]] = field(
+        default_factory=list
+    )
 
     # Validators
 
@@ -1748,7 +1758,6 @@ class Entity:
             )
 
 
-
 @dataclass(config=PydanticConfig)
 class NamedThing(Entity):
     """
@@ -1779,15 +1788,11 @@ class RelationshipType(OntologyClass):
     _category: ClassVar[str] = "RelationshipType"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class GeneOntologyClass(OntologyClass):
     """
     an ontology class that describes a functional aspect of a gene, gene prodoct or complex
     """
-
-    pass
 
 
 @dataclass(config=PydanticConfig)
@@ -1795,8 +1800,6 @@ class UnclassifiedOntologyClass(OntologyClass):
     """
     this is used for nodes that are taken from an ontology but are not typed using an existing biolink class
     """
-
-    pass
 
 
 @dataclass(config=PydanticConfig)
@@ -1807,11 +1810,7 @@ class TaxonomicRank(OntologyClass):
 
     # Class Variables
     _category: ClassVar[str] = "TaxonomicRank"
-    _id_prefixes: ClassVar[List[str]] = [
-        "TAXRANK"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["TAXRANK"]
 
 
 @dataclass(config=PydanticConfig)
@@ -1823,19 +1822,9 @@ class OrganismTaxon(NamedThing):
 
     # Class Variables
     _category: ClassVar[str] = "OrganismTaxon"
-    _id_prefixes: ClassVar[List[str]] = [
-        "NCBITaxon",
-        "MESH"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["NCBITaxon", "MESH"]
 
     has_taxonomic_rank: Optional[Union[str, TaxonomicRank]] = None
-    subclass_of: Optional[Union[List[Union[URIorCURIE, OrganismTaxon]], Union[URIorCURIE, OrganismTaxon]]] = field(default_factory=list)
-
-    # Validators
-
-    @validator('subclass_of', allow_reuse=True)
-    def convert_subclass_of_to_list_check_curies(cls, value):
-        return convert_scalar_to_list_check_curies(OrganismTaxon, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -1846,8 +1835,6 @@ class Event(NamedThing):
 
     # Class Variables
     _category: ClassVar[str] = "Event"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -1864,17 +1851,12 @@ class Agent(AdministrativeEntity):
 
     # Class Variables
     _category: ClassVar[str] = "Agent"
-    _id_prefixes: ClassVar[List[str]] = [
-        "isbn",
-        "ORCID",
-        "ScopusID",
-        "ResearchID",
-        "GSID",
-        "isni"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["isbn", "ORCID", "ScopusID", "ResearchID", "GSID", "isni"]
 
     id: URIorCURIE = None
-    affiliation: Optional[Union[List[Union[str, URIorCURIE]], Union[str, URIorCURIE]]] = field(default_factory=list)
+    affiliation: Optional[Union[List[Union[str, URIorCURIE]], Union[str, URIorCURIE]]] = field(
+        default_factory=list
+    )
     address: Optional[Union[str, str]] = None
     name: Optional[Union[str, LabelType]] = None
 
@@ -1898,15 +1880,12 @@ class InformationContentEntity(NamedThing):
     """
 
     # Class Variables
-    _id_prefixes: ClassVar[List[str]] = [
-        "doi"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["doi"]
 
     license: Optional[Union[str, str]] = None
     rights: Optional[Union[str, str]] = None
     format: Optional[Union[str, str]] = None
     creation_date: Optional[Union[str, XSDDate]] = None
-
 
 
 @dataclass(config=PydanticConfig)
@@ -1919,8 +1898,6 @@ class Dataset(InformationContentEntity):
     _category: ClassVar[str] = "Dataset"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class DatasetDistribution(InformationContentEntity):
     """
@@ -1931,7 +1908,6 @@ class DatasetDistribution(InformationContentEntity):
     _category: ClassVar[str] = "DatasetDistribution"
 
     distribution_download_url: Optional[Union[str, str]] = None
-
 
 
 @dataclass(config=PydanticConfig)
@@ -1973,7 +1949,6 @@ class DatasetSummary(InformationContentEntity):
     source_logo: Optional[Union[str, str]] = None
 
 
-
 @dataclass(config=PydanticConfig)
 class ConfidenceLevel(InformationContentEntity):
     """
@@ -1984,8 +1959,6 @@ class ConfidenceLevel(InformationContentEntity):
     _category: ClassVar[str] = "ConfidenceLevel"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class EvidenceType(InformationContentEntity):
     """
@@ -1994,8 +1967,6 @@ class EvidenceType(InformationContentEntity):
 
     # Class Variables
     _category: ClassVar[str] = "EvidenceType"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -2012,8 +1983,6 @@ class InformationResource(InformationContentEntity):
     _category: ClassVar[str] = "InformationResource"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class Publication(InformationContentEntity):
     """
@@ -2025,9 +1994,7 @@ class Publication(InformationContentEntity):
 
     # Class Variables
     _category: ClassVar[str] = "Publication"
-    _id_prefixes: ClassVar[List[str]] = [
-        "NLMID"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["NLMID"]
 
     id: URIorCURIE = None
     type: Union[str, str] = None
@@ -2035,7 +2002,9 @@ class Publication(InformationContentEntity):
     pages: Optional[Union[List[Union[str, str]], Union[str, str]]] = field(default_factory=list)
     summary: Optional[Union[str, str]] = None
     keywords: Optional[Union[List[Union[str, str]], Union[str, str]]] = field(default_factory=list)
-    mesh_terms: Optional[Union[List[Union[str, URIorCURIE]], Union[str, URIorCURIE]]] = field(default_factory=list)
+    mesh_terms: Optional[Union[List[Union[str, URIorCURIE]], Union[str, URIorCURIE]]] = field(
+        default_factory=list
+    )
     xref: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
     name: Optional[Union[str, LabelType]] = None
 
@@ -2081,10 +2050,7 @@ class Book(Publication):
 
     # Class Variables
     _category: ClassVar[str] = "Book"
-    _id_prefixes: ClassVar[List[str]] = [
-        "isbn",
-        "NLMID"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["isbn", "NLMID"]
 
     id: URIorCURIE = None
     type: Union[str, str] = None
@@ -2130,10 +2096,7 @@ class Serial(Publication):
 
     # Class Variables
     _category: ClassVar[str] = "Serial"
-    _id_prefixes: ClassVar[List[str]] = [
-        "issn",
-        "NLMID"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["issn", "NLMID"]
 
     id: URIorCURIE = None
     type: Union[str, str] = None
@@ -2160,9 +2123,7 @@ class Article(Publication):
 
     # Class Variables
     _category: ClassVar[str] = "Article"
-    _id_prefixes: ClassVar[List[str]] = [
-        "PMID"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["PMID"]
 
     published_in: Union[str, URIorCURIE] = None
     iso_abbreviation: Optional[Union[str, str]] = None
@@ -2184,16 +2145,12 @@ class PhysicalEssenceOrOccurrent:
     Either a physical or processual entity.
     """
 
-    pass
-
 
 @dataclass(config=PydanticConfig)
 class PhysicalEssence(PhysicalEssenceOrOccurrent):
     """
     Semantic mixin concept.  Pertains to entities that have physical properties such as mass, volume, or charge.
     """
-
-    pass
 
 
 @dataclass(config=PydanticConfig)
@@ -2206,15 +2163,11 @@ class PhysicalEntity(NamedThing, PhysicalEssence):
     _category: ClassVar[str] = "PhysicalEntity"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class Occurrent(PhysicalEssenceOrOccurrent):
     """
     A processual entity.
     """
-
-    pass
 
 
 @dataclass(config=PydanticConfig)
@@ -2222,8 +2175,6 @@ class ActivityAndBehavior(Occurrent):
     """
     Activity or behavior of any independent integral living, organization or mechanical actor in the world
     """
-
-    pass
 
 
 @dataclass(config=PydanticConfig)
@@ -2237,8 +2188,6 @@ class Activity(NamedThing, ActivityAndBehavior):
     _category: ClassVar[str] = "Activity"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class Procedure(NamedThing, ActivityAndBehavior):
     """
@@ -2247,8 +2196,6 @@ class Procedure(NamedThing, ActivityAndBehavior):
 
     # Class Variables
     _category: ClassVar[str] = "Procedure"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -2261,8 +2208,6 @@ class Phenomenon(NamedThing, Occurrent):
     _category: ClassVar[str] = "Phenomenon"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class Device(NamedThing):
     """
@@ -2273,15 +2218,11 @@ class Device(NamedThing):
     _category: ClassVar[str] = "Device"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class SubjectOfInvestigation:
     """
     An entity that has the role of being studied in an investigation, study, or experiment
     """
-
-    pass
 
 
 @dataclass(config=PydanticConfig)
@@ -2294,12 +2235,7 @@ class MaterialSample(PhysicalEntity, SubjectOfInvestigation):
 
     # Class Variables
     _category: ClassVar[str] = "MaterialSample"
-    _id_prefixes: ClassVar[List[str]] = [
-        "BIOSAMPLE",
-        "GOLD.META"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["BIOSAMPLE", "GOLD.META"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2312,8 +2248,6 @@ class PlanetaryEntity(NamedThing):
     _category: ClassVar[str] = "PlanetaryEntity"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class EnvironmentalProcess(PlanetaryEntity, Occurrent):
 
@@ -2321,15 +2255,11 @@ class EnvironmentalProcess(PlanetaryEntity, Occurrent):
     _category: ClassVar[str] = "EnvironmentalProcess"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class EnvironmentalFeature(PlanetaryEntity):
 
     # Class Variables
     _category: ClassVar[str] = "EnvironmentalFeature"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -2345,7 +2275,6 @@ class GeographicLocation(PlanetaryEntity):
     longitude: Optional[Union[float, float]] = None
 
 
-
 @dataclass(config=PydanticConfig)
 class GeographicLocationAtTime(GeographicLocation):
     """
@@ -2356,7 +2285,6 @@ class GeographicLocationAtTime(GeographicLocation):
     _category: ClassVar[str] = "GeographicLocationAtTime"
 
     timepoint: Optional[Union[str, TimeType]] = None
-
 
 
 @dataclass(config=PydanticConfig)
@@ -2371,7 +2299,10 @@ class ThingWithTaxon:
     A mixin that can be used on any entity that can be taxonomically classified. This includes individual organisms;
     genes, their products and other molecular entities; body parts; biological processes
     """
-    in_taxon: Optional[Union[List[Union[URIorCURIE, OrganismTaxon]], Union[URIorCURIE, OrganismTaxon]]] = field(default_factory=list)
+
+    in_taxon: Optional[
+        Union[List[Union[URIorCURIE, OrganismTaxon]], Union[URIorCURIE, OrganismTaxon]]
+    ] = field(default_factory=list)
 
     # Validators
 
@@ -2385,14 +2316,11 @@ class GenomicEntity(ThingWithTaxon):
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
 
-
 @dataclass(config=PydanticConfig)
 class ChemicalSubstance:
 
     # Class Variables
     _category: ClassVar[str] = "ChemicalSubstance"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -2404,14 +2332,23 @@ class BiologicalProcessOrActivity(BiologicalEntity, Occurrent, OntologyClass):
 
     # Class Variables
     _category: ClassVar[str] = "BiologicalProcessOrActivity"
-    _id_prefixes: ClassVar[List[str]] = [
-        "GO",
-        "REACT"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["GO", "REACT"]
 
-    has_input: Optional[Union[List[Union[URIorCURIE, BiologicalProcessOrActivity]], Union[URIorCURIE, BiologicalProcessOrActivity]]] = field(default_factory=list)
-    has_output: Optional[Union[List[Union[URIorCURIE, BiologicalProcessOrActivity]], Union[URIorCURIE, BiologicalProcessOrActivity]]] = field(default_factory=list)
-    enabled_by: Optional[Union[List[Union[URIorCURIE, PhysicalEntity]], Union[URIorCURIE, PhysicalEntity]]] = field(default_factory=list)
+    has_input: Optional[
+        Union[
+            List[Union[URIorCURIE, BiologicalProcessOrActivity]],
+            Union[URIorCURIE, BiologicalProcessOrActivity],
+        ]
+    ] = field(default_factory=list)
+    has_output: Optional[
+        Union[
+            List[Union[URIorCURIE, BiologicalProcessOrActivity]],
+            Union[URIorCURIE, BiologicalProcessOrActivity],
+        ]
+    ] = field(default_factory=list)
+    enabled_by: Optional[
+        Union[List[Union[URIorCURIE, PhysicalEntity]], Union[URIorCURIE, PhysicalEntity]]
+    ] = field(default_factory=list)
 
     # Validators
 
@@ -2440,7 +2377,7 @@ class MolecularActivity(BiologicalProcessOrActivity, Occurrent, OntologyClass):
         "GO",
         "REACT",
         "RHEA",
-        "MetaCyc",
+        "metacyc.reaction",
         "EC",
         "TCDB",
         "KEGG.REACTION",
@@ -2450,12 +2387,18 @@ class MolecularActivity(BiologicalProcessOrActivity, Occurrent, OntologyClass):
         "UMLS",
         "BIGG.REACTION",
         "SEED.REACTION",
-        "METANETX.REACTION"
+        "METANETX.REACTION",
     ]
 
-    has_input: Optional[Union[List[Union[URIorCURIE, MolecularEntity]], Union[URIorCURIE, MolecularEntity]]] = field(default_factory=list)
-    has_output: Optional[Union[List[Union[URIorCURIE, MolecularEntity]], Union[URIorCURIE, MolecularEntity]]] = field(default_factory=list)
-    enabled_by: Optional[Union[List[Union[str, MacromolecularMachineMixin]], Union[str, MacromolecularMachineMixin]]] = field(default_factory=list)
+    has_input: Optional[
+        Union[List[Union[URIorCURIE, MolecularEntity]], Union[URIorCURIE, MolecularEntity]]
+    ] = field(default_factory=list)
+    has_output: Optional[
+        Union[List[Union[URIorCURIE, MolecularEntity]], Union[URIorCURIE, MolecularEntity]]
+    ] = field(default_factory=list)
+    enabled_by: Optional[
+        Union[List[Union[str, MacromolecularMachineMixin]], Union[str, MacromolecularMachineMixin]]
+    ] = field(default_factory=list)
 
     # Validators
 
@@ -2480,14 +2423,7 @@ class BiologicalProcess(BiologicalProcessOrActivity, Occurrent, OntologyClass):
 
     # Class Variables
     _category: ClassVar[str] = "BiologicalProcess"
-    _id_prefixes: ClassVar[List[str]] = [
-        "GO",
-        "REACT",
-        "MetaCyc",
-        "KEGG.MODULE"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["GO", "REACT", "metacyc.reaction", "KEGG.MODULE"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2505,10 +2441,8 @@ class Pathway(BiologicalProcess, OntologyClass):
         "WIKIPATHWAYS",
         "FB",
         "PANTHER.PATHWAY",
-        "KEGG.PATHWAY"
+        "KEGG.PATHWAY",
     ]
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -2516,12 +2450,7 @@ class PhysiologicalProcess(BiologicalProcess, OntologyClass):
 
     # Class Variables
     _category: ClassVar[str] = "PhysiologicalProcess"
-    _id_prefixes: ClassVar[List[str]] = [
-        "GO",
-        "REACT"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["GO", "REACT"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2529,8 +2458,6 @@ class Behavior(BiologicalProcess, ActivityAndBehavior, OntologyClass):
 
     # Class Variables
     _category: ClassVar[str] = "Behavior"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -2543,8 +2470,6 @@ class OrganismAttribute(Attribute):
     _category: ClassVar[str] = "OrganismAttribute"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class PhenotypicQuality(OrganismAttribute):
     """
@@ -2553,8 +2478,6 @@ class PhenotypicQuality(OrganismAttribute):
 
     # Class Variables
     _category: ClassVar[str] = "PhenotypicQuality"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -2568,15 +2491,16 @@ class Inheritance(OrganismAttribute):
     _category: ClassVar[str] = "Inheritance"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class OrganismalEntity(BiologicalEntity):
     """
     A named entity that is either a part of an organism, a whole organism, population or clade of organisms, excluding
     chemical entities
     """
-    has_attribute: Optional[Union[List[Union[str, Attribute]], Union[str, Attribute]]] = field(default_factory=list)
+
+    has_attribute: Optional[Union[List[Union[str, Attribute]], Union[str, Attribute]]] = field(
+        default_factory=list
+    )
 
     # Validators
 
@@ -2595,8 +2519,6 @@ class LifeStage(OrganismalEntity, ThingWithTaxon):
     _category: ClassVar[str] = "LifeStage"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class IndividualOrganism(OrganismalEntity, ThingWithTaxon):
     """
@@ -2606,28 +2528,19 @@ class IndividualOrganism(OrganismalEntity, ThingWithTaxon):
 
     # Class Variables
     _category: ClassVar[str] = "IndividualOrganism"
-    _id_prefixes: ClassVar[List[str]] = [
-        "ORCID"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["ORCID"]
 
 
 @dataclass(config=PydanticConfig)
 class PopulationOfIndividualOrganisms(OrganismalEntity, ThingWithTaxon):
     """
     A collection of individuals from the same taxonomic class distinguished by one or more characteristics.
-    Characteristics can include, but are not limited to, shared geographic location, genetics, phenotypes [Alliance
-    for Genome Resources]
+    Characteristics can include, but are not limited to, shared geographic location, genetics, phenotypes.
     """
 
     # Class Variables
     _category: ClassVar[str] = "PopulationOfIndividualOrganisms"
-    _id_prefixes: ClassVar[List[str]] = [
-        "HANCESTRO"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["HANCESTRO"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2640,8 +2553,6 @@ class StudyPopulation(PopulationOfIndividualOrganisms):
     _category: ClassVar[str] = "StudyPopulation"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class DiseaseOrPhenotypicFeature(BiologicalEntity, ThingWithTaxon):
     """
@@ -2651,8 +2562,6 @@ class DiseaseOrPhenotypicFeature(BiologicalEntity, ThingWithTaxon):
 
     # Class Variables
     _category: ClassVar[str] = "DiseaseOrPhenotypicFeature"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -2674,17 +2583,17 @@ class Disease(DiseaseOrPhenotypicFeature):
         "medgen",
         "ICD10",
         "ICD9",
-        "ICD0",
         "KEGG.DISEASE",
         "HP",
-        "MP"
+        "MP",
     ]
-
-
 
 
 @dataclass(config=PydanticConfig)
 class PhenotypicFeature(DiseaseOrPhenotypicFeature):
+    """
+    A combination of entity and quality that makes up a phenotyping statement.
+    """
 
     # Class Variables
     _category: ClassVar[str] = "PhenotypicFeature"
@@ -2703,10 +2612,8 @@ class PhenotypicFeature(DiseaseOrPhenotypicFeature):
         "SNOMEDCT",
         "MESH",
         "XPO",
-        "FYPO"
+        "FYPO",
     ]
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -2719,8 +2626,6 @@ class BehavioralFeature(PhenotypicFeature):
     _category: ClassVar[str] = "BehavioralFeature"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class AnatomicalEntity(OrganismalEntity, ThingWithTaxon, PhysicalEssence):
     """
@@ -2729,16 +2634,7 @@ class AnatomicalEntity(OrganismalEntity, ThingWithTaxon, PhysicalEssence):
 
     # Class Variables
     _category: ClassVar[str] = "AnatomicalEntity"
-    _id_prefixes: ClassVar[List[str]] = [
-        "UBERON",
-        "GO",
-        "CL",
-        "UMLS",
-        "MESH",
-        "NCIT"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["UBERON", "GO", "CL", "UMLS", "MESH", "NCIT"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2749,17 +2645,7 @@ class CellularComponent(AnatomicalEntity):
 
     # Class Variables
     _category: ClassVar[str] = "CellularComponent"
-    _id_prefixes: ClassVar[List[str]] = [
-        "GO",
-        "MESH",
-        "UMLS",
-        "NCIT",
-        "SNOMEDCT",
-        "CL",
-        "UBERON"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["GO", "MESH", "UMLS", "NCIT", "SNOMEDCT", "CL", "UBERON"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2767,17 +2653,7 @@ class Cell(AnatomicalEntity):
 
     # Class Variables
     _category: ClassVar[str] = "Cell"
-    _id_prefixes: ClassVar[List[str]] = [
-        "CL",
-        "PO",
-        "UMLS",
-        "NCIT",
-        "MESH",
-        "UBERON",
-        "SNOMEDCT"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["CL", "PO", "UMLS", "NCIT", "MESH", "UBERON", "SNOMEDCT"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2785,11 +2661,7 @@ class CellLine(OrganismalEntity):
 
     # Class Variables
     _category: ClassVar[str] = "CellLine"
-    _id_prefixes: ClassVar[List[str]] = [
-        "CLO"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["CLO"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2797,16 +2669,7 @@ class GrossAnatomicalStructure(AnatomicalEntity):
 
     # Class Variables
     _category: ClassVar[str] = "GrossAnatomicalStructure"
-    _id_prefixes: ClassVar[List[str]] = [
-        "UBERON",
-        "UMLS",
-        "MESH",
-        "NCIT",
-        "PO",
-        "FAO"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["UBERON", "UMLS", "MESH", "NCIT", "PO", "FAO"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2816,8 +2679,6 @@ class ChemicalEntityOrGeneOrGeneProduct:
     across chemical entities that must include genes and their children as chemical entities.
     """
 
-    pass
-
 
 @dataclass(config=PydanticConfig)
 class ChemicalEntityOrProteinOrPolypeptide:
@@ -2826,26 +2687,27 @@ class ChemicalEntityOrProteinOrPolypeptide:
     searching across chemical entities that must include genes and their children as chemical entities.
     """
 
-    pass
-
 
 @dataclass(config=PydanticConfig)
-class ChemicalEntity(NamedThing, PhysicalEssence, ChemicalOrDrugOrTreatment, ChemicalEntityOrGeneOrGeneProduct, ChemicalEntityOrProteinOrPolypeptide):
+class ChemicalEntity(
+    NamedThing,
+    PhysicalEssence,
+    ChemicalOrDrugOrTreatment,
+    ChemicalEntityOrGeneOrGeneProduct,
+    ChemicalEntityOrProteinOrPolypeptide,
+):
     """
     A chemical entity is a physical entity that pertains to chemistry or biochemistry.
     """
 
     # Class Variables
     _category: ClassVar[str] = "ChemicalEntity"
-    _id_prefixes: ClassVar[List[str]] = [
-        "UNII",
-        "MESH",
-        "CAS",
-        "UMLS"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["UNII", "MESH", "CAS", "UMLS"]
 
     trade_name: Optional[Union[URIorCURIE, ChemicalEntity]] = None
-    available_from: Optional[Union[List[Union[str, DrugAvailabilityEnum]], Union[str, DrugAvailabilityEnum]]] = field(default_factory=list)
+    available_from: Optional[
+        Union[List[Union[str, DrugAvailabilityEnum]], Union[str, DrugAvailabilityEnum]]
+    ] = field(default_factory=list)
     max_tolerated_dose: Optional[Union[str, str]] = None
     is_toxic: Optional[Union[bool, Bool]] = None
 
@@ -2882,7 +2744,6 @@ class MolecularEntity(ChemicalEntity):
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
@@ -2891,11 +2752,10 @@ class MolecularEntity(ChemicalEntity):
         "KEGG.DRUG",
         "KEGG.DGROUP",
         "KEGG.ENVIRON",
-        "UMLS"
+        "UMLS",
     ]
 
     is_metabolite: Optional[Union[bool, Bool]] = None
-
 
 
 @dataclass(config=PydanticConfig)
@@ -2922,7 +2782,6 @@ class SmallMolecule(MolecularEntity):
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
@@ -2932,7 +2791,7 @@ class SmallMolecule(MolecularEntity):
         "KEGG.DGROUP",
         "KEGG.ENVIRON",
         "BIGG.METABOLITE",
-        "UMLS"
+        "UMLS",
     ]
 
     id: URIorCURIE = None
@@ -2967,7 +2826,6 @@ class ChemicalMixture(ChemicalEntity):
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
@@ -2976,7 +2834,7 @@ class ChemicalMixture(ChemicalEntity):
         "KEGG.DRUG",
         "KEGG.DGROUP",
         "KEGG.ENVIRON",
-        "UMLS"
+        "UMLS",
     ]
 
     is_supplement: Optional[Union[URIorCURIE, ChemicalMixture]] = None
@@ -3012,15 +2870,12 @@ class NucleicAcidEntity(MolecularEntity, GenomicEntity, PhysicalEssence, Ontolog
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "INCHI",
         "INCHIKEY",
         "KEGG.GLYCAN",
-        "KEGG.ENVIRON"
+        "KEGG.ENVIRON",
     ]
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3045,7 +2900,6 @@ class MolecularMixture(ChemicalMixture):
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
@@ -3054,10 +2908,8 @@ class MolecularMixture(ChemicalMixture):
         "KEGG.DRUG",
         "KEGG.DGROUP",
         "KEGG.ENVIRON",
-        "UMLS"
+        "UMLS",
     ]
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3082,7 +2934,6 @@ class ComplexMolecularMixture(ChemicalMixture):
         "HMDB",
         "KEGG.COMPOUND",
         "ChemBank",
-        "Aeolus",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
@@ -3091,10 +2942,8 @@ class ComplexMolecularMixture(ChemicalMixture):
         "KEGG.DRUG",
         "KEGG.DGROUP",
         "KEGG.ENVIRON",
-        "UMLS"
+        "UMLS",
     ]
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3106,11 +2955,7 @@ class ProcessedMaterial(ChemicalMixture):
 
     # Class Variables
     _category: ClassVar[str] = "ProcessedMaterial"
-    _id_prefixes: ClassVar[List[str]] = [
-        "UMLS"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["UMLS"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3121,13 +2966,7 @@ class Drug(MolecularMixture, ChemicalOrDrugOrTreatment, OntologyClass):
 
     # Class Variables
     _category: ClassVar[str] = "Drug"
-    _id_prefixes: ClassVar[List[str]] = [
-        "RXCUI",
-        "NDC",
-        "UMLS"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["RXCUI", "NDC", "UMLS"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3137,15 +2976,11 @@ class EnvironmentalFoodContaminant(ChemicalEntity):
     _category: ClassVar[str] = "EnvironmentalFoodContaminant"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class FoodAdditive(ChemicalEntity):
 
     # Class Variables
     _category: ClassVar[str] = "FoodAdditive"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3155,15 +2990,11 @@ class Nutrient(ChemicalEntity):
     _category: ClassVar[str] = "Nutrient"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class Macronutrient(Nutrient):
 
     # Class Variables
     _category: ClassVar[str] = "Macronutrient"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3173,15 +3004,11 @@ class Micronutrient(Nutrient):
     _category: ClassVar[str] = "Micronutrient"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class Vitamin(Micronutrient):
 
     # Class Variables
     _category: ClassVar[str] = "Vitamin"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3192,11 +3019,7 @@ class Food(ChemicalMixture):
 
     # Class Variables
     _category: ClassVar[str] = "Food"
-    _id_prefixes: ClassVar[List[str]] = [
-        "foodb.compound"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["foodb.compound"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3205,8 +3028,8 @@ class MacromolecularMachineMixin:
     A union of gene locus, gene product, and macromolecular complex mixin. These are the basic units of function in a
     cell. They either carry out individual biological activities, or they encode molecules which do this.
     """
-    name: Optional[Union[str, SymbolType]] = None
 
+    name: Optional[Union[str, SymbolType]] = None
 
 
 @dataclass(config=PydanticConfig)
@@ -3216,16 +3039,18 @@ class GeneOrGeneProduct(MacromolecularMachineMixin):
     """
 
     # Class Variables
-    _id_prefixes: ClassVar[List[str]] = [
-        "CHEMBL.TARGET",
-        "IUPHAR.FAMILY"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["CHEMBL.TARGET", "IUPHAR.FAMILY"]
 
 
 @dataclass(config=PydanticConfig)
-class Gene(BiologicalEntity, GeneOrGeneProduct, GenomicEntity, ChemicalEntityOrGeneOrGeneProduct, PhysicalEssence, OntologyClass):
+class Gene(
+    BiologicalEntity,
+    GeneOrGeneProduct,
+    GenomicEntity,
+    ChemicalEntityOrGeneOrGeneProduct,
+    PhysicalEssence,
+    OntologyClass,
+):
     """
     A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A
     gene locus may include regulatory regions, transcribed regions and/or other functional sequence regions.
@@ -3249,11 +3074,13 @@ class Gene(BiologicalEntity, GeneOrGeneProduct, GenomicEntity, ChemicalEntityOrG
         "OMIM",
         "KEGG.GENE",
         "UMLS",
-        "Xenbase"
+        "Xenbase",
     ]
 
     symbol: Optional[Union[str, str]] = None
-    synonym: Optional[Union[List[Union[str, LabelType]], Union[str, LabelType]]] = field(default_factory=list)
+    synonym: Optional[Union[List[Union[str, LabelType]], Union[str, LabelType]]] = field(
+        default_factory=list
+    )
     xref: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
 
     # Validators
@@ -3275,13 +3102,11 @@ class GeneProductMixin(GeneOrGeneProduct):
     """
 
     # Class Variables
-    _id_prefixes: ClassVar[List[str]] = [
-        "UniProtKB",
-        "gtpo",
-        "PR"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["UniProtKB", "gtpo", "PR"]
 
-    synonym: Optional[Union[List[Union[str, LabelType]], Union[str, LabelType]]] = field(default_factory=list)
+    synonym: Optional[Union[List[Union[str, LabelType]], Union[str, LabelType]]] = field(
+        default_factory=list
+    )
     xref: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
 
     # Validators
@@ -3303,8 +3128,6 @@ class GeneProductIsoformMixin(GeneProductMixin):
     designation of canonical or reference may be arbitrary, or it may represent the superclass of all isoforms.
     """
 
-    pass
-
 
 @dataclass(config=PydanticConfig)
 class MacromolecularComplexMixin(MacromolecularMachineMixin):
@@ -3314,14 +3137,7 @@ class MacromolecularComplexMixin(MacromolecularMachineMixin):
     """
 
     # Class Variables
-    _id_prefixes: ClassVar[List[str]] = [
-        "INTACT",
-        "GO",
-        "PR",
-        "REACT"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["INTACT", "GO", "PR", "REACT"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3332,8 +3148,6 @@ class Genome(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass):
 
     # Class Variables
     _category: ClassVar[str] = "Genome"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3347,8 +3161,6 @@ class Exon(NucleicAcidEntity):
     _category: ClassVar[str] = "Exon"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class Transcript(NucleicAcidEntity):
     """
@@ -3357,12 +3169,7 @@ class Transcript(NucleicAcidEntity):
 
     # Class Variables
     _category: ClassVar[str] = "Transcript"
-    _id_prefixes: ClassVar[List[str]] = [
-        "ENSEMBL",
-        "FB"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["ENSEMBL", "FB"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3372,10 +3179,13 @@ class CodingSequence(NucleicAcidEntity):
     _category: ClassVar[str] = "CodingSequence"
 
 
-
-
 @dataclass(config=PydanticConfig)
-class Polypeptide(BiologicalEntity, ThingWithTaxon, ChemicalEntityOrGeneOrGeneProduct, ChemicalEntityOrProteinOrPolypeptide):
+class Polypeptide(
+    BiologicalEntity,
+    ThingWithTaxon,
+    ChemicalEntityOrGeneOrGeneProduct,
+    ChemicalEntityOrProteinOrPolypeptide,
+):
     """
     A polypeptide is a molecular entity characterized by availability in protein databases of amino-acid-based
     sequence representations of its precise primary structure; for convenience of representation, partial sequences of
@@ -3384,15 +3194,7 @@ class Polypeptide(BiologicalEntity, ThingWithTaxon, ChemicalEntityOrGeneOrGenePr
 
     # Class Variables
     _category: ClassVar[str] = "Polypeptide"
-    _id_prefixes: ClassVar[List[str]] = [
-        "UniProtKB",
-        "PR",
-        "ENSEMBL",
-        "FB",
-        "UMLS"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["UniProtKB", "PR", "ENSEMBL", "FB", "UMLS"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3404,16 +3206,7 @@ class Protein(Polypeptide, GeneProductMixin, ThingWithTaxon):
 
     # Class Variables
     _category: ClassVar[str] = "Protein"
-    _id_prefixes: ClassVar[List[str]] = [
-        "UniProtKB",
-        "PR",
-        "ENSEMBL",
-        "FB",
-        "UMLS",
-        "MESH"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["UniProtKB", "PR", "ENSEMBL", "FB", "UMLS", "MESH"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3425,14 +3218,18 @@ class ProteinIsoform(Protein, GeneProductIsoformMixin):
 
     # Class Variables
     _category: ClassVar[str] = "ProteinIsoform"
-    _id_prefixes: ClassVar[List[str]] = [
-        "UniProtKB",
-        "UNIPROT.ISOFORM",
-        "PR",
-        "ENSEMBL"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["UniProtKB", "UNIPROT.ISOFORM", "PR", "ENSEMBL"]
 
 
+@dataclass(config=PydanticConfig)
+class NucleicAcidSequenceMotif(BiologicalEntity):
+    """
+    A linear nucleotide sequence pattern that is widespread and has, or is conjectured to have, a biological
+    significance. e.g. the TATA box promoter motif, transcription factor binding consensus sequences.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "NucleicAcidSequenceMotif"
 
 
 @dataclass(config=PydanticConfig)
@@ -3440,11 +3237,7 @@ class RNAProduct(Transcript, GeneProductMixin):
 
     # Class Variables
     _category: ClassVar[str] = "RNAProduct"
-    _id_prefixes: ClassVar[List[str]] = [
-        "RNACENTRAL"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["RNACENTRAL"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3455,11 +3248,7 @@ class RNAProductIsoform(RNAProduct, GeneProductIsoformMixin):
 
     # Class Variables
     _category: ClassVar[str] = "RNAProductIsoform"
-    _id_prefixes: ClassVar[List[str]] = [
-        "RNACENTRAL"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["RNACENTRAL"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3467,13 +3256,7 @@ class NoncodingRNAProduct(RNAProduct):
 
     # Class Variables
     _category: ClassVar[str] = "NoncodingRNAProduct"
-    _id_prefixes: ClassVar[List[str]] = [
-        "RNACENTRAL",
-        "NCBIGene",
-        "ENSEMBL"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["RNACENTRAL", "NCBIGene", "ENSEMBL"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3481,13 +3264,7 @@ class MicroRNA(NoncodingRNAProduct):
 
     # Class Variables
     _category: ClassVar[str] = "MicroRNA"
-    _id_prefixes: ClassVar[List[str]] = [
-        "MIR",
-        "HGNC",
-        "WormBase"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["MIR", "HGNC", "WormBase"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3500,13 +3277,7 @@ class SiRNA(NoncodingRNAProduct):
 
     # Class Variables
     _category: ClassVar[str] = "SiRNA"
-    _id_prefixes: ClassVar[List[str]] = [
-        "MIR",
-        "HGNC",
-        "WormBase"
-    ]
-
-
+    _id_prefixes: ClassVar[List[str]] = ["MIR", "HGNC", "WormBase"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3514,13 +3285,35 @@ class GeneGroupingMixin:
     """
     any grouping of multiple genes or gene products
     """
-    has_gene_or_gene_product: Optional[Union[List[Union[URIorCURIE, Gene]], Union[URIorCURIE, Gene]]] = field(default_factory=list)
+
+    has_gene_or_gene_product: Optional[
+        Union[List[Union[URIorCURIE, Gene]], Union[URIorCURIE, Gene]]
+    ] = field(default_factory=list)
 
     # Validators
 
     @validator('has_gene_or_gene_product', allow_reuse=True)
     def convert_has_gene_or_gene_product_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(Gene, value)
+
+
+@dataclass(config=PydanticConfig)
+class ProteinDomain(BiologicalEntity, GeneGroupingMixin, ChemicalEntityOrGeneOrGeneProduct):
+    """
+    A conserved part of protein sequence and (tertiary) structure that can evolve, function, and exist independently
+    of the rest of the protein chain. Protein domains maintain their structure and function independently of the
+    proteins in which they are found. e.g. an SH3 domain.
+    """
+
+    # Class Variables
+    _category: ClassVar[str] = "ProteinDomain"
+
+
+@dataclass(config=PydanticConfig)
+class ProteinFamily(BiologicalEntity, GeneGroupingMixin, ChemicalEntityOrGeneOrGeneProduct):
+
+    # Class Variables
+    _category: ClassVar[str] = "ProteinFamily"
 
 
 @dataclass(config=PydanticConfig)
@@ -3551,10 +3344,8 @@ class GeneFamily(BiologicalEntity, GeneGroupingMixin, ChemicalEntityOrGeneOrGene
         "RFAM",
         "KEGG.ORTHOLOGY",
         "EGGNOG",
-        "COG"
+        "COG",
     ]
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3562,8 +3353,6 @@ class Zygosity(Attribute):
 
     # Class Variables
     _category: ClassVar[str] = "Zygosity"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3575,13 +3364,9 @@ class Genotype(BiologicalEntity, PhysicalEssence, GenomicEntity, OntologyClass):
 
     # Class Variables
     _category: ClassVar[str] = "Genotype"
-    _id_prefixes: ClassVar[List[str]] = [
-        "ZFIN",
-        "FB"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["ZFIN", "FB"]
 
     has_zygosity: Optional[Union[str, Zygosity]] = None
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3592,8 +3377,6 @@ class Haplotype(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass)
 
     # Class Variables
     _category: ClassVar[str] = "Haplotype"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3614,11 +3397,13 @@ class SequenceVariant(BiologicalEntity, GenomicEntity, PhysicalEssence, Ontology
         "ZFIN",
         "FB",
         "WB",
-        "WormBase"
+        "WormBase",
     ]
 
     id: URIorCURIE = None
-    has_gene: Optional[Union[List[Union[URIorCURIE, Gene]], Union[URIorCURIE, Gene]]] = field(default_factory=list)
+    has_gene: Optional[Union[List[Union[URIorCURIE, Gene]], Union[URIorCURIE, Gene]]] = field(
+        default_factory=list
+    )
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
     # Validators
@@ -3644,8 +3429,6 @@ class Snv(SequenceVariant):
     _category: ClassVar[str] = "Snv"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class ReagentTargetedGene(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass):
     """
@@ -3657,8 +3440,6 @@ class ReagentTargetedGene(BiologicalEntity, GenomicEntity, PhysicalEssence, Onto
     _category: ClassVar[str] = "ReagentTargetedGene"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class ClinicalAttribute(Attribute):
     """
@@ -3667,8 +3448,6 @@ class ClinicalAttribute(Attribute):
 
     # Class Variables
     _category: ClassVar[str] = "ClinicalAttribute"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3702,8 +3481,6 @@ class ClinicalModifier(ClinicalAttribute):
     _category: ClassVar[str] = "ClinicalModifier"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class ClinicalCourse(ClinicalAttribute):
     """
@@ -3715,8 +3492,6 @@ class ClinicalCourse(ClinicalAttribute):
     _category: ClassVar[str] = "ClinicalCourse"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class Onset(ClinicalCourse):
     """
@@ -3725,8 +3500,6 @@ class Onset(ClinicalCourse):
 
     # Class Variables
     _category: ClassVar[str] = "Onset"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3740,8 +3513,6 @@ class ClinicalEntity(NamedThing):
     _category: ClassVar[str] = "ClinicalEntity"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class ClinicalTrial(ClinicalEntity):
 
@@ -3749,15 +3520,11 @@ class ClinicalTrial(ClinicalEntity):
     _category: ClassVar[str] = "ClinicalTrial"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class ClinicalIntervention(ClinicalEntity):
 
     # Class Variables
     _category: ClassVar[str] = "ClinicalIntervention"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3769,13 +3536,11 @@ class ClinicalFinding(PhenotypicFeature):
 
     # Class Variables
     _category: ClassVar[str] = "ClinicalFinding"
-    _id_prefixes: ClassVar[List[str]] = [
-        "LOINC",
-        "NCIT",
-        "EFO"
-    ]
+    _id_prefixes: ClassVar[List[str]] = ["LOINC", "NCIT", "EFO"]
 
-    has_attribute: Optional[Union[List[Union[str, ClinicalAttribute]], Union[str, ClinicalAttribute]]] = field(default_factory=list)
+    has_attribute: Optional[
+        Union[List[Union[str, ClinicalAttribute]], Union[str, ClinicalAttribute]]
+    ] = field(default_factory=list)
 
     # Validators
 
@@ -3791,8 +3556,6 @@ class Hospitalization(ClinicalIntervention):
     _category: ClassVar[str] = "Hospitalization"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class SocioeconomicAttribute(Attribute):
     """
@@ -3803,8 +3566,6 @@ class SocioeconomicAttribute(Attribute):
     _category: ClassVar[str] = "SocioeconomicAttribute"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class Case(IndividualOrganism):
     """
@@ -3813,8 +3574,6 @@ class Case(IndividualOrganism):
 
     # Class Variables
     _category: ClassVar[str] = "Case"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3828,20 +3587,20 @@ class Cohort(StudyPopulation):
     _category: ClassVar[str] = "Cohort"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class ExposureEvent:
     """
     A (possibly time bounded) incidence of a feature of the environment of an organism that influences one or more
     phenotypic features of that organism, potentially mediated by genes
     """
+
     timepoint: Optional[Union[str, TimeType]] = None
 
 
-
 @dataclass(config=PydanticConfig)
-class GenomicBackgroundExposure(ExposureEvent, GeneGroupingMixin, PhysicalEssence, GenomicEntity, OntologyClass):
+class GenomicBackgroundExposure(
+    ExposureEvent, GeneGroupingMixin, PhysicalEssence, GenomicEntity, OntologyClass
+):
     """
     A genomic background exposure is where an individual's specific genomic background of genes, sequence variants or
     other pre-existing genomic conditions constitute a kind of 'exposure' to the organism, leading to or influencing
@@ -3852,15 +3611,11 @@ class GenomicBackgroundExposure(ExposureEvent, GeneGroupingMixin, PhysicalEssenc
     _category: ClassVar[str] = "GenomicBackgroundExposure"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class PathologicalEntityMixin:
     """
     A pathological (abnormal) structure or process.
     """
-
-    pass
 
 
 @dataclass(config=PydanticConfig)
@@ -3874,8 +3629,6 @@ class PathologicalProcess(BiologicalProcess, PathologicalEntityMixin):
     _category: ClassVar[str] = "PathologicalProcess"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class PathologicalProcessExposure(ExposureEvent):
     """
@@ -3885,8 +3638,6 @@ class PathologicalProcessExposure(ExposureEvent):
 
     # Class Variables
     _category: ClassVar[str] = "PathologicalProcessExposure"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3900,8 +3651,6 @@ class PathologicalAnatomicalStructure(AnatomicalEntity, PathologicalEntityMixin)
     _category: ClassVar[str] = "PathologicalAnatomicalStructure"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class PathologicalAnatomicalExposure(ExposureEvent):
     """
@@ -3911,8 +3660,6 @@ class PathologicalAnatomicalExposure(ExposureEvent):
 
     # Class Variables
     _category: ClassVar[str] = "PathologicalAnatomicalExposure"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3927,8 +3674,6 @@ class DiseaseOrPhenotypicFeatureExposure(ExposureEvent, PathologicalEntityMixin)
     _category: ClassVar[str] = "DiseaseOrPhenotypicFeatureExposure"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class ChemicalExposure(ExposureEvent):
     """
@@ -3937,8 +3682,6 @@ class ChemicalExposure(ExposureEvent):
 
     # Class Variables
     _category: ClassVar[str] = "ChemicalExposure"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3951,8 +3694,6 @@ class ComplexChemicalExposure:
     _category: ClassVar[str] = "ComplexChemicalExposure"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class DrugExposure(ChemicalExposure, ExposureEvent):
     """
@@ -3961,8 +3702,6 @@ class DrugExposure(ChemicalExposure, ExposureEvent):
 
     # Class Variables
     _category: ClassVar[str] = "DrugExposure"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -3976,8 +3715,6 @@ class DrugToGeneInteractionExposure(DrugExposure, GeneGroupingMixin):
     _category: ClassVar[str] = "DrugToGeneInteractionExposure"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class Treatment(NamedThing, ExposureEvent, ChemicalOrDrugOrTreatment):
     """
@@ -3988,9 +3725,15 @@ class Treatment(NamedThing, ExposureEvent, ChemicalOrDrugOrTreatment):
     # Class Variables
     _category: ClassVar[str] = "Treatment"
 
-    has_drug: Optional[Union[List[Union[URIorCURIE, Drug]], Union[URIorCURIE, Drug]]] = field(default_factory=list)
-    has_device: Optional[Union[List[Union[URIorCURIE, Device]], Union[URIorCURIE, Device]]] = field(default_factory=list)
-    has_procedure: Optional[Union[List[Union[URIorCURIE, Procedure]], Union[URIorCURIE, Procedure]]] = field(default_factory=list)
+    has_drug: Optional[Union[List[Union[URIorCURIE, Drug]], Union[URIorCURIE, Drug]]] = field(
+        default_factory=list
+    )
+    has_device: Optional[Union[List[Union[URIorCURIE, Device]], Union[URIorCURIE, Device]]] = field(
+        default_factory=list
+    )
+    has_procedure: Optional[
+        Union[List[Union[URIorCURIE, Procedure]], Union[URIorCURIE, Procedure]]
+    ] = field(default_factory=list)
 
     # Validators
 
@@ -4017,8 +3760,6 @@ class BioticExposure(ExposureEvent):
     _category: ClassVar[str] = "BioticExposure"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class EnvironmentalExposure(ExposureEvent):
     """
@@ -4028,8 +3769,6 @@ class EnvironmentalExposure(ExposureEvent):
 
     # Class Variables
     _category: ClassVar[str] = "EnvironmentalExposure"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -4042,8 +3781,6 @@ class GeographicExposure(EnvironmentalExposure, ExposureEvent):
     _category: ClassVar[str] = "GeographicExposure"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class BehavioralExposure(ExposureEvent):
     """
@@ -4052,8 +3789,6 @@ class BehavioralExposure(ExposureEvent):
 
     # Class Variables
     _category: ClassVar[str] = "BehavioralExposure"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -4066,7 +3801,9 @@ class SocioeconomicExposure(ExposureEvent):
     # Class Variables
     _category: ClassVar[str] = "SocioeconomicExposure"
 
-    has_attribute: Union[List[Union[str, SocioeconomicAttribute]], Union[str, SocioeconomicAttribute]] = None
+    has_attribute: Union[
+        List[Union[str, SocioeconomicAttribute]], Union[str, SocioeconomicAttribute]
+    ] = None
 
     # Validators
 
@@ -4084,8 +3821,6 @@ class Outcome:
     various categories of possible biological or non-biological (e.g. clinical) outcomes.
     """
 
-    pass
-
 
 @dataclass(config=PydanticConfig)
 class PathologicalProcessOutcome(Outcome):
@@ -4097,8 +3832,6 @@ class PathologicalProcessOutcome(Outcome):
     _category: ClassVar[str] = "PathologicalProcessOutcome"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class PathologicalAnatomicalOutcome(Outcome):
     """
@@ -4107,8 +3840,6 @@ class PathologicalAnatomicalOutcome(Outcome):
 
     # Class Variables
     _category: ClassVar[str] = "PathologicalAnatomicalOutcome"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -4122,8 +3853,6 @@ class DiseaseOrPhenotypicFeatureOutcome(Outcome):
     _category: ClassVar[str] = "DiseaseOrPhenotypicFeatureOutcome"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class BehavioralOutcome(Outcome):
     """
@@ -4132,8 +3861,6 @@ class BehavioralOutcome(Outcome):
 
     # Class Variables
     _category: ClassVar[str] = "BehavioralOutcome"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -4147,8 +3874,6 @@ class HospitalizationOutcome(Outcome):
     _category: ClassVar[str] = "HospitalizationOutcome"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class MortalityOutcome(Outcome):
     """
@@ -4157,8 +3882,6 @@ class MortalityOutcome(Outcome):
 
     # Class Variables
     _category: ClassVar[str] = "MortalityOutcome"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -4171,8 +3894,6 @@ class EpidemiologicalOutcome(Outcome):
     _category: ClassVar[str] = "EpidemiologicalOutcome"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class SocioeconomicOutcome(Outcome):
     """
@@ -4182,8 +3903,6 @@ class SocioeconomicOutcome(Outcome):
 
     # Class Variables
     _category: ClassVar[str] = "SocioeconomicOutcome"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -4200,9 +3919,15 @@ class Association(Entity):
     object: Union[URIorCURIE, NamedThing] = None
     relation: Optional[Union[str, str]] = None
     negated: Optional[Union[bool, Bool]] = None
-    qualifiers: Optional[Union[List[Union[str, OntologyClass]], Union[str, OntologyClass]]] = field(default_factory=list)
-    publications: Optional[Union[List[Union[URIorCURIE, Publication]], Union[URIorCURIE, Publication]]] = field(default_factory=list)
-    has_evidence: Optional[Union[List[Union[URIorCURIE, EvidenceType]], Union[URIorCURIE, EvidenceType]]] = field(default_factory=list)
+    qualifiers: Optional[Union[List[Union[str, OntologyClass]], Union[str, OntologyClass]]] = field(
+        default_factory=list
+    )
+    publications: Optional[
+        Union[List[Union[URIorCURIE, Publication]], Union[URIorCURIE, Publication]]
+    ] = field(default_factory=list)
+    has_evidence: Optional[
+        Union[List[Union[URIorCURIE, EvidenceType]], Union[URIorCURIE, EvidenceType]]
+    ] = field(default_factory=list)
     type: Optional[Union[str, str]] = None
     category: Optional[Union[List[URIorCURIE], URIorCURIE]] = field(default_factory=list)
 
@@ -4254,7 +3979,9 @@ class ContributorAssociation(Association):
     subject: Union[URIorCURIE, InformationContentEntity] = None
     predicate: Union[str, PredicateType] = None
     object: Union[URIorCURIE, Agent] = None
-    qualifiers: Optional[Union[List[Union[str, OntologyClass]], Union[str, OntologyClass]]] = field(default_factory=list)
+    qualifiers: Optional[Union[List[Union[str, OntologyClass]], Union[str, OntologyClass]]] = field(
+        default_factory=list
+    )
 
     # Validators
 
@@ -4386,6 +4113,7 @@ class GeneToGeneAssociation(Association):
     abstract parent class for different kinds of gene-gene or gene product to gene product relationships. Includes
     homology and interaction.
     """
+
     subject: Union[str, GeneOrGeneProduct] = None
     object: Union[str, GeneOrGeneProduct] = None
 
@@ -4428,6 +4156,7 @@ class GeneExpressionMixin:
     Observed gene expression intensity, context (site, stage) and associated phenotypic status within which the
     expression occurs.
     """
+
     quantifier_qualifier: Optional[Union[str, OntologyClass]] = None
     expression_site: Optional[Union[URIorCURIE, AnatomicalEntity]] = None
     stage_qualifier: Optional[Union[URIorCURIE, LifeStage]] = None
@@ -4481,7 +4210,6 @@ class PairwiseGeneToGeneInteraction(GeneToGeneAssociation):
     _category: ClassVar[str] = "PairwiseGeneToGeneInteraction"
 
     predicate: Union[str, PredicateType] = None
-    relation: Optional[Union[str, str]] = None
 
     # Validators
 
@@ -4505,7 +4233,6 @@ class PairwiseMolecularInteraction(PairwiseGeneToGeneInteraction):
     predicate: Union[str, PredicateType] = None
     object: Union[URIorCURIE, MolecularEntity] = None
     interacting_molecules_category: Optional[Union[str, OntologyClass]] = None
-    relation: Optional[Union[str, str]] = None
 
     # Validators
 
@@ -4538,6 +4265,7 @@ class CellLineToEntityAssociationMixin:
     """
     An relationship between a cell line and another entity
     """
+
     subject: Union[URIorCURIE, CellLine] = None
 
     # Validators
@@ -4554,6 +4282,7 @@ class ChemicalEntityToEntityAssociationMixin:
     """
     An interaction between a chemical entity and another entity
     """
+
     subject: Union[str, ChemicalEntityOrGeneOrGeneProduct] = None
 
     # Validators
@@ -4569,6 +4298,7 @@ class DrugToEntityAssociationMixin(ChemicalEntityToEntityAssociationMixin):
     """
     An interaction between a drug and another entity
     """
+
     subject: Union[URIorCURIE, Drug] = None
 
     # Validators
@@ -4585,6 +4315,7 @@ class ChemicalToEntityAssociationMixin(ChemicalEntityToEntityAssociationMixin):
     """
     An interaction between a chemical entity and another entity
     """
+
     subject: Union[str, ChemicalEntityOrGeneOrGeneProduct] = None
 
     # Validators
@@ -4600,6 +4331,7 @@ class CaseToEntityAssociationMixin:
     """
     An abstract association for use where the case is the subject
     """
+
     subject: Union[URIorCURIE, Case] = None
 
     # Validators
@@ -4688,7 +4420,9 @@ class ChemicalToChemicalDerivationAssociation(ChemicalToChemicalAssociation):
     subject: Union[URIorCURIE, ChemicalEntity] = None
     object: Union[URIorCURIE, ChemicalEntity] = None
     predicate: Union[str, PredicateType] = None
-    catalyst_qualifier: Optional[Union[List[Union[str, MacromolecularMachineMixin]], Union[str, MacromolecularMachineMixin]]] = field(default_factory=list)
+    catalyst_qualifier: Optional[
+        Union[List[Union[str, MacromolecularMachineMixin]], Union[str, MacromolecularMachineMixin]]
+    ] = field(default_factory=list)
 
     # Validators
 
@@ -4777,6 +4511,7 @@ class MaterialSampleToEntityAssociationMixin:
     """
     An association between a material sample and something.
     """
+
     subject: Union[URIorCURIE, MaterialSample] = None
 
     # Validators
@@ -4839,6 +4574,7 @@ class EntityToExposureEventAssociationMixin:
     """
     An association between some entity and an exposure event.
     """
+
     object: Union[str, ExposureEvent] = None
 
     # Validators
@@ -4850,15 +4586,15 @@ class EntityToExposureEventAssociationMixin:
 
 
 @dataclass(config=PydanticConfig)
-class DiseaseToExposureEventAssociation(Association, DiseaseToEntityAssociationMixin, EntityToExposureEventAssociationMixin):
+class DiseaseToExposureEventAssociation(
+    Association, DiseaseToEntityAssociationMixin, EntityToExposureEventAssociationMixin
+):
     """
     An association between an exposure event and a disease.
     """
 
     # Class Variables
     _category: ClassVar[str] = "DiseaseToExposureEventAssociation"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -4868,13 +4604,12 @@ class ExposureEventToEntityAssociationMixin:
     _category: ClassVar[str] = "ExposureEventToEntityAssociationMixin"
 
 
-
-
 @dataclass(config=PydanticConfig)
 class EntityToOutcomeAssociationMixin:
     """
     An association between some entity and an outcome
     """
+
     object: Union[str, Outcome] = None
 
     # Validators
@@ -4886,7 +4621,9 @@ class EntityToOutcomeAssociationMixin:
 
 
 @dataclass(config=PydanticConfig)
-class ExposureEventToOutcomeAssociation(Association, ExposureEventToEntityAssociationMixin, EntityToOutcomeAssociationMixin):
+class ExposureEventToOutcomeAssociation(
+    Association, ExposureEventToEntityAssociationMixin, EntityToOutcomeAssociationMixin
+):
     """
     An association between an exposure event and an outcome.
     """
@@ -4910,8 +4647,8 @@ class FrequencyQualifierMixin:
     """
     Qualifier for frequency type associations
     """
-    frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
 
+    frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
 
 
 @dataclass(config=PydanticConfig)
@@ -4919,16 +4656,15 @@ class EntityToFeatureOrDiseaseQualifiersMixin(FrequencyQualifierMixin):
     """
     Qualifiers for entity to disease or phenotype associations.
     """
+
     severity_qualifier: Optional[Union[str, SeverityValue]] = None
     onset_qualifier: Optional[Union[str, Onset]] = None
-
 
 
 @dataclass(config=PydanticConfig)
 class EntityToPhenotypicFeatureAssociationMixin(EntityToFeatureOrDiseaseQualifiersMixin):
     object: Union[URIorCURIE, PhenotypicFeature] = None
     sex_qualifier: Optional[Union[str, BiologicalSex]] = None
-    description: Optional[Union[str, NarrativeText]] = None
 
     # Validators
 
@@ -4940,7 +4676,7 @@ class EntityToPhenotypicFeatureAssociationMixin(EntityToFeatureOrDiseaseQualifie
 
 
 @dataclass(config=PydanticConfig)
-class NamedThingToInformationContentEntityAssociation(Association):
+class InformationContentEntityToNamedThingAssociation(Association):
     """
     association between a named thing and a information content entity where the specific context of the relationship
     between that named thing and the publication is unknown. For example, model organisms databases often capture the
@@ -4951,10 +4687,10 @@ class NamedThingToInformationContentEntityAssociation(Association):
     """
 
     # Class Variables
-    _category: ClassVar[str] = "NamedThingToInformationContentEntityAssociation"
+    _category: ClassVar[str] = "InformationContentEntityToNamedThingAssociation"
 
     subject: Union[URIorCURIE, NamedThing] = None
-    object: Union[URIorCURIE, Publication] = None
+    object: Union[URIorCURIE, NamedThing] = None
     predicate: Union[str, PredicateType] = None
 
     # Validators
@@ -4968,7 +4704,7 @@ class NamedThingToInformationContentEntityAssociation(Association):
     @validator('object', allow_reuse=True)
     def validate_required_object(cls, value):
         check_value_is_not_none("object", value)
-        check_curie_prefix(Publication, value)
+        check_curie_prefix(NamedThing, value)
         return value
 
     @validator('predicate', allow_reuse=True)
@@ -4982,6 +4718,7 @@ class EntityToDiseaseAssociationMixin(EntityToFeatureOrDiseaseQualifiersMixin):
     """
     mixin class for any association whose object (target node) is a disease
     """
+
     object: Union[URIorCURIE, Disease] = None
 
     # Validators
@@ -5007,7 +4744,9 @@ class DiseaseOrPhenotypicFeatureToEntityAssociationMixin:
 
 
 @dataclass(config=PydanticConfig)
-class DiseaseOrPhenotypicFeatureToLocationAssociation(Association, DiseaseOrPhenotypicFeatureToEntityAssociationMixin):
+class DiseaseOrPhenotypicFeatureToLocationAssociation(
+    Association, DiseaseOrPhenotypicFeatureToEntityAssociationMixin
+):
     """
     An association between either a disease or a phenotypic feature and an anatomical entity, where the
     disease/feature manifests in that site.
@@ -5041,7 +4780,11 @@ class EntityToDiseaseOrPhenotypicFeatureAssociationMixin:
 
 
 @dataclass(config=PydanticConfig)
-class CellLineToDiseaseOrPhenotypicFeatureAssociation(Association, CellLineToEntityAssociationMixin, EntityToDiseaseOrPhenotypicFeatureAssociationMixin):
+class CellLineToDiseaseOrPhenotypicFeatureAssociation(
+    Association,
+    CellLineToEntityAssociationMixin,
+    EntityToDiseaseOrPhenotypicFeatureAssociationMixin,
+):
     """
     An relationship between a cell line and a disease or a phenotype, where the cell line is derived from an
     individual with that disease or phenotype.
@@ -5062,7 +4805,11 @@ class CellLineToDiseaseOrPhenotypicFeatureAssociation(Association, CellLineToEnt
 
 
 @dataclass(config=PydanticConfig)
-class ChemicalToDiseaseOrPhenotypicFeatureAssociation(Association, ChemicalToEntityAssociationMixin, EntityToDiseaseOrPhenotypicFeatureAssociationMixin):
+class ChemicalToDiseaseOrPhenotypicFeatureAssociation(
+    Association,
+    ChemicalToEntityAssociationMixin,
+    EntityToDiseaseOrPhenotypicFeatureAssociationMixin,
+):
     """
     An interaction between a chemical entity and a phenotype or disease, where the presence of the chemical gives rise
     to or exacerbates the phenotype.
@@ -5083,15 +4830,17 @@ class ChemicalToDiseaseOrPhenotypicFeatureAssociation(Association, ChemicalToEnt
 
 
 @dataclass(config=PydanticConfig)
-class MaterialSampleToDiseaseOrPhenotypicFeatureAssociation(Association, MaterialSampleToEntityAssociationMixin, EntityToDiseaseOrPhenotypicFeatureAssociationMixin):
+class MaterialSampleToDiseaseOrPhenotypicFeatureAssociation(
+    Association,
+    MaterialSampleToEntityAssociationMixin,
+    EntityToDiseaseOrPhenotypicFeatureAssociationMixin,
+):
     """
     An association between a material sample and a disease or phenotype.
     """
 
     # Class Variables
     _category: ClassVar[str] = "MaterialSampleToDiseaseOrPhenotypicFeatureAssociation"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -5108,7 +4857,9 @@ class GenotypeToEntityAssociationMixin:
 
 
 @dataclass(config=PydanticConfig)
-class GenotypeToPhenotypicFeatureAssociation(Association, EntityToPhenotypicFeatureAssociationMixin, GenotypeToEntityAssociationMixin):
+class GenotypeToPhenotypicFeatureAssociation(
+    Association, EntityToPhenotypicFeatureAssociationMixin, GenotypeToEntityAssociationMixin
+):
     """
     Any association between one genotype and a phenotypic feature, where having the genotype confers the phenotype,
     either in isolation or through environment
@@ -5135,7 +4886,9 @@ class GenotypeToPhenotypicFeatureAssociation(Association, EntityToPhenotypicFeat
 
 
 @dataclass(config=PydanticConfig)
-class ExposureEventToPhenotypicFeatureAssociation(Association, EntityToPhenotypicFeatureAssociationMixin):
+class ExposureEventToPhenotypicFeatureAssociation(
+    Association, EntityToPhenotypicFeatureAssociationMixin
+):
     """
     Any association between an environment and a phenotypic feature, where being in the environment influences the
     phenotype.
@@ -5155,7 +4908,9 @@ class ExposureEventToPhenotypicFeatureAssociation(Association, EntityToPhenotypi
 
 
 @dataclass(config=PydanticConfig)
-class DiseaseToPhenotypicFeatureAssociation(Association, EntityToPhenotypicFeatureAssociationMixin, DiseaseToEntityAssociationMixin):
+class DiseaseToPhenotypicFeatureAssociation(
+    Association, EntityToPhenotypicFeatureAssociationMixin, DiseaseToEntityAssociationMixin
+):
     """
     An association between a disease and a phenotypic feature in which the phenotypic feature is associated with the
     disease in some way.
@@ -5165,10 +4920,10 @@ class DiseaseToPhenotypicFeatureAssociation(Association, EntityToPhenotypicFeatu
     _category: ClassVar[str] = "DiseaseToPhenotypicFeatureAssociation"
 
 
-
-
 @dataclass(config=PydanticConfig)
-class CaseToPhenotypicFeatureAssociation(Association, EntityToPhenotypicFeatureAssociationMixin, CaseToEntityAssociationMixin):
+class CaseToPhenotypicFeatureAssociation(
+    Association, EntityToPhenotypicFeatureAssociationMixin, CaseToEntityAssociationMixin
+):
     """
     An association between a case (e.g. individual patient) and a phenotypic feature in which the individual has or
     has had the phenotype.
@@ -5178,10 +4933,10 @@ class CaseToPhenotypicFeatureAssociation(Association, EntityToPhenotypicFeatureA
     _category: ClassVar[str] = "CaseToPhenotypicFeatureAssociation"
 
 
-
-
 @dataclass(config=PydanticConfig)
-class BehaviorToBehavioralFeatureAssociation(Association, EntityToPhenotypicFeatureAssociationMixin):
+class BehaviorToBehavioralFeatureAssociation(
+    Association, EntityToPhenotypicFeatureAssociationMixin
+):
     """
     An association between an mixture behavior and a behavioral feature manifested by the individual exhibited or has
     exhibited the behavior.
@@ -5234,7 +4989,9 @@ class VariantToEntityAssociationMixin:
 
 
 @dataclass(config=PydanticConfig)
-class GeneToPhenotypicFeatureAssociation(Association, EntityToPhenotypicFeatureAssociationMixin, GeneToEntityAssociationMixin):
+class GeneToPhenotypicFeatureAssociation(
+    Association, EntityToPhenotypicFeatureAssociationMixin, GeneToEntityAssociationMixin
+):
 
     # Class Variables
     _category: ClassVar[str] = "GeneToPhenotypicFeatureAssociation"
@@ -5250,7 +5007,9 @@ class GeneToPhenotypicFeatureAssociation(Association, EntityToPhenotypicFeatureA
 
 
 @dataclass(config=PydanticConfig)
-class GeneToDiseaseAssociation(Association, EntityToDiseaseAssociationMixin, GeneToEntityAssociationMixin):
+class GeneToDiseaseAssociation(
+    Association, EntityToDiseaseAssociationMixin, GeneToEntityAssociationMixin
+):
 
     # Class Variables
     _category: ClassVar[str] = "GeneToDiseaseAssociation"
@@ -5312,7 +5071,9 @@ class VariantToGeneExpressionAssociation(VariantToGeneAssociation, GeneExpressio
 
 
 @dataclass(config=PydanticConfig)
-class VariantToPopulationAssociation(Association, VariantToEntityAssociationMixin, FrequencyQuantifier, FrequencyQualifierMixin):
+class VariantToPopulationAssociation(
+    Association, VariantToEntityAssociationMixin, FrequencyQuantifier, FrequencyQualifierMixin
+):
     """
     An association between a variant and a population, where the variant has particular frequency in the population
     """
@@ -5375,7 +5136,9 @@ class PopulationToPopulationAssociation(Association):
 
 
 @dataclass(config=PydanticConfig)
-class VariantToPhenotypicFeatureAssociation(Association, VariantToEntityAssociationMixin, EntityToPhenotypicFeatureAssociationMixin):
+class VariantToPhenotypicFeatureAssociation(
+    Association, VariantToEntityAssociationMixin, EntityToPhenotypicFeatureAssociationMixin
+):
 
     # Class Variables
     _category: ClassVar[str] = "VariantToPhenotypicFeatureAssociation"
@@ -5392,7 +5155,9 @@ class VariantToPhenotypicFeatureAssociation(Association, VariantToEntityAssociat
 
 
 @dataclass(config=PydanticConfig)
-class VariantToDiseaseAssociation(Association, VariantToEntityAssociationMixin, EntityToDiseaseAssociationMixin):
+class VariantToDiseaseAssociation(
+    Association, VariantToEntityAssociationMixin, EntityToDiseaseAssociationMixin
+):
 
     # Class Variables
     _category: ClassVar[str] = "VariantToDiseaseAssociation"
@@ -5422,7 +5187,9 @@ class VariantToDiseaseAssociation(Association, VariantToEntityAssociationMixin, 
 
 
 @dataclass(config=PydanticConfig)
-class GenotypeToDiseaseAssociation(Association, GenotypeToEntityAssociationMixin, EntityToDiseaseAssociationMixin):
+class GenotypeToDiseaseAssociation(
+    Association, GenotypeToEntityAssociationMixin, EntityToDiseaseAssociationMixin
+):
 
     # Class Variables
     _category: ClassVar[str] = "GenotypeToDiseaseAssociation"
@@ -5458,6 +5225,7 @@ class ModelToDiseaseAssociationMixin:
     that it recapitulates some features of the disease in a way that is useful for studying the disease outside a
     patient carrying the disease
     """
+
     subject: Union[URIorCURIE, NamedThing] = None
     predicate: Union[str, PredicateType] = None
 
@@ -5476,7 +5244,9 @@ class ModelToDiseaseAssociationMixin:
 
 
 @dataclass(config=PydanticConfig)
-class GeneAsAModelOfDiseaseAssociation(GeneToDiseaseAssociation, ModelToDiseaseAssociationMixin, EntityToDiseaseAssociationMixin):
+class GeneAsAModelOfDiseaseAssociation(
+    GeneToDiseaseAssociation, ModelToDiseaseAssociationMixin, EntityToDiseaseAssociationMixin
+):
 
     # Class Variables
     _category: ClassVar[str] = "GeneAsAModelOfDiseaseAssociation"
@@ -5492,7 +5262,9 @@ class GeneAsAModelOfDiseaseAssociation(GeneToDiseaseAssociation, ModelToDiseaseA
 
 
 @dataclass(config=PydanticConfig)
-class VariantAsAModelOfDiseaseAssociation(VariantToDiseaseAssociation, ModelToDiseaseAssociationMixin, EntityToDiseaseAssociationMixin):
+class VariantAsAModelOfDiseaseAssociation(
+    VariantToDiseaseAssociation, ModelToDiseaseAssociationMixin, EntityToDiseaseAssociationMixin
+):
 
     # Class Variables
     _category: ClassVar[str] = "VariantAsAModelOfDiseaseAssociation"
@@ -5509,7 +5281,9 @@ class VariantAsAModelOfDiseaseAssociation(VariantToDiseaseAssociation, ModelToDi
 
 
 @dataclass(config=PydanticConfig)
-class GenotypeAsAModelOfDiseaseAssociation(GenotypeToDiseaseAssociation, ModelToDiseaseAssociationMixin, EntityToDiseaseAssociationMixin):
+class GenotypeAsAModelOfDiseaseAssociation(
+    GenotypeToDiseaseAssociation, ModelToDiseaseAssociationMixin, EntityToDiseaseAssociationMixin
+):
 
     # Class Variables
     _category: ClassVar[str] = "GenotypeAsAModelOfDiseaseAssociation"
@@ -5526,7 +5300,11 @@ class GenotypeAsAModelOfDiseaseAssociation(GenotypeToDiseaseAssociation, ModelTo
 
 
 @dataclass(config=PydanticConfig)
-class CellLineAsAModelOfDiseaseAssociation(CellLineToDiseaseOrPhenotypicFeatureAssociation, ModelToDiseaseAssociationMixin, EntityToDiseaseAssociationMixin):
+class CellLineAsAModelOfDiseaseAssociation(
+    CellLineToDiseaseOrPhenotypicFeatureAssociation,
+    ModelToDiseaseAssociationMixin,
+    EntityToDiseaseAssociationMixin,
+):
 
     # Class Variables
     _category: ClassVar[str] = "CellLineAsAModelOfDiseaseAssociation"
@@ -5543,7 +5321,9 @@ class CellLineAsAModelOfDiseaseAssociation(CellLineToDiseaseOrPhenotypicFeatureA
 
 
 @dataclass(config=PydanticConfig)
-class OrganismalEntityAsAModelOfDiseaseAssociation(Association, ModelToDiseaseAssociationMixin, EntityToDiseaseAssociationMixin):
+class OrganismalEntityAsAModelOfDiseaseAssociation(
+    Association, ModelToDiseaseAssociationMixin, EntityToDiseaseAssociationMixin
+):
 
     # Class Variables
     _category: ClassVar[str] = "OrganismalEntityAsAModelOfDiseaseAssociation"
@@ -5567,7 +5347,6 @@ class OrganismToOrganismAssociation(Association):
 
     subject: Union[URIorCURIE, IndividualOrganism] = None
     object: Union[URIorCURIE, IndividualOrganism] = None
-    relation: Optional[Union[str, str]] = None
 
     # Validators
 
@@ -5592,7 +5371,6 @@ class TaxonToTaxonAssociation(Association):
 
     subject: Union[URIorCURIE, OrganismTaxon] = None
     object: Union[URIorCURIE, OrganismTaxon] = None
-    relation: Optional[Union[str, str]] = None
 
     # Validators
 
@@ -5676,6 +5454,7 @@ class SequenceVariantModulatesTreatmentAssociation(Association):
     An association between a sequence variant and a treatment or health intervention. The treatment object itself
     encompasses both the disease and the drug used.
     """
+
     subject: Union[URIorCURIE, SequenceVariant] = None
     object: Union[URIorCURIE, Treatment] = None
 
@@ -5725,6 +5504,7 @@ class MacromolecularMachineToEntityAssociationMixin:
     """
     an association which has a macromolecular machine mixin as a subject
     """
+
     subject: Union[URIorCURIE, NamedThing] = None
 
     # Validators
@@ -5737,7 +5517,9 @@ class MacromolecularMachineToEntityAssociationMixin:
 
 
 @dataclass(config=PydanticConfig)
-class MacromolecularMachineToMolecularActivityAssociation(FunctionalAssociation, MacromolecularMachineToEntityAssociationMixin):
+class MacromolecularMachineToMolecularActivityAssociation(
+    FunctionalAssociation, MacromolecularMachineToEntityAssociationMixin
+):
     """
     A functional association between a macromolecular machine (gene, gene product or complex) and a molecular activity
     (as represented in the GO molecular function branch), where the entity carries out the activity, or contributes to
@@ -5759,7 +5541,9 @@ class MacromolecularMachineToMolecularActivityAssociation(FunctionalAssociation,
 
 
 @dataclass(config=PydanticConfig)
-class MacromolecularMachineToBiologicalProcessAssociation(FunctionalAssociation, MacromolecularMachineToEntityAssociationMixin):
+class MacromolecularMachineToBiologicalProcessAssociation(
+    FunctionalAssociation, MacromolecularMachineToEntityAssociationMixin
+):
     """
     A functional association between a macromolecular machine (gene, gene product or complex) and a biological process
     or pathway (as represented in the GO biological process branch), where the entity carries out some part of the
@@ -5781,7 +5565,9 @@ class MacromolecularMachineToBiologicalProcessAssociation(FunctionalAssociation,
 
 
 @dataclass(config=PydanticConfig)
-class MacromolecularMachineToCellularComponentAssociation(FunctionalAssociation, MacromolecularMachineToEntityAssociationMixin):
+class MacromolecularMachineToCellularComponentAssociation(
+    FunctionalAssociation, MacromolecularMachineToEntityAssociationMixin
+):
     """
     A functional association between a macromolecular machine (gene, gene product or complex) and a cellular component
     (as represented in the GO cellular component branch), where the entity carries out its function in the cellular
@@ -5890,7 +5676,6 @@ class EntityToDiseaseAssociation(Association):
     FDA_approval_status: Optional[Union[str, FDAApprovalStatusEnum]] = None
 
 
-
 @dataclass(config=PydanticConfig)
 class EntityToPhenotypicFeatureAssociation(Association):
 
@@ -5898,7 +5683,6 @@ class EntityToPhenotypicFeatureAssociation(Association):
     _category: ClassVar[str] = "EntityToPhenotypicFeatureAssociation"
 
     FDA_approval_status: Optional[Union[str, FDAApprovalStatusEnum]] = None
-
 
 
 @dataclass(config=PydanticConfig)
@@ -5909,8 +5693,6 @@ class SequenceAssociation(Association):
 
     # Class Variables
     _category: ClassVar[str] = "SequenceAssociation"
-
-
 
 
 @dataclass(config=PydanticConfig)
@@ -6117,7 +5899,9 @@ class AnatomicalEntityToAnatomicalEntityAssociation(Association):
 
 
 @dataclass(config=PydanticConfig)
-class AnatomicalEntityToAnatomicalEntityPartOfAssociation(AnatomicalEntityToAnatomicalEntityAssociation):
+class AnatomicalEntityToAnatomicalEntityPartOfAssociation(
+    AnatomicalEntityToAnatomicalEntityAssociation
+):
     """
     A relationship between two anatomical entities where the relationship is mereological, i.e the two entities are
     related by parthood. This includes relationships between cellular components and cells, between cells and tissues,
@@ -6152,7 +5936,9 @@ class AnatomicalEntityToAnatomicalEntityPartOfAssociation(AnatomicalEntityToAnat
 
 
 @dataclass(config=PydanticConfig)
-class AnatomicalEntityToAnatomicalEntityOntogenicAssociation(AnatomicalEntityToAnatomicalEntityAssociation):
+class AnatomicalEntityToAnatomicalEntityOntogenicAssociation(
+    AnatomicalEntityToAnatomicalEntityAssociation
+):
     """
     A relationship between two anatomical entities where the relationship is ontogenic, i.e. the two entities are
     related by development. A number of different relationship types can be used to specify the precise nature of the
@@ -6191,6 +5977,7 @@ class OrganismTaxonToEntityAssociation:
     """
     An association between an organism taxon and another entity
     """
+
     subject: Union[URIorCURIE, OrganismTaxon] = None
 
     # Validators
@@ -6207,6 +5994,7 @@ class OrganismTaxonToOrganismTaxonAssociation(Association, OrganismTaxonToEntity
     """
     A relationship between two organism taxon nodes
     """
+
     subject: Union[URIorCURIE, OrganismTaxon] = None
     object: Union[URIorCURIE, OrganismTaxon] = None
 
@@ -6433,12 +6221,15 @@ CodingSequence.__pydantic_model__.update_forward_refs()
 Polypeptide.__pydantic_model__.update_forward_refs()
 Protein.__pydantic_model__.update_forward_refs()
 ProteinIsoform.__pydantic_model__.update_forward_refs()
+NucleicAcidSequenceMotif.__pydantic_model__.update_forward_refs()
 RNAProduct.__pydantic_model__.update_forward_refs()
 RNAProductIsoform.__pydantic_model__.update_forward_refs()
 NoncodingRNAProduct.__pydantic_model__.update_forward_refs()
 MicroRNA.__pydantic_model__.update_forward_refs()
 SiRNA.__pydantic_model__.update_forward_refs()
 GeneGroupingMixin.__pydantic_model__.update_forward_refs()
+ProteinDomain.__pydantic_model__.update_forward_refs()
+ProteinFamily.__pydantic_model__.update_forward_refs()
 GeneFamily.__pydantic_model__.update_forward_refs()
 Zygosity.__pydantic_model__.update_forward_refs()
 Genotype.__pydantic_model__.update_forward_refs()
@@ -6520,7 +6311,7 @@ ExposureEventToOutcomeAssociation.__pydantic_model__.update_forward_refs()
 FrequencyQualifierMixin.__pydantic_model__.update_forward_refs()
 EntityToFeatureOrDiseaseQualifiersMixin.__pydantic_model__.update_forward_refs()
 EntityToPhenotypicFeatureAssociationMixin.__pydantic_model__.update_forward_refs()
-NamedThingToInformationContentEntityAssociation.__pydantic_model__.update_forward_refs()
+InformationContentEntityToNamedThingAssociation.__pydantic_model__.update_forward_refs()
 EntityToDiseaseAssociationMixin.__pydantic_model__.update_forward_refs()
 DiseaseOrPhenotypicFeatureToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
 DiseaseOrPhenotypicFeatureToLocationAssociation.__pydantic_model__.update_forward_refs()
@@ -6581,5 +6372,3 @@ OrganismTaxonToOrganismTaxonAssociation.__pydantic_model__.update_forward_refs()
 OrganismTaxonToOrganismTaxonSpecialization.__pydantic_model__.update_forward_refs()
 OrganismTaxonToOrganismTaxonInteraction.__pydantic_model__.update_forward_refs()
 OrganismTaxonToEnvironmentAssociation.__pydantic_model__.update_forward_refs()
-
-
