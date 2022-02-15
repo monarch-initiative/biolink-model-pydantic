@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2021-12-01T16:30:38
+# Generation date: 2022-02-14T17:25:28
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -1385,7 +1385,6 @@ class PredicateType(str, Enum):
     occurs_in = "biolink:occurs_in"
     occurs_together_in_literature_with = "biolink:occurs_together_in_literature_with"
     opposite_of = "biolink:opposite_of"
-    organism_taxon_subclass_of = "biolink:organism_taxon_subclass_of"
     orthologous_to = "biolink:orthologous_to"
     overlaps = "biolink:overlaps"
     paralogous_to = "biolink:paralogous_to"
@@ -1822,15 +1821,6 @@ class OrganismTaxon(NamedThing):
     _id_prefixes: ClassVar[List[str]] = ["NCBITaxon", "MESH"]
 
     has_taxonomic_rank: Optional[Union[str, TaxonomicRank]] = None
-    subclass_of: Optional[
-        Union[List[Union[URIorCURIE, OrganismTaxon]], Union[URIorCURIE, OrganismTaxon]]
-    ] = field(default_factory=list)
-
-    # Validators
-
-    @validator('subclass_of', allow_reuse=True)
-    def convert_subclass_of_to_list_check_curies(cls, value):
-        return convert_scalar_to_list_check_curies(OrganismTaxon, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -4218,7 +4208,6 @@ class PairwiseGeneToGeneInteraction(GeneToGeneAssociation):
     _category: ClassVar[str] = "PairwiseGeneToGeneInteraction"
 
     predicate: Union[str, PredicateType] = None
-    relation: Optional[Union[str, str]] = None
 
     # Validators
 
@@ -4242,7 +4231,6 @@ class PairwiseMolecularInteraction(PairwiseGeneToGeneInteraction):
     predicate: Union[str, PredicateType] = None
     object: Union[URIorCURIE, MolecularEntity] = None
     interacting_molecules_category: Optional[Union[str, OntologyClass]] = None
-    relation: Optional[Union[str, str]] = None
 
     # Validators
 
@@ -4675,7 +4663,6 @@ class EntityToFeatureOrDiseaseQualifiersMixin(FrequencyQualifierMixin):
 class EntityToPhenotypicFeatureAssociationMixin(EntityToFeatureOrDiseaseQualifiersMixin):
     object: Union[URIorCURIE, PhenotypicFeature] = None
     sex_qualifier: Optional[Union[str, BiologicalSex]] = None
-    description: Optional[Union[str, NarrativeText]] = None
 
     # Validators
 
@@ -5358,7 +5345,6 @@ class OrganismToOrganismAssociation(Association):
 
     subject: Union[URIorCURIE, IndividualOrganism] = None
     object: Union[URIorCURIE, IndividualOrganism] = None
-    relation: Optional[Union[str, str]] = None
 
     # Validators
 
@@ -5383,7 +5369,6 @@ class TaxonToTaxonAssociation(Association):
 
     subject: Union[URIorCURIE, OrganismTaxon] = None
     object: Union[URIorCURIE, OrganismTaxon] = None
-    relation: Optional[Union[str, str]] = None
 
     # Validators
 
