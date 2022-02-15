@@ -1,2 +1,2 @@
 """Pydantic dataclasses for the Biolink model"""
-__version__ = '0.1.4'
+__version__ = '0.1.5'
