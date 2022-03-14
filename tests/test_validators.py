@@ -70,6 +70,14 @@ def test_good_curie():
     assert 'HP:0000001' == entity.id
 
 
+def test_curie_like_synonym():
+    """
+    Tests that a synonym that looks a little like a curie won't cause split errors
+    """
+    entity = Gene(id="MGI:1", synonym=['si:dkey-13i15.1si:dkey-30j22.1'])
+    assert entity.synonym == ['si:dkey-13i15.1si:dkey-30j22.1']
+
+
 def test_taxon():
     gene1 = Gene(id='MGI:1', in_taxon='NCBITaxon:1')
     gene2 = Gene(id='MGI:1', in_taxon=['NCBITaxon:1'])

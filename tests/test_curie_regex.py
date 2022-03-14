@@ -1,11 +1,10 @@
 import re
 
 import pytest
+
 from pydanticgen.pydanticgen import PydanticGen
 
-curie_regexp = re.compile(
-    PydanticGen.curie_regexp
-)
+curie_regexp = re.compile(PydanticGen.curie_regexp)
 
 
 @pytest.mark.parametrize(
@@ -20,7 +19,7 @@ curie_regexp = re.compile(
         "D:1.1/a.bcd.1900.1.1",
         "DOI:10.10/06-11(22)33-1",
         "DOI:10.1002/(SICI)1097-0061(19980430)14:6<551::AID-YEA260>3.0.CO;2-Q",
-        "A.B:12345"
+        "A.B:12345",
     ],
 )
 def test_valid_curie(curie):
