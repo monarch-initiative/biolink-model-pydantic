@@ -71,7 +71,9 @@ class PydanticGen(PythonGenerator):
 
     generatorname = Path(__file__).name
     generatorversion = PYTHON_GEN_VERSION
-    curie_regexp = r'^[a-zA-Z_]?[a-zA-Z_0-9.-]*:([A-Za-z0-9_][A-Za-z0-9_.-]*[A-Za-z0-9./\(\)\-><_:;]*)?$'
+    curie_regexp = (
+        r'^[a-zA-Z_]?[a-zA-Z_0-9.-]*:([A-Za-z0-9_][A-Za-z0-9_.-]*[A-Za-z0-9./\(\)\-><_:;]*)?$'
+    )
 
     def __init__(
         self,
@@ -746,7 +748,7 @@ def check_curie_prefix(cls, curie: Union[List, str, None]):
                         f"for a list of valid curie prefixes"
                     )
     elif curie:
-        prefix, local_id = curie.split(':')
+        prefix, local_id = curie.split(':', 1)
         if prefix not in valid_prefix:
             LOG.warning(f"{curie} prefix '{prefix}' not in curie map")
             if hasattr(cls, '_id_prefixes') and cls._id_prefixes:
