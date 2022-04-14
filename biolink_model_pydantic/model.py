@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2022-03-14T16:23:52
+# Generation date: 2022-04-14T15:31:20
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -94,6 +94,7 @@ valid_prefix = {
     "ATFDB_FAMILY",
     "ATO",
     "AUTDB",
+    "AspGD",
     "BACMAP_BIOG",
     "BACMAP_MAP",
     "BAO",
@@ -616,6 +617,7 @@ valid_prefix = {
     "MYCO_SMEG",
     "MYCO_TUBER",
     "MZSPEC",
+    "MmusDv",
     "MonarchArchive",
     "MonarchData",
     "NAPDI",
@@ -685,6 +687,7 @@ valid_prefix = {
     "OMIA-breed",
     "OMIABIS",
     "OMIM",
+    "OMIM_PS",
     "OMIT",
     "OMP",
     "OMRSE",
@@ -769,7 +772,6 @@ valid_prefix = {
     "PO",
     "POCKETOME",
     "POLBASE",
-    "POMBASE",
     "PORO",
     "PPO",
     "PR",
@@ -797,6 +799,7 @@ valid_prefix = {
     "PW",
     "PX",
     "PathWhiz",
+    "PomBase",
     "RBK",
     "RBRC",
     "REACT",
@@ -973,6 +976,8 @@ valid_prefix = {
     "WBPhenotype",
     "WBVocab",
     "WB_RNAI",
+    "WBbt",
+    "WBls",
     "WD_Entity",
     "WD_Prop",
     "WIKIDATA",
@@ -1038,6 +1043,7 @@ valid_prefix = {
     "medgen",
     "metacyc_reaction",
     "mirbase",
+    "mmmp_biomaps",
     "oa",
     "oboInOwl",
     "oboformat",
@@ -1308,6 +1314,7 @@ class PredicateType(str, Enum):
     has_splice_site_variant = "biolink:has_splice_site_variant"
     has_substrate = "biolink:has_substrate"
     has_synonymous_variant = "biolink:has_synonymous_variant"
+    has_target = "biolink:has_target"
     has_upstream_actor = "biolink:has_upstream_actor"
     has_upstream_or_within_actor = "biolink:has_upstream_or_within_actor"
     has_variant_part = "biolink:has_variant_part"
@@ -1438,6 +1445,7 @@ class PredicateType(str, Enum):
     synthesis_affected_by = "biolink:synthesis_affected_by"
     synthesis_decreased_by = "biolink:synthesis_decreased_by"
     synthesis_increased_by = "biolink:synthesis_increased_by"
+    target_for = "biolink:target_for"
     taxon_of = "biolink:taxon_of"
     temporally_related_to = "biolink:temporally_related_to"
     transcribed_from = "biolink:transcribed_from"
@@ -1535,10 +1543,28 @@ class PredicateQualifierEnum(str, Enum):
 
 
 @unique
+class DruggableGeneCategoryEnum(str, Enum):
+
+    Tclin = "Tclin"
+    Tbio = "Tbio"
+    Tchem = "Tchem"
+    Tdark = "Tdark"
+
+
+@unique
 class DrugAvailabilityEnum(str, Enum):
 
     value_0 = "over the counter"
     prescription = "prescription"
+
+
+@unique
+class DrugDeliveryEnum(str, Enum):
+
+    inhalation = "inhalation"
+    oral = "oral"
+    value_2 = "absorbtion through the skin"
+    value_3 = "intravenous injection"
 
 
 @unique
@@ -1616,7 +1642,7 @@ class Attribute(Annotation, OntologyClass):
     ] = field(default_factory=list)
     has_qualitative_value: Optional[Union[URIorCURIE, NamedThing]] = None
     iri: Optional[IriType] = None
-    source: Optional[Union[str, LabelType]] = None
+    source: Optional[Union[str, str]] = None
 
     # Validators
 
@@ -1633,6 +1659,13 @@ class Attribute(Annotation, OntologyClass):
     def check_has_qualitative_value_prefix(cls, value):
         check_curie_prefix(NamedThing, value)
         return value
+
+
+@dataclass(config=PydanticConfig)
+class ChemicalRole(Attribute):
+
+    # Class Variables
+    _category: ClassVar[str] = "ChemicalRole"
 
 
 @dataclass(config=PydanticConfig)
@@ -1727,10 +1760,7 @@ class Entity:
     type: Optional[Union[str, str]] = None
     name: Optional[Union[str, LabelType]] = None
     description: Optional[Union[str, NarrativeText]] = None
-    source: Optional[Union[str, LabelType]] = None
-    provided_by: Optional[Union[List[Union[URIorCURIE, Agent]], Union[URIorCURIE, Agent]]] = field(
-        default_factory=list
-    )
+    source: Optional[Union[str, str]] = None
     has_attribute: Optional[Union[List[Union[str, Attribute]], Union[str, Attribute]]] = field(
         default_factory=list
     )
@@ -1742,10 +1772,6 @@ class Entity:
         check_value_is_not_none("id", value)
         check_curie_prefix(Entity, value)
         return value
-
-    @validator('provided_by', allow_reuse=True)
-    def convert_provided_by_to_list_check_curies(cls, value):
-        return convert_scalar_to_list_check_curies(Agent, value)
 
     @validator('has_attribute', allow_reuse=True)
     def convert_has_attribute_to_list_check_curies(cls, value):
@@ -1774,6 +1800,15 @@ class NamedThing(Entity):
     _category: ClassVar[str] = "NamedThing"
 
     category: Union[List[Union[URIorCURIE, NamedThing]], Union[URIorCURIE, NamedThing]] = None
+    provided_by: Optional[Union[List[Union[str, str]], Union[str, str]]] = field(
+        default_factory=list
+    )
+
+    # Validators
+
+    @validator('provided_by', allow_reuse=True)
+    def convert_provided_by_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -2194,6 +2229,7 @@ class Procedure(NamedThing, ActivityAndBehavior):
 
     # Class Variables
     _category: ClassVar[str] = "Procedure"
+    _id_prefixes: ClassVar[List[str]] = ["CPT"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2515,6 +2551,7 @@ class LifeStage(OrganismalEntity, ThingWithTaxon):
 
     # Class Variables
     _category: ClassVar[str] = "LifeStage"
+    _id_prefixes: ClassVar[List[str]] = ["HsapDv", "MmusDv", "ZFS", "FBdv", "WBls", "UBERON"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2571,6 +2608,7 @@ class Disease(DiseaseOrPhenotypicFeature):
         "MONDO",
         "DOID",
         "OMIM",
+        "OMIM.PS",
         "ORPHANET",
         "EFO",
         "UMLS",
@@ -2611,6 +2649,7 @@ class PhenotypicFeature(DiseaseOrPhenotypicFeature):
         "MESH",
         "XPO",
         "FYPO",
+        "TO",
     ]
 
 
@@ -2632,7 +2671,18 @@ class AnatomicalEntity(OrganismalEntity, ThingWithTaxon, PhysicalEssence):
 
     # Class Variables
     _category: ClassVar[str] = "AnatomicalEntity"
-    _id_prefixes: ClassVar[List[str]] = ["UBERON", "GO", "CL", "UMLS", "MESH", "NCIT"]
+    _id_prefixes: ClassVar[List[str]] = [
+        "UBERON",
+        "GO",
+        "CL",
+        "UMLS",
+        "MESH",
+        "NCIT",
+        "EMAPA",
+        "ZFA",
+        "FBbt",
+        "WBbt",
+    ]
 
 
 @dataclass(config=PydanticConfig)
@@ -2708,6 +2758,9 @@ class ChemicalEntity(
     ] = field(default_factory=list)
     max_tolerated_dose: Optional[Union[str, str]] = None
     is_toxic: Optional[Union[bool, Bool]] = None
+    has_chemical_role: Optional[
+        Union[List[Union[str, ChemicalRole]], Union[str, ChemicalRole]]
+    ] = field(default_factory=list)
 
     # Validators
 
@@ -2718,6 +2771,10 @@ class ChemicalEntity(
 
     @validator('available_from', allow_reuse=True)
     def convert_available_from_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
+
+    @validator('has_chemical_role', allow_reuse=True)
+    def convert_has_chemical_role_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(cls, value)
 
 
@@ -2838,6 +2895,9 @@ class ChemicalMixture(ChemicalEntity):
     is_supplement: Optional[Union[URIorCURIE, ChemicalMixture]] = None
     highest_FDA_approval_status: Optional[Union[str, str]] = None
     drug_regulatory_status_world_wide: Optional[Union[str, str]] = None
+    routes_of_delivery: Optional[
+        Union[List[Union[str, DrugDeliveryEnum]], Union[str, DrugDeliveryEnum]]
+    ] = field(default_factory=list)
 
     # Validators
 
@@ -2845,6 +2905,10 @@ class ChemicalMixture(ChemicalEntity):
     def check_is_supplement_prefix(cls, value):
         check_curie_prefix(ChemicalMixture, value)
         return value
+
+    @validator('routes_of_delivery', allow_reuse=True)
+    def convert_routes_of_delivery_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -3068,11 +3132,12 @@ class Gene(
         "FB",
         "RGD",
         "SGD",
-        "POMBASE",
+        "PomBase",
         "OMIM",
         "KEGG.GENE",
         "UMLS",
         "Xenbase",
+        "AspGD",
     ]
 
     symbol: Optional[Union[str, str]] = None
@@ -3685,6 +3750,16 @@ class ChemicalExposure(ExposureEvent):
     # Class Variables
     _category: ClassVar[str] = "ChemicalExposure"
 
+    has_quantitative_value: Optional[
+        Union[List[Union[str, QuantityValue]], Union[str, QuantityValue]]
+    ] = field(default_factory=list)
+
+    # Validators
+
+    @validator('has_quantitative_value', allow_reuse=True)
+    def convert_has_quantitative_value_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
+
 
 @dataclass(config=PydanticConfig)
 class ComplexChemicalExposure:
@@ -3930,6 +4005,14 @@ class Association(Entity):
     has_evidence: Optional[
         Union[List[Union[URIorCURIE, EvidenceType]], Union[URIorCURIE, EvidenceType]]
     ] = field(default_factory=list)
+    knowledge_source: Optional[
+        Union[List[Union[URIorCURIE, InformationResource]], Union[URIorCURIE, InformationResource]]
+    ] = field(default_factory=list)
+    original_knowledge_source: Optional[Union[URIorCURIE, InformationResource]] = None
+    primary_knowledge_source: Optional[Union[URIorCURIE, InformationResource]] = None
+    aggregator_knowledge_source: Optional[
+        Union[List[Union[URIorCURIE, InformationResource]], Union[URIorCURIE, InformationResource]]
+    ] = field(default_factory=list)
     type: Optional[Union[str, str]] = None
     category: Optional[Union[List[Union[str, CategoryType]], Union[str, CategoryType]]] = field(
         default_factory=list
@@ -3965,6 +4048,24 @@ class Association(Entity):
     @validator('has_evidence', allow_reuse=True)
     def convert_has_evidence_to_list_check_curies(cls, value):
         return convert_scalar_to_list_check_curies(EvidenceType, value)
+
+    @validator('knowledge_source', allow_reuse=True)
+    def convert_knowledge_source_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(InformationResource, value)
+
+    @validator('original_knowledge_source', allow_reuse=True)
+    def check_original_knowledge_source_prefix(cls, value):
+        check_curie_prefix(InformationResource, value)
+        return value
+
+    @validator('primary_knowledge_source', allow_reuse=True)
+    def check_primary_knowledge_source_prefix(cls, value):
+        check_curie_prefix(InformationResource, value)
+        return value
+
+    @validator('aggregator_knowledge_source', allow_reuse=True)
+    def convert_aggregator_knowledge_source_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(InformationResource, value)
 
 
 @dataclass(config=PydanticConfig)
@@ -5025,6 +5126,37 @@ class GeneToDiseaseAssociation(
 
 
 @dataclass(config=PydanticConfig)
+class DruggableGeneToDiseaseAssociation(
+    GeneToDiseaseAssociation, EntityToDiseaseAssociationMixin, GeneToEntityAssociationMixin
+):
+
+    # Class Variables
+    _category: ClassVar[str] = "DruggableGeneToDiseaseAssociation"
+
+    subject: Union[str, GeneOrGeneProduct] = None
+    predicate: Union[str, PredicateType] = None
+    has_evidence: Optional[
+        Union[List[Union[str, DruggableGeneCategoryEnum]], Union[str, DruggableGeneCategoryEnum]]
+    ] = field(default_factory=list)
+
+    # Validators
+
+    @validator('subject', allow_reuse=True)
+    def validate_required_subject(cls, value):
+        check_value_is_not_none("subject", value)
+        return value
+
+    @validator('predicate', allow_reuse=True)
+    def validate_required_predicate(cls, value):
+        check_value_is_not_none("predicate", value)
+        return value
+
+    @validator('has_evidence', allow_reuse=True)
+    def convert_has_evidence_to_list_check_curies(cls, value):
+        return convert_scalar_to_list_check_curies(cls, value)
+
+
+@dataclass(config=PydanticConfig)
 class VariantToGeneAssociation(Association, VariantToEntityAssociationMixin):
     """
     An association between a variant and a gene, where the variant has a genetic association with the gene (i.e. is in
@@ -5412,7 +5544,7 @@ class GeneHasVariantThatContributesToDiseaseAssociation(GeneToDiseaseAssociation
 @dataclass(config=PydanticConfig)
 class GeneToExpressionSiteAssociation(Association):
     """
-    An association between a gene and an expression site, possibly qualified by stage/timing info.
+    An association between a gene and a gene expression site, possibly qualified by stage/timing info.
     """
 
     # Class Variables
@@ -6114,6 +6246,7 @@ OntologyClass.__pydantic_model__.update_forward_refs()
 Annotation.__pydantic_model__.update_forward_refs()
 QuantityValue.__pydantic_model__.update_forward_refs()
 Attribute.__pydantic_model__.update_forward_refs()
+ChemicalRole.__pydantic_model__.update_forward_refs()
 BiologicalSex.__pydantic_model__.update_forward_refs()
 PhenotypicSex.__pydantic_model__.update_forward_refs()
 GenotypicSex.__pydantic_model__.update_forward_refs()
@@ -6329,6 +6462,7 @@ GeneToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
 VariantToEntityAssociationMixin.__pydantic_model__.update_forward_refs()
 GeneToPhenotypicFeatureAssociation.__pydantic_model__.update_forward_refs()
 GeneToDiseaseAssociation.__pydantic_model__.update_forward_refs()
+DruggableGeneToDiseaseAssociation.__pydantic_model__.update_forward_refs()
 VariantToGeneAssociation.__pydantic_model__.update_forward_refs()
 VariantToGeneExpressionAssociation.__pydantic_model__.update_forward_refs()
 VariantToPopulationAssociation.__pydantic_model__.update_forward_refs()

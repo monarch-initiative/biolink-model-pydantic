@@ -9,13 +9,13 @@ from pydantic import ValidationError
 from biolink_model_pydantic.model import Entity, Gene, Publication
 
 
-def test_entity_provided_by_to_list_converter():
+def test_gene_xref_to_list_converter():
     """
     Test that passing a string to Entity.provided_by is converted to a list
     """
-    entity = Entity(id="HP:123")
-    entity.provided_by = 'INFORES:stringdb'
-    assert entity.provided_by == ['INFORES:stringdb']
+    gene = Gene(id="MGI:123")
+    gene.xref = 'ENSEMBL:ENSMUSG00123567'
+    assert gene.xref == ['ENSEMBL:ENSMUSG00123567']
 
 
 def test_bad_curie():
