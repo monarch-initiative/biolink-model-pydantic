@@ -524,7 +524,7 @@ valid_prefix = {{
         vars = []
 
         if not (cls.mixin or cls.abstract):
-            vars.append(f'_category: ClassVar[str] = "{camelcase(cls.name)}"')
+            vars.append(f'category: ClassVar[str] = {{"biolink:{camelcase(cls.name)}"}}')
 
         id_prefixes_fmt = ',\n'.join([f'\t\t"{prefix}"' for prefix in cls.id_prefixes])
 
@@ -697,14 +697,15 @@ Predicate = namedtuple(
     def __post_init__(self):
         # Initialize default categories if not set
         # by traversing the MRO chain
-        if not self.category:
-            self.category = list(
-                {
-                    f'biolink:{super_class._category}'
-                    for super_class in inspect.getmro(type(self))
-                    if hasattr(super_class, '_category')
-                }
-            )
+        pass
+        # if not self.category:
+        #     self.category = list(
+        #         {
+        #             f'biolink:{super_class._category}'
+        #             for super_class in inspect.getmro(type(self))
+        #             if hasattr(super_class, '_category')
+        #         }
+        #     )
         '''
 
     @staticmethod
