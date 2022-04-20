@@ -524,7 +524,7 @@ valid_prefix = {{
         vars = []
 
         if not (cls.mixin or cls.abstract):
-            vars.append(f'category: ClassVar[str] = {{"biolink:{camelcase(cls.name)}"}}')
+            vars.append(f'category: ClassVar[str] = ["biolink:{camelcase(cls.name)}"]')
 
         id_prefixes_fmt = ',\n'.join([f'\t\t"{prefix}"' for prefix in cls.id_prefixes])
 

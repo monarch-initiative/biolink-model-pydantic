@@ -1,5 +1,5 @@
 # Auto generated from biolink-model.yaml by pydanticgen.py version: 0.9.0
-# Generation date: 2022-04-19T10:04:56
+# Generation date: 2022-04-20T11:43:05
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -1618,7 +1618,7 @@ class QuantityValue(Annotation):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:QuantityValue"}
+    category: ClassVar[str] = ["biolink:QuantityValue"]
 
     has_unit: Optional[Union[str, Unit]] = None
     has_numeric_value: Optional[Union[float, float]] = None
@@ -1632,7 +1632,7 @@ class Attribute(Annotation, OntologyClass):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Attribute"}
+    category: ClassVar[str] = ["biolink:Attribute"]
     _id_prefixes: ClassVar[List[str]] = ["EDAM-DATA", "EDAM-FORMAT", "EDAM-OPERATION", "EDAM-TOPIC"]
 
     has_attribute_type: Union[str, OntologyClass] = None
@@ -1665,14 +1665,14 @@ class Attribute(Annotation, OntologyClass):
 class ChemicalRole(Attribute):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ChemicalRole"}
+    category: ClassVar[str] = ["biolink:ChemicalRole"]
 
 
 @dataclass(config=PydanticConfig)
 class BiologicalSex(Attribute):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:BiologicalSex"}
+    category: ClassVar[str] = ["biolink:BiologicalSex"]
 
 
 @dataclass(config=PydanticConfig)
@@ -1682,7 +1682,7 @@ class PhenotypicSex(BiologicalSex):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PhenotypicSex"}
+    category: ClassVar[str] = ["biolink:PhenotypicSex"]
 
 
 @dataclass(config=PydanticConfig)
@@ -1693,7 +1693,7 @@ class GenotypicSex(BiologicalSex):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GenotypicSex"}
+    category: ClassVar[str] = ["biolink:GenotypicSex"]
 
 
 @dataclass(config=PydanticConfig)
@@ -1703,7 +1703,7 @@ class SeverityValue(Attribute):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:SeverityValue"}
+    category: ClassVar[str] = ["biolink:SeverityValue"]
 
 
 @dataclass(config=PydanticConfig)
@@ -1798,7 +1798,7 @@ class NamedThing(Entity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:NamedThing"}
+    category: ClassVar[str] = ["biolink:NamedThing"]
 
     category: Union[List[Union[URIorCURIE, NamedThing]], Union[URIorCURIE, NamedThing]] = None
     provided_by: Optional[Union[List[Union[str, str]], Union[str, str]]] = field(
@@ -1819,7 +1819,7 @@ class RelationshipType(OntologyClass):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:RelationshipType"}
+    category: ClassVar[str] = ["biolink:RelationshipType"]
 
 
 @dataclass(config=PydanticConfig)
@@ -1843,7 +1843,7 @@ class TaxonomicRank(OntologyClass):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:TaxonomicRank"}
+    category: ClassVar[str] = ["biolink:TaxonomicRank"]
     _id_prefixes: ClassVar[List[str]] = ["TAXRANK"]
 
 
@@ -1855,7 +1855,7 @@ class OrganismTaxon(NamedThing):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:OrganismTaxon"}
+    category: ClassVar[str] = ["biolink:OrganismTaxon"]
     _id_prefixes: ClassVar[List[str]] = ["NCBITaxon", "MESH"]
 
     has_taxonomic_rank: Optional[Union[str, TaxonomicRank]] = None
@@ -1868,7 +1868,7 @@ class Event(NamedThing):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Event"}
+    category: ClassVar[str] = ["biolink:Event"]
 
 
 @dataclass(config=PydanticConfig)
@@ -1884,7 +1884,7 @@ class Agent(AdministrativeEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Agent"}
+    category: ClassVar[str] = ["biolink:Agent"]
     _id_prefixes: ClassVar[List[str]] = ["isbn", "ORCID", "ScopusID", "ResearchID", "GSID", "isni"]
 
     id: Union[URIorCURIE, Agent] = None
@@ -1929,7 +1929,7 @@ class Dataset(InformationContentEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Dataset"}
+    category: ClassVar[str] = ["biolink:Dataset"]
 
 
 @dataclass(config=PydanticConfig)
@@ -1939,7 +1939,7 @@ class DatasetDistribution(InformationContentEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DatasetDistribution"}
+    category: ClassVar[str] = ["biolink:DatasetDistribution"]
 
     distribution_download_url: Optional[Union[str, str]] = None
 
@@ -1951,7 +1951,7 @@ class DatasetVersion(InformationContentEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DatasetVersion"}
+    category: ClassVar[str] = ["biolink:DatasetVersion"]
 
     has_dataset: Optional[Union[URIorCURIE, Dataset]] = None
     ingest_date: Optional[Union[str, str]] = None
@@ -1977,7 +1977,7 @@ class DatasetSummary(InformationContentEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DatasetSummary"}
+    category: ClassVar[str] = ["biolink:DatasetSummary"]
 
     source_web_page: Optional[Union[str, str]] = None
     source_logo: Optional[Union[str, str]] = None
@@ -1990,7 +1990,7 @@ class ConfidenceLevel(InformationContentEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ConfidenceLevel"}
+    category: ClassVar[str] = ["biolink:ConfidenceLevel"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2000,7 +2000,7 @@ class EvidenceType(InformationContentEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:EvidenceType"}
+    category: ClassVar[str] = ["biolink:EvidenceType"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2014,7 +2014,7 @@ class InformationResource(InformationContentEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:InformationResource"}
+    category: ClassVar[str] = ["biolink:InformationResource"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2027,7 +2027,7 @@ class Publication(InformationContentEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Publication"}
+    category: ClassVar[str] = ["biolink:Publication"]
     _id_prefixes: ClassVar[List[str]] = ["NLMID"]
 
     id: Union[URIorCURIE, Publication] = None
@@ -2085,7 +2085,7 @@ class Book(Publication):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Book"}
+    category: ClassVar[str] = ["biolink:Book"]
     _id_prefixes: ClassVar[List[str]] = ["isbn", "NLMID"]
 
     id: Union[URIorCURIE, Book] = None
@@ -2109,7 +2109,7 @@ class Book(Publication):
 class BookChapter(Publication):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:BookChapter"}
+    category: ClassVar[str] = ["biolink:BookChapter"]
 
     published_in: Union[str, URIorCURIE] = None
     volume: Optional[Union[str, str]] = None
@@ -2130,7 +2130,7 @@ class Serial(Publication):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Serial"}
+    category: ClassVar[str] = ["biolink:Serial"]
     _id_prefixes: ClassVar[List[str]] = ["issn", "NLMID"]
 
     id: Union[URIorCURIE, Serial] = None
@@ -2157,7 +2157,7 @@ class Serial(Publication):
 class Article(Publication):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Article"}
+    category: ClassVar[str] = ["biolink:Article"]
     _id_prefixes: ClassVar[List[str]] = ["PMID"]
 
     published_in: Union[str, URIorCURIE] = None
@@ -2194,7 +2194,7 @@ class PhysicalEntity(NamedThing, PhysicalEssence):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PhysicalEntity"}
+    category: ClassVar[str] = ["biolink:PhysicalEntity"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2219,7 +2219,7 @@ class Activity(NamedThing, ActivityAndBehavior):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Activity"}
+    category: ClassVar[str] = ["biolink:Activity"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2229,7 +2229,7 @@ class Procedure(NamedThing, ActivityAndBehavior):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Procedure"}
+    category: ClassVar[str] = ["biolink:Procedure"]
     _id_prefixes: ClassVar[List[str]] = ["CPT"]
 
 
@@ -2240,7 +2240,7 @@ class Phenomenon(NamedThing, Occurrent):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Phenomenon"}
+    category: ClassVar[str] = ["biolink:Phenomenon"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2250,7 +2250,7 @@ class Device(NamedThing):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Device"}
+    category: ClassVar[str] = ["biolink:Device"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2269,7 +2269,7 @@ class MaterialSample(PhysicalEntity, SubjectOfInvestigation):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MaterialSample"}
+    category: ClassVar[str] = ["biolink:MaterialSample"]
     _id_prefixes: ClassVar[List[str]] = ["BIOSAMPLE", "GOLD.META"]
 
 
@@ -2280,21 +2280,21 @@ class PlanetaryEntity(NamedThing):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PlanetaryEntity"}
+    category: ClassVar[str] = ["biolink:PlanetaryEntity"]
 
 
 @dataclass(config=PydanticConfig)
 class EnvironmentalProcess(PlanetaryEntity, Occurrent):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:EnvironmentalProcess"}
+    category: ClassVar[str] = ["biolink:EnvironmentalProcess"]
 
 
 @dataclass(config=PydanticConfig)
 class EnvironmentalFeature(PlanetaryEntity):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:EnvironmentalFeature"}
+    category: ClassVar[str] = ["biolink:EnvironmentalFeature"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2304,7 +2304,7 @@ class GeographicLocation(PlanetaryEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeographicLocation"}
+    category: ClassVar[str] = ["biolink:GeographicLocation"]
 
     latitude: Optional[Union[float, float]] = None
     longitude: Optional[Union[float, float]] = None
@@ -2317,7 +2317,7 @@ class GeographicLocationAtTime(GeographicLocation):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeographicLocationAtTime"}
+    category: ClassVar[str] = ["biolink:GeographicLocationAtTime"]
 
     timepoint: Optional[Union[str, TimeType]] = None
 
@@ -2355,7 +2355,7 @@ class GenomicEntity(ThingWithTaxon):
 class ChemicalSubstance:
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ChemicalSubstance"}
+    category: ClassVar[str] = ["biolink:ChemicalSubstance"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2366,7 +2366,7 @@ class BiologicalProcessOrActivity(BiologicalEntity, Occurrent, OntologyClass):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:BiologicalProcessOrActivity"}
+    category: ClassVar[str] = ["biolink:BiologicalProcessOrActivity"]
     _id_prefixes: ClassVar[List[str]] = ["GO", "REACT"]
 
     has_input: Optional[
@@ -2407,7 +2407,7 @@ class MolecularActivity(BiologicalProcessOrActivity, Occurrent, OntologyClass):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MolecularActivity"}
+    category: ClassVar[str] = ["biolink:MolecularActivity"]
     _id_prefixes: ClassVar[List[str]] = [
         "GO",
         "REACT",
@@ -2457,7 +2457,7 @@ class BiologicalProcess(BiologicalProcessOrActivity, Occurrent, OntologyClass):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:BiologicalProcess"}
+    category: ClassVar[str] = ["biolink:BiologicalProcess"]
     _id_prefixes: ClassVar[List[str]] = ["GO", "REACT", "metacyc.reaction", "KEGG.MODULE"]
 
 
@@ -2465,7 +2465,7 @@ class BiologicalProcess(BiologicalProcessOrActivity, Occurrent, OntologyClass):
 class Pathway(BiologicalProcess, OntologyClass):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Pathway"}
+    category: ClassVar[str] = ["biolink:Pathway"]
     _id_prefixes: ClassVar[List[str]] = [
         "GO",
         "REACT",
@@ -2484,7 +2484,7 @@ class Pathway(BiologicalProcess, OntologyClass):
 class PhysiologicalProcess(BiologicalProcess, OntologyClass):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PhysiologicalProcess"}
+    category: ClassVar[str] = ["biolink:PhysiologicalProcess"]
     _id_prefixes: ClassVar[List[str]] = ["GO", "REACT"]
 
 
@@ -2492,7 +2492,7 @@ class PhysiologicalProcess(BiologicalProcess, OntologyClass):
 class Behavior(BiologicalProcess, ActivityAndBehavior, OntologyClass):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Behavior"}
+    category: ClassVar[str] = ["biolink:Behavior"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2502,7 +2502,7 @@ class OrganismAttribute(Attribute):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:OrganismAttribute"}
+    category: ClassVar[str] = ["biolink:OrganismAttribute"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2512,7 +2512,7 @@ class PhenotypicQuality(OrganismAttribute):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PhenotypicQuality"}
+    category: ClassVar[str] = ["biolink:PhenotypicQuality"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2523,7 +2523,7 @@ class Inheritance(OrganismAttribute):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Inheritance"}
+    category: ClassVar[str] = ["biolink:Inheritance"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2551,7 +2551,7 @@ class LifeStage(OrganismalEntity, ThingWithTaxon):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:LifeStage"}
+    category: ClassVar[str] = ["biolink:LifeStage"]
     _id_prefixes: ClassVar[List[str]] = ["HsapDv", "MmusDv", "ZFS", "FBdv", "WBls", "UBERON"]
 
 
@@ -2563,7 +2563,7 @@ class IndividualOrganism(OrganismalEntity, ThingWithTaxon):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:IndividualOrganism"}
+    category: ClassVar[str] = ["biolink:IndividualOrganism"]
     _id_prefixes: ClassVar[List[str]] = ["ORCID"]
 
 
@@ -2575,7 +2575,7 @@ class PopulationOfIndividualOrganisms(OrganismalEntity, ThingWithTaxon):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PopulationOfIndividualOrganisms"}
+    category: ClassVar[str] = ["biolink:PopulationOfIndividualOrganisms"]
     _id_prefixes: ClassVar[List[str]] = ["HANCESTRO"]
 
 
@@ -2586,7 +2586,7 @@ class StudyPopulation(PopulationOfIndividualOrganisms):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:StudyPopulation"}
+    category: ClassVar[str] = ["biolink:StudyPopulation"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2597,14 +2597,14 @@ class DiseaseOrPhenotypicFeature(BiologicalEntity, ThingWithTaxon):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DiseaseOrPhenotypicFeature"}
+    category: ClassVar[str] = ["biolink:DiseaseOrPhenotypicFeature"]
 
 
 @dataclass(config=PydanticConfig)
 class Disease(DiseaseOrPhenotypicFeature):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Disease"}
+    category: ClassVar[str] = ["biolink:Disease"]
     _id_prefixes: ClassVar[List[str]] = [
         "MONDO",
         "DOID",
@@ -2633,7 +2633,7 @@ class PhenotypicFeature(DiseaseOrPhenotypicFeature):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PhenotypicFeature"}
+    category: ClassVar[str] = ["biolink:PhenotypicFeature"]
     _id_prefixes: ClassVar[List[str]] = [
         "HP",
         "EFO",
@@ -2661,7 +2661,7 @@ class BehavioralFeature(PhenotypicFeature):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:BehavioralFeature"}
+    category: ClassVar[str] = ["biolink:BehavioralFeature"]
 
 
 @dataclass(config=PydanticConfig)
@@ -2671,7 +2671,7 @@ class AnatomicalEntity(OrganismalEntity, ThingWithTaxon, PhysicalEssence):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:AnatomicalEntity"}
+    category: ClassVar[str] = ["biolink:AnatomicalEntity"]
     _id_prefixes: ClassVar[List[str]] = [
         "UBERON",
         "GO",
@@ -2693,7 +2693,7 @@ class CellularComponent(AnatomicalEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:CellularComponent"}
+    category: ClassVar[str] = ["biolink:CellularComponent"]
     _id_prefixes: ClassVar[List[str]] = ["GO", "MESH", "UMLS", "NCIT", "SNOMEDCT", "CL", "UBERON"]
 
 
@@ -2701,7 +2701,7 @@ class CellularComponent(AnatomicalEntity):
 class Cell(AnatomicalEntity):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Cell"}
+    category: ClassVar[str] = ["biolink:Cell"]
     _id_prefixes: ClassVar[List[str]] = ["CL", "PO", "UMLS", "NCIT", "MESH", "UBERON", "SNOMEDCT"]
 
 
@@ -2709,7 +2709,7 @@ class Cell(AnatomicalEntity):
 class CellLine(OrganismalEntity):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:CellLine"}
+    category: ClassVar[str] = ["biolink:CellLine"]
     _id_prefixes: ClassVar[List[str]] = ["CLO"]
 
 
@@ -2717,7 +2717,7 @@ class CellLine(OrganismalEntity):
 class GrossAnatomicalStructure(AnatomicalEntity):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GrossAnatomicalStructure"}
+    category: ClassVar[str] = ["biolink:GrossAnatomicalStructure"]
     _id_prefixes: ClassVar[List[str]] = ["UBERON", "UMLS", "MESH", "NCIT", "PO", "FAO"]
 
 
@@ -2750,7 +2750,7 @@ class ChemicalEntity(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ChemicalEntity"}
+    category: ClassVar[str] = ["biolink:ChemicalEntity"]
     _id_prefixes: ClassVar[List[str]] = ["UNII", "MESH", "CAS", "UMLS"]
 
     trade_name: Optional[Union[URIorCURIE, ChemicalEntity]] = None
@@ -2786,7 +2786,7 @@ class MolecularEntity(ChemicalEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MolecularEntity"}
+    category: ClassVar[str] = ["biolink:MolecularEntity"]
     _id_prefixes: ClassVar[List[str]] = [
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
@@ -2824,7 +2824,7 @@ class SmallMolecule(MolecularEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:SmallMolecule"}
+    category: ClassVar[str] = ["biolink:SmallMolecule"]
     _id_prefixes: ClassVar[List[str]] = [
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
@@ -2868,7 +2868,7 @@ class ChemicalMixture(ChemicalEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ChemicalMixture"}
+    category: ClassVar[str] = ["biolink:ChemicalMixture"]
     _id_prefixes: ClassVar[List[str]] = [
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
@@ -2921,7 +2921,7 @@ class NucleicAcidEntity(MolecularEntity, GenomicEntity, PhysicalEssence, Ontolog
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:NucleicAcidEntity"}
+    category: ClassVar[str] = ["biolink:NucleicAcidEntity"]
     _id_prefixes: ClassVar[List[str]] = [
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
@@ -2949,7 +2949,7 @@ class MolecularMixture(ChemicalMixture):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MolecularMixture"}
+    category: ClassVar[str] = ["biolink:MolecularMixture"]
     _id_prefixes: ClassVar[List[str]] = [
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
@@ -2983,7 +2983,7 @@ class ComplexMolecularMixture(ChemicalMixture):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ComplexMolecularMixture"}
+    category: ClassVar[str] = ["biolink:ComplexMolecularMixture"]
     _id_prefixes: ClassVar[List[str]] = [
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
@@ -3017,7 +3017,7 @@ class ProcessedMaterial(ChemicalMixture):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ProcessedMaterial"}
+    category: ClassVar[str] = ["biolink:ProcessedMaterial"]
     _id_prefixes: ClassVar[List[str]] = ["UMLS"]
 
 
@@ -3028,7 +3028,7 @@ class Drug(MolecularMixture, ChemicalOrDrugOrTreatment, OntologyClass):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Drug"}
+    category: ClassVar[str] = ["biolink:Drug"]
     _id_prefixes: ClassVar[List[str]] = ["RXCUI", "NDC", "UMLS"]
 
 
@@ -3036,42 +3036,42 @@ class Drug(MolecularMixture, ChemicalOrDrugOrTreatment, OntologyClass):
 class EnvironmentalFoodContaminant(ChemicalEntity):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:EnvironmentalFoodContaminant"}
+    category: ClassVar[str] = ["biolink:EnvironmentalFoodContaminant"]
 
 
 @dataclass(config=PydanticConfig)
 class FoodAdditive(ChemicalEntity):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:FoodAdditive"}
+    category: ClassVar[str] = ["biolink:FoodAdditive"]
 
 
 @dataclass(config=PydanticConfig)
 class Nutrient(ChemicalEntity):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Nutrient"}
+    category: ClassVar[str] = ["biolink:Nutrient"]
 
 
 @dataclass(config=PydanticConfig)
 class Macronutrient(Nutrient):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Macronutrient"}
+    category: ClassVar[str] = ["biolink:Macronutrient"]
 
 
 @dataclass(config=PydanticConfig)
 class Micronutrient(Nutrient):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Micronutrient"}
+    category: ClassVar[str] = ["biolink:Micronutrient"]
 
 
 @dataclass(config=PydanticConfig)
 class Vitamin(Micronutrient):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Vitamin"}
+    category: ClassVar[str] = ["biolink:Vitamin"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3081,7 +3081,7 @@ class Food(ChemicalMixture):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Food"}
+    category: ClassVar[str] = ["biolink:Food"]
     _id_prefixes: ClassVar[List[str]] = ["foodb.compound"]
 
 
@@ -3120,7 +3120,7 @@ class Gene(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Gene"}
+    category: ClassVar[str] = ["biolink:Gene"]
     _id_prefixes: ClassVar[List[str]] = [
         "NCBIGene",
         "ENSEMBL",
@@ -3215,7 +3215,7 @@ class Genome(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Genome"}
+    category: ClassVar[str] = ["biolink:Genome"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3226,7 +3226,7 @@ class Exon(NucleicAcidEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Exon"}
+    category: ClassVar[str] = ["biolink:Exon"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3236,7 +3236,7 @@ class Transcript(NucleicAcidEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Transcript"}
+    category: ClassVar[str] = ["biolink:Transcript"]
     _id_prefixes: ClassVar[List[str]] = ["ENSEMBL", "FB"]
 
 
@@ -3244,7 +3244,7 @@ class Transcript(NucleicAcidEntity):
 class CodingSequence(NucleicAcidEntity):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:CodingSequence"}
+    category: ClassVar[str] = ["biolink:CodingSequence"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3261,7 +3261,7 @@ class Polypeptide(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Polypeptide"}
+    category: ClassVar[str] = ["biolink:Polypeptide"]
     _id_prefixes: ClassVar[List[str]] = ["UniProtKB", "PR", "ENSEMBL", "FB", "UMLS"]
 
 
@@ -3273,7 +3273,7 @@ class Protein(Polypeptide, GeneProductMixin, ThingWithTaxon):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Protein"}
+    category: ClassVar[str] = ["biolink:Protein"]
     _id_prefixes: ClassVar[List[str]] = ["UniProtKB", "PR", "ENSEMBL", "FB", "UMLS", "MESH"]
 
 
@@ -3285,7 +3285,7 @@ class ProteinIsoform(Protein, GeneProductIsoformMixin):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ProteinIsoform"}
+    category: ClassVar[str] = ["biolink:ProteinIsoform"]
     _id_prefixes: ClassVar[List[str]] = ["UniProtKB", "UNIPROT.ISOFORM", "PR", "ENSEMBL"]
 
 
@@ -3297,14 +3297,14 @@ class NucleicAcidSequenceMotif(BiologicalEntity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:NucleicAcidSequenceMotif"}
+    category: ClassVar[str] = ["biolink:NucleicAcidSequenceMotif"]
 
 
 @dataclass(config=PydanticConfig)
 class RNAProduct(Transcript, GeneProductMixin):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:RNAProduct"}
+    category: ClassVar[str] = ["biolink:RNAProduct"]
     _id_prefixes: ClassVar[List[str]] = ["RNACENTRAL"]
 
 
@@ -3315,7 +3315,7 @@ class RNAProductIsoform(RNAProduct, GeneProductIsoformMixin):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:RNAProductIsoform"}
+    category: ClassVar[str] = ["biolink:RNAProductIsoform"]
     _id_prefixes: ClassVar[List[str]] = ["RNACENTRAL"]
 
 
@@ -3323,7 +3323,7 @@ class RNAProductIsoform(RNAProduct, GeneProductIsoformMixin):
 class NoncodingRNAProduct(RNAProduct):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:NoncodingRNAProduct"}
+    category: ClassVar[str] = ["biolink:NoncodingRNAProduct"]
     _id_prefixes: ClassVar[List[str]] = ["RNACENTRAL", "NCBIGene", "ENSEMBL"]
 
 
@@ -3331,7 +3331,7 @@ class NoncodingRNAProduct(RNAProduct):
 class MicroRNA(NoncodingRNAProduct):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MicroRNA"}
+    category: ClassVar[str] = ["biolink:MicroRNA"]
     _id_prefixes: ClassVar[List[str]] = ["MIR", "HGNC", "WormBase"]
 
 
@@ -3344,7 +3344,7 @@ class SiRNA(NoncodingRNAProduct):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:SiRNA"}
+    category: ClassVar[str] = ["biolink:SiRNA"]
     _id_prefixes: ClassVar[List[str]] = ["MIR", "HGNC", "WormBase"]
 
 
@@ -3374,14 +3374,14 @@ class ProteinDomain(BiologicalEntity, GeneGroupingMixin, ChemicalEntityOrGeneOrG
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ProteinDomain"}
+    category: ClassVar[str] = ["biolink:ProteinDomain"]
 
 
 @dataclass(config=PydanticConfig)
 class ProteinFamily(BiologicalEntity, GeneGroupingMixin, ChemicalEntityOrGeneOrGeneProduct):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ProteinFamily"}
+    category: ClassVar[str] = ["biolink:ProteinFamily"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3391,7 +3391,7 @@ class GeneFamily(BiologicalEntity, GeneGroupingMixin, ChemicalEntityOrGeneOrGene
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeneFamily"}
+    category: ClassVar[str] = ["biolink:GeneFamily"]
     _id_prefixes: ClassVar[List[str]] = [
         "PANTHER.FAMILY",
         "HGNC.FAMILY",
@@ -3420,7 +3420,7 @@ class GeneFamily(BiologicalEntity, GeneGroupingMixin, ChemicalEntityOrGeneOrGene
 class Zygosity(Attribute):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Zygosity"}
+    category: ClassVar[str] = ["biolink:Zygosity"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3431,7 +3431,7 @@ class Genotype(BiologicalEntity, PhysicalEssence, GenomicEntity, OntologyClass):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Genotype"}
+    category: ClassVar[str] = ["biolink:Genotype"]
     _id_prefixes: ClassVar[List[str]] = ["ZFIN", "FB"]
 
     has_zygosity: Optional[Union[str, Zygosity]] = None
@@ -3444,7 +3444,7 @@ class Haplotype(BiologicalEntity, GenomicEntity, PhysicalEssence, OntologyClass)
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Haplotype"}
+    category: ClassVar[str] = ["biolink:Haplotype"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3454,7 +3454,7 @@ class SequenceVariant(BiologicalEntity, GenomicEntity, PhysicalEssence, Ontology
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:SequenceVariant"}
+    category: ClassVar[str] = ["biolink:SequenceVariant"]
     _id_prefixes: ClassVar[List[str]] = [
         "CAID",
         "CLINVAR",
@@ -3494,7 +3494,7 @@ class Snv(SequenceVariant):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Snv"}
+    category: ClassVar[str] = ["biolink:Snv"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3505,7 +3505,7 @@ class ReagentTargetedGene(BiologicalEntity, GenomicEntity, PhysicalEssence, Onto
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ReagentTargetedGene"}
+    category: ClassVar[str] = ["biolink:ReagentTargetedGene"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3515,7 +3515,7 @@ class ClinicalAttribute(Attribute):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ClinicalAttribute"}
+    category: ClassVar[str] = ["biolink:ClinicalAttribute"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3526,7 +3526,7 @@ class ClinicalMeasurement(ClinicalAttribute):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ClinicalMeasurement"}
+    category: ClassVar[str] = ["biolink:ClinicalMeasurement"]
 
     has_attribute_type: Union[str, OntologyClass] = None
 
@@ -3546,7 +3546,7 @@ class ClinicalModifier(ClinicalAttribute):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ClinicalModifier"}
+    category: ClassVar[str] = ["biolink:ClinicalModifier"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3557,7 +3557,7 @@ class ClinicalCourse(ClinicalAttribute):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ClinicalCourse"}
+    category: ClassVar[str] = ["biolink:ClinicalCourse"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3567,7 +3567,7 @@ class Onset(ClinicalCourse):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Onset"}
+    category: ClassVar[str] = ["biolink:Onset"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3578,21 +3578,21 @@ class ClinicalEntity(NamedThing):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ClinicalEntity"}
+    category: ClassVar[str] = ["biolink:ClinicalEntity"]
 
 
 @dataclass(config=PydanticConfig)
 class ClinicalTrial(ClinicalEntity):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ClinicalTrial"}
+    category: ClassVar[str] = ["biolink:ClinicalTrial"]
 
 
 @dataclass(config=PydanticConfig)
 class ClinicalIntervention(ClinicalEntity):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ClinicalIntervention"}
+    category: ClassVar[str] = ["biolink:ClinicalIntervention"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3603,7 +3603,7 @@ class ClinicalFinding(PhenotypicFeature):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ClinicalFinding"}
+    category: ClassVar[str] = ["biolink:ClinicalFinding"]
     _id_prefixes: ClassVar[List[str]] = ["LOINC", "NCIT", "EFO"]
 
     has_attribute: Optional[
@@ -3621,7 +3621,7 @@ class ClinicalFinding(PhenotypicFeature):
 class Hospitalization(ClinicalIntervention):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Hospitalization"}
+    category: ClassVar[str] = ["biolink:Hospitalization"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3631,7 +3631,7 @@ class SocioeconomicAttribute(Attribute):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:SocioeconomicAttribute"}
+    category: ClassVar[str] = ["biolink:SocioeconomicAttribute"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3641,7 +3641,7 @@ class Case(IndividualOrganism):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Case"}
+    category: ClassVar[str] = ["biolink:Case"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3652,7 +3652,7 @@ class Cohort(StudyPopulation):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Cohort"}
+    category: ClassVar[str] = ["biolink:Cohort"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3676,7 +3676,7 @@ class GenomicBackgroundExposure(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GenomicBackgroundExposure"}
+    category: ClassVar[str] = ["biolink:GenomicBackgroundExposure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3694,7 +3694,7 @@ class PathologicalProcess(BiologicalProcess, PathologicalEntityMixin):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PathologicalProcess"}
+    category: ClassVar[str] = ["biolink:PathologicalProcess"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3705,7 +3705,7 @@ class PathologicalProcessExposure(ExposureEvent):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PathologicalProcessExposure"}
+    category: ClassVar[str] = ["biolink:PathologicalProcessExposure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3716,7 +3716,7 @@ class PathologicalAnatomicalStructure(AnatomicalEntity, PathologicalEntityMixin)
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PathologicalAnatomicalStructure"}
+    category: ClassVar[str] = ["biolink:PathologicalAnatomicalStructure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3727,7 +3727,7 @@ class PathologicalAnatomicalExposure(ExposureEvent):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PathologicalAnatomicalExposure"}
+    category: ClassVar[str] = ["biolink:PathologicalAnatomicalExposure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3739,7 +3739,7 @@ class DiseaseOrPhenotypicFeatureExposure(ExposureEvent, PathologicalEntityMixin)
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DiseaseOrPhenotypicFeatureExposure"}
+    category: ClassVar[str] = ["biolink:DiseaseOrPhenotypicFeatureExposure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3749,7 +3749,7 @@ class ChemicalExposure(ExposureEvent):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ChemicalExposure"}
+    category: ClassVar[str] = ["biolink:ChemicalExposure"]
 
     has_quantitative_value: Optional[
         Union[List[Union[str, QuantityValue]], Union[str, QuantityValue]]
@@ -3769,7 +3769,7 @@ class ComplexChemicalExposure:
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ComplexChemicalExposure"}
+    category: ClassVar[str] = ["biolink:ComplexChemicalExposure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3779,7 +3779,7 @@ class DrugExposure(ChemicalExposure, ExposureEvent):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DrugExposure"}
+    category: ClassVar[str] = ["biolink:DrugExposure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3790,7 +3790,7 @@ class DrugToGeneInteractionExposure(DrugExposure, GeneGroupingMixin):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DrugToGeneInteractionExposure"}
+    category: ClassVar[str] = ["biolink:DrugToGeneInteractionExposure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3801,7 +3801,7 @@ class Treatment(NamedThing, ExposureEvent, ChemicalOrDrugOrTreatment):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Treatment"}
+    category: ClassVar[str] = ["biolink:Treatment"]
 
     has_drug: Optional[Union[List[Union[URIorCURIE, Drug]], Union[URIorCURIE, Drug]]] = field(
         default_factory=list
@@ -3835,7 +3835,7 @@ class BioticExposure(ExposureEvent):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:BioticExposure"}
+    category: ClassVar[str] = ["biolink:BioticExposure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3846,7 +3846,7 @@ class EnvironmentalExposure(ExposureEvent):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:EnvironmentalExposure"}
+    category: ClassVar[str] = ["biolink:EnvironmentalExposure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3856,7 +3856,7 @@ class GeographicExposure(EnvironmentalExposure, ExposureEvent):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeographicExposure"}
+    category: ClassVar[str] = ["biolink:GeographicExposure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3866,7 +3866,7 @@ class BehavioralExposure(ExposureEvent):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:BehavioralExposure"}
+    category: ClassVar[str] = ["biolink:BehavioralExposure"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3877,7 +3877,7 @@ class SocioeconomicExposure(ExposureEvent):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:SocioeconomicExposure"}
+    category: ClassVar[str] = ["biolink:SocioeconomicExposure"]
 
     has_attribute: Union[
         List[Union[str, SocioeconomicAttribute]], Union[str, SocioeconomicAttribute]
@@ -3907,7 +3907,7 @@ class PathologicalProcessOutcome(Outcome):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PathologicalProcessOutcome"}
+    category: ClassVar[str] = ["biolink:PathologicalProcessOutcome"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3917,7 +3917,7 @@ class PathologicalAnatomicalOutcome(Outcome):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PathologicalAnatomicalOutcome"}
+    category: ClassVar[str] = ["biolink:PathologicalAnatomicalOutcome"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3928,7 +3928,7 @@ class DiseaseOrPhenotypicFeatureOutcome(Outcome):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DiseaseOrPhenotypicFeatureOutcome"}
+    category: ClassVar[str] = ["biolink:DiseaseOrPhenotypicFeatureOutcome"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3938,7 +3938,7 @@ class BehavioralOutcome(Outcome):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:BehavioralOutcome"}
+    category: ClassVar[str] = ["biolink:BehavioralOutcome"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3949,7 +3949,7 @@ class HospitalizationOutcome(Outcome):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:HospitalizationOutcome"}
+    category: ClassVar[str] = ["biolink:HospitalizationOutcome"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3959,7 +3959,7 @@ class MortalityOutcome(Outcome):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MortalityOutcome"}
+    category: ClassVar[str] = ["biolink:MortalityOutcome"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3969,7 +3969,7 @@ class EpidemiologicalOutcome(Outcome):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:EpidemiologicalOutcome"}
+    category: ClassVar[str] = ["biolink:EpidemiologicalOutcome"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3980,7 +3980,7 @@ class SocioeconomicOutcome(Outcome):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:SocioeconomicOutcome"}
+    category: ClassVar[str] = ["biolink:SocioeconomicOutcome"]
 
 
 @dataclass(config=PydanticConfig)
@@ -3990,7 +3990,7 @@ class Association(Entity):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:Association"}
+    category: ClassVar[str] = ["biolink:Association"]
 
     subject: Union[URIorCURIE, NamedThing] = None
     predicate: Union[str, PredicateType] = None
@@ -4076,7 +4076,7 @@ class ContributorAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ContributorAssociation"}
+    category: ClassVar[str] = ["biolink:ContributorAssociation"]
 
     subject: Union[URIorCURIE, InformationContentEntity] = None
     predicate: Union[str, PredicateType] = None
@@ -4116,7 +4116,7 @@ class GenotypeToGenotypePartAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GenotypeToGenotypePartAssociation"}
+    category: ClassVar[str] = ["biolink:GenotypeToGenotypePartAssociation"]
 
     predicate: Union[str, PredicateType] = None
     subject: Union[URIorCURIE, Genotype] = None
@@ -4150,7 +4150,7 @@ class GenotypeToGeneAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GenotypeToGeneAssociation"}
+    category: ClassVar[str] = ["biolink:GenotypeToGeneAssociation"]
 
     predicate: Union[str, PredicateType] = None
     subject: Union[URIorCURIE, Genotype] = None
@@ -4183,7 +4183,7 @@ class GenotypeToVariantAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GenotypeToVariantAssociation"}
+    category: ClassVar[str] = ["biolink:GenotypeToVariantAssociation"]
 
     predicate: Union[str, PredicateType] = None
     subject: Union[URIorCURIE, Genotype] = None
@@ -4240,7 +4240,7 @@ class GeneToGeneHomologyAssociation(GeneToGeneAssociation):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeneToGeneHomologyAssociation"}
+    category: ClassVar[str] = ["biolink:GeneToGeneHomologyAssociation"]
 
     predicate: Union[str, PredicateType] = None
 
@@ -4289,7 +4289,7 @@ class GeneToGeneCoexpressionAssociation(GeneToGeneAssociation, GeneExpressionMix
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeneToGeneCoexpressionAssociation"}
+    category: ClassVar[str] = ["biolink:GeneToGeneCoexpressionAssociation"]
 
     predicate: Union[str, PredicateType] = None
 
@@ -4309,7 +4309,7 @@ class PairwiseGeneToGeneInteraction(GeneToGeneAssociation):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PairwiseGeneToGeneInteraction"}
+    category: ClassVar[str] = ["biolink:PairwiseGeneToGeneInteraction"]
 
     predicate: Union[str, PredicateType] = None
 
@@ -4328,7 +4328,7 @@ class PairwiseMolecularInteraction(PairwiseGeneToGeneInteraction):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PairwiseMolecularInteraction"}
+    category: ClassVar[str] = ["biolink:PairwiseMolecularInteraction"]
 
     subject: Union[URIorCURIE, MolecularEntity] = None
     id: Union[URIorCURIE, PairwiseMolecularInteraction] = None
@@ -4453,7 +4453,7 @@ class ChemicalToChemicalAssociation(Association, ChemicalToEntityAssociationMixi
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ChemicalToChemicalAssociation"}
+    category: ClassVar[str] = ["biolink:ChemicalToChemicalAssociation"]
 
     object: Union[URIorCURIE, ChemicalEntity] = None
 
@@ -4470,7 +4470,7 @@ class ChemicalToChemicalAssociation(Association, ChemicalToEntityAssociationMixi
 class ReactionToParticipantAssociation(ChemicalToChemicalAssociation):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ReactionToParticipantAssociation"}
+    category: ClassVar[str] = ["biolink:ReactionToParticipantAssociation"]
 
     subject: Union[URIorCURIE, MolecularEntity] = None
     stoichiometry: Optional[Union[int, int]] = None
@@ -4490,7 +4490,7 @@ class ReactionToParticipantAssociation(ChemicalToChemicalAssociation):
 class ReactionToCatalystAssociation(ReactionToParticipantAssociation):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ReactionToCatalystAssociation"}
+    category: ClassVar[str] = ["biolink:ReactionToCatalystAssociation"]
 
     object: Union[str, GeneOrGeneProduct] = None
 
@@ -4517,7 +4517,7 @@ class ChemicalToChemicalDerivationAssociation(ChemicalToChemicalAssociation):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ChemicalToChemicalDerivationAssociation"}
+    category: ClassVar[str] = ["biolink:ChemicalToChemicalDerivationAssociation"]
 
     subject: Union[URIorCURIE, ChemicalEntity] = None
     object: Union[URIorCURIE, ChemicalEntity] = None
@@ -4557,7 +4557,7 @@ class ChemicalToPathwayAssociation(Association, ChemicalToEntityAssociationMixin
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ChemicalToPathwayAssociation"}
+    category: ClassVar[str] = ["biolink:ChemicalToPathwayAssociation"]
 
     object: Union[URIorCURIE, Pathway] = None
 
@@ -4577,7 +4577,7 @@ class ChemicalToGeneAssociation(Association, ChemicalToEntityAssociationMixin):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ChemicalToGeneAssociation"}
+    category: ClassVar[str] = ["biolink:ChemicalToGeneAssociation"]
 
     object: Union[str, GeneOrGeneProduct] = None
 
@@ -4596,7 +4596,7 @@ class DrugToGeneAssociation(Association, DrugToEntityAssociationMixin):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DrugToGeneAssociation"}
+    category: ClassVar[str] = ["biolink:DrugToGeneAssociation"]
 
     object: Union[str, GeneOrGeneProduct] = None
 
@@ -4632,7 +4632,7 @@ class MaterialSampleDerivationAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MaterialSampleDerivationAssociation"}
+    category: ClassVar[str] = ["biolink:MaterialSampleDerivationAssociation"]
 
     subject: Union[URIorCURIE, MaterialSample] = None
     object: Union[URIorCURIE, NamedThing] = None
@@ -4696,14 +4696,14 @@ class DiseaseToExposureEventAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DiseaseToExposureEventAssociation"}
+    category: ClassVar[str] = ["biolink:DiseaseToExposureEventAssociation"]
 
 
 @dataclass(config=PydanticConfig)
 class ExposureEventToEntityAssociationMixin:
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ExposureEventToEntityAssociationMixin"}
+    category: ClassVar[str] = ["biolink:ExposureEventToEntityAssociationMixin"]
 
 
 @dataclass(config=PydanticConfig)
@@ -4731,7 +4731,7 @@ class ExposureEventToOutcomeAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ExposureEventToOutcomeAssociation"}
+    category: ClassVar[str] = ["biolink:ExposureEventToOutcomeAssociation"]
 
     has_population_context: Optional[Union[URIorCURIE, PopulationOfIndividualOrganisms]] = None
     has_temporal_context: Optional[Union[str, TimeType]] = None
@@ -4789,7 +4789,7 @@ class InformationContentEntityToNamedThingAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:InformationContentEntityToNamedThingAssociation"}
+    category: ClassVar[str] = ["biolink:InformationContentEntityToNamedThingAssociation"]
 
     subject: Union[URIorCURIE, NamedThing] = None
     object: Union[URIorCURIE, NamedThing] = None
@@ -4855,7 +4855,7 @@ class DiseaseOrPhenotypicFeatureToLocationAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DiseaseOrPhenotypicFeatureToLocationAssociation"}
+    category: ClassVar[str] = ["biolink:DiseaseOrPhenotypicFeatureToLocationAssociation"]
 
     object: Union[URIorCURIE, AnatomicalEntity] = None
 
@@ -4893,7 +4893,7 @@ class CellLineToDiseaseOrPhenotypicFeatureAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:CellLineToDiseaseOrPhenotypicFeatureAssociation"}
+    category: ClassVar[str] = ["biolink:CellLineToDiseaseOrPhenotypicFeatureAssociation"]
 
     subject: Union[URIorCURIE, DiseaseOrPhenotypicFeature] = None
 
@@ -4918,7 +4918,7 @@ class ChemicalToDiseaseOrPhenotypicFeatureAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ChemicalToDiseaseOrPhenotypicFeatureAssociation"}
+    category: ClassVar[str] = ["biolink:ChemicalToDiseaseOrPhenotypicFeatureAssociation"]
 
     object: Union[URIorCURIE, DiseaseOrPhenotypicFeature] = None
 
@@ -4942,7 +4942,7 @@ class MaterialSampleToDiseaseOrPhenotypicFeatureAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MaterialSampleToDiseaseOrPhenotypicFeatureAssociation"}
+    category: ClassVar[str] = ["biolink:MaterialSampleToDiseaseOrPhenotypicFeatureAssociation"]
 
 
 @dataclass(config=PydanticConfig)
@@ -4968,7 +4968,7 @@ class GenotypeToPhenotypicFeatureAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GenotypeToPhenotypicFeatureAssociation"}
+    category: ClassVar[str] = ["biolink:GenotypeToPhenotypicFeatureAssociation"]
 
     predicate: Union[str, PredicateType] = None
     subject: Union[URIorCURIE, Genotype] = None
@@ -4997,7 +4997,7 @@ class ExposureEventToPhenotypicFeatureAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ExposureEventToPhenotypicFeatureAssociation"}
+    category: ClassVar[str] = ["biolink:ExposureEventToPhenotypicFeatureAssociation"]
 
     subject: Union[str, ExposureEvent] = None
 
@@ -5019,7 +5019,7 @@ class DiseaseToPhenotypicFeatureAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DiseaseToPhenotypicFeatureAssociation"}
+    category: ClassVar[str] = ["biolink:DiseaseToPhenotypicFeatureAssociation"]
 
 
 @dataclass(config=PydanticConfig)
@@ -5032,7 +5032,7 @@ class CaseToPhenotypicFeatureAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:CaseToPhenotypicFeatureAssociation"}
+    category: ClassVar[str] = ["biolink:CaseToPhenotypicFeatureAssociation"]
 
 
 @dataclass(config=PydanticConfig)
@@ -5045,7 +5045,7 @@ class BehaviorToBehavioralFeatureAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:BehaviorToBehavioralFeatureAssociation"}
+    category: ClassVar[str] = ["biolink:BehaviorToBehavioralFeatureAssociation"]
 
     subject: Union[URIorCURIE, Behavior] = None
     object: Union[URIorCURIE, BehavioralFeature] = None
@@ -5096,7 +5096,7 @@ class GeneToPhenotypicFeatureAssociation(
 ):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeneToPhenotypicFeatureAssociation"}
+    category: ClassVar[str] = ["biolink:GeneToPhenotypicFeatureAssociation"]
 
     subject: Union[str, GeneOrGeneProduct] = None
 
@@ -5114,7 +5114,7 @@ class GeneToDiseaseAssociation(
 ):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeneToDiseaseAssociation"}
+    category: ClassVar[str] = ["biolink:GeneToDiseaseAssociation"]
 
     subject: Union[str, GeneOrGeneProduct] = None
 
@@ -5132,7 +5132,7 @@ class DruggableGeneToDiseaseAssociation(
 ):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:DruggableGeneToDiseaseAssociation"}
+    category: ClassVar[str] = ["biolink:DruggableGeneToDiseaseAssociation"]
 
     subject: Union[str, GeneOrGeneProduct] = None
     predicate: Union[str, PredicateType] = None
@@ -5165,7 +5165,7 @@ class VariantToGeneAssociation(Association, VariantToEntityAssociationMixin):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:VariantToGeneAssociation"}
+    category: ClassVar[str] = ["biolink:VariantToGeneAssociation"]
 
     object: Union[URIorCURIE, Gene] = None
     predicate: Union[str, PredicateType] = None
@@ -5191,7 +5191,7 @@ class VariantToGeneExpressionAssociation(VariantToGeneAssociation, GeneExpressio
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:VariantToGeneExpressionAssociation"}
+    category: ClassVar[str] = ["biolink:VariantToGeneExpressionAssociation"]
 
     predicate: Union[str, PredicateType] = None
 
@@ -5212,7 +5212,7 @@ class VariantToPopulationAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:VariantToPopulationAssociation"}
+    category: ClassVar[str] = ["biolink:VariantToPopulationAssociation"]
 
     subject: Union[URIorCURIE, SequenceVariant] = None
     object: Union[URIorCURIE, PopulationOfIndividualOrganisms] = None
@@ -5242,7 +5242,7 @@ class PopulationToPopulationAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:PopulationToPopulationAssociation"}
+    category: ClassVar[str] = ["biolink:PopulationToPopulationAssociation"]
 
     subject: Union[URIorCURIE, PopulationOfIndividualOrganisms] = None
     object: Union[URIorCURIE, PopulationOfIndividualOrganisms] = None
@@ -5274,7 +5274,7 @@ class VariantToPhenotypicFeatureAssociation(
 ):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:VariantToPhenotypicFeatureAssociation"}
+    category: ClassVar[str] = ["biolink:VariantToPhenotypicFeatureAssociation"]
 
     subject: Union[URIorCURIE, SequenceVariant] = None
 
@@ -5293,7 +5293,7 @@ class VariantToDiseaseAssociation(
 ):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:VariantToDiseaseAssociation"}
+    category: ClassVar[str] = ["biolink:VariantToDiseaseAssociation"]
 
     subject: Union[URIorCURIE, NamedThing] = None
     predicate: Union[str, PredicateType] = None
@@ -5325,7 +5325,7 @@ class GenotypeToDiseaseAssociation(
 ):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GenotypeToDiseaseAssociation"}
+    category: ClassVar[str] = ["biolink:GenotypeToDiseaseAssociation"]
 
     subject: Union[URIorCURIE, NamedThing] = None
     predicate: Union[str, PredicateType] = None
@@ -5382,7 +5382,7 @@ class GeneAsAModelOfDiseaseAssociation(
 ):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeneAsAModelOfDiseaseAssociation"}
+    category: ClassVar[str] = ["biolink:GeneAsAModelOfDiseaseAssociation"]
 
     subject: Union[str, GeneOrGeneProduct] = None
 
@@ -5400,7 +5400,7 @@ class VariantAsAModelOfDiseaseAssociation(
 ):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:VariantAsAModelOfDiseaseAssociation"}
+    category: ClassVar[str] = ["biolink:VariantAsAModelOfDiseaseAssociation"]
 
     subject: Union[URIorCURIE, SequenceVariant] = None
 
@@ -5419,7 +5419,7 @@ class GenotypeAsAModelOfDiseaseAssociation(
 ):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GenotypeAsAModelOfDiseaseAssociation"}
+    category: ClassVar[str] = ["biolink:GenotypeAsAModelOfDiseaseAssociation"]
 
     subject: Union[URIorCURIE, Genotype] = None
 
@@ -5440,7 +5440,7 @@ class CellLineAsAModelOfDiseaseAssociation(
 ):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:CellLineAsAModelOfDiseaseAssociation"}
+    category: ClassVar[str] = ["biolink:CellLineAsAModelOfDiseaseAssociation"]
 
     subject: Union[URIorCURIE, CellLine] = None
 
@@ -5459,7 +5459,7 @@ class OrganismalEntityAsAModelOfDiseaseAssociation(
 ):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:OrganismalEntityAsAModelOfDiseaseAssociation"}
+    category: ClassVar[str] = ["biolink:OrganismalEntityAsAModelOfDiseaseAssociation"]
 
     subject: Union[URIorCURIE, OrganismalEntity] = None
 
@@ -5476,7 +5476,7 @@ class OrganismalEntityAsAModelOfDiseaseAssociation(
 class OrganismToOrganismAssociation(Association):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:OrganismToOrganismAssociation"}
+    category: ClassVar[str] = ["biolink:OrganismToOrganismAssociation"]
 
     subject: Union[URIorCURIE, IndividualOrganism] = None
     object: Union[URIorCURIE, IndividualOrganism] = None
@@ -5500,7 +5500,7 @@ class OrganismToOrganismAssociation(Association):
 class TaxonToTaxonAssociation(Association):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:TaxonToTaxonAssociation"}
+    category: ClassVar[str] = ["biolink:TaxonToTaxonAssociation"]
 
     subject: Union[URIorCURIE, OrganismTaxon] = None
     object: Union[URIorCURIE, OrganismTaxon] = None
@@ -5524,7 +5524,7 @@ class TaxonToTaxonAssociation(Association):
 class GeneHasVariantThatContributesToDiseaseAssociation(GeneToDiseaseAssociation):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeneHasVariantThatContributesToDiseaseAssociation"}
+    category: ClassVar[str] = ["biolink:GeneHasVariantThatContributesToDiseaseAssociation"]
 
     subject: Union[str, GeneOrGeneProduct] = None
     sequence_variant_qualifier: Optional[Union[URIorCURIE, SequenceVariant]] = None
@@ -5549,7 +5549,7 @@ class GeneToExpressionSiteAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeneToExpressionSiteAssociation"}
+    category: ClassVar[str] = ["biolink:GeneToExpressionSiteAssociation"]
 
     subject: Union[str, GeneOrGeneProduct] = None
     object: Union[URIorCURIE, AnatomicalEntity] = None
@@ -5614,7 +5614,7 @@ class FunctionalAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:FunctionalAssociation"}
+    category: ClassVar[str] = ["biolink:FunctionalAssociation"]
 
     subject: Union[str, MacromolecularMachineMixin] = None
     object: Union[str, GeneOntologyClass] = None
@@ -5660,7 +5660,7 @@ class MacromolecularMachineToMolecularActivityAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MacromolecularMachineToMolecularActivityAssociation"}
+    category: ClassVar[str] = ["biolink:MacromolecularMachineToMolecularActivityAssociation"]
 
     object: Union[URIorCURIE, MolecularActivity] = None
 
@@ -5684,7 +5684,7 @@ class MacromolecularMachineToBiologicalProcessAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MacromolecularMachineToBiologicalProcessAssociation"}
+    category: ClassVar[str] = ["biolink:MacromolecularMachineToBiologicalProcessAssociation"]
 
     object: Union[URIorCURIE, BiologicalProcess] = None
 
@@ -5708,7 +5708,7 @@ class MacromolecularMachineToCellularComponentAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MacromolecularMachineToCellularComponentAssociation"}
+    category: ClassVar[str] = ["biolink:MacromolecularMachineToCellularComponentAssociation"]
 
     object: Union[URIorCURIE, CellularComponent] = None
 
@@ -5729,7 +5729,7 @@ class MolecularActivityToChemicalEntityAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MolecularActivityToChemicalEntityAssociation"}
+    category: ClassVar[str] = ["biolink:MolecularActivityToChemicalEntityAssociation"]
 
     subject: Union[URIorCURIE, MolecularActivity] = None
     object: Union[URIorCURIE, ChemicalEntity] = None
@@ -5757,7 +5757,7 @@ class MolecularActivityToMolecularActivityAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:MolecularActivityToMolecularActivityAssociation"}
+    category: ClassVar[str] = ["biolink:MolecularActivityToMolecularActivityAssociation"]
 
     subject: Union[URIorCURIE, MolecularActivity] = None
     object: Union[URIorCURIE, MolecularActivity] = None
@@ -5781,7 +5781,7 @@ class MolecularActivityToMolecularActivityAssociation(Association):
 class GeneToGoTermAssociation(FunctionalAssociation):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeneToGoTermAssociation"}
+    category: ClassVar[str] = ["biolink:GeneToGoTermAssociation"]
 
     subject: Union[URIorCURIE, Gene] = None
     object: Union[str, GeneOntologyClass] = None
@@ -5804,7 +5804,7 @@ class GeneToGoTermAssociation(FunctionalAssociation):
 class EntityToDiseaseAssociation(Association):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:EntityToDiseaseAssociation"}
+    category: ClassVar[str] = ["biolink:EntityToDiseaseAssociation"]
 
     FDA_approval_status: Optional[Union[str, FDAApprovalStatusEnum]] = None
 
@@ -5813,7 +5813,7 @@ class EntityToDiseaseAssociation(Association):
 class EntityToPhenotypicFeatureAssociation(Association):
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:EntityToPhenotypicFeatureAssociation"}
+    category: ClassVar[str] = ["biolink:EntityToPhenotypicFeatureAssociation"]
 
     FDA_approval_status: Optional[Union[str, FDAApprovalStatusEnum]] = None
 
@@ -5825,7 +5825,7 @@ class SequenceAssociation(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:SequenceAssociation"}
+    category: ClassVar[str] = ["biolink:SequenceAssociation"]
 
 
 @dataclass(config=PydanticConfig)
@@ -5836,7 +5836,7 @@ class GenomicSequenceLocalization(SequenceAssociation):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GenomicSequenceLocalization"}
+    category: ClassVar[str] = ["biolink:GenomicSequenceLocalization"]
 
     subject: Union[URIorCURIE, NucleicAcidEntity] = None
     object: Union[URIorCURIE, NucleicAcidEntity] = None
@@ -5874,7 +5874,7 @@ class SequenceFeatureRelationship(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:SequenceFeatureRelationship"}
+    category: ClassVar[str] = ["biolink:SequenceFeatureRelationship"]
 
     subject: Union[URIorCURIE, NucleicAcidEntity] = None
     object: Union[URIorCURIE, NucleicAcidEntity] = None
@@ -5901,7 +5901,7 @@ class TranscriptToGeneRelationship(SequenceFeatureRelationship):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:TranscriptToGeneRelationship"}
+    category: ClassVar[str] = ["biolink:TranscriptToGeneRelationship"]
 
     subject: Union[URIorCURIE, Transcript] = None
     object: Union[URIorCURIE, Gene] = None
@@ -5928,7 +5928,7 @@ class GeneToGeneProductRelationship(SequenceFeatureRelationship):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeneToGeneProductRelationship"}
+    category: ClassVar[str] = ["biolink:GeneToGeneProductRelationship"]
 
     subject: Union[URIorCURIE, Gene] = None
     object: Union[str, GeneProductMixin] = None
@@ -5960,7 +5960,7 @@ class ExonToTranscriptRelationship(SequenceFeatureRelationship):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:ExonToTranscriptRelationship"}
+    category: ClassVar[str] = ["biolink:ExonToTranscriptRelationship"]
 
     subject: Union[URIorCURIE, Exon] = None
     object: Union[URIorCURIE, Transcript] = None
@@ -5987,7 +5987,7 @@ class GeneRegulatoryRelationship(Association):
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:GeneRegulatoryRelationship"}
+    category: ClassVar[str] = ["biolink:GeneRegulatoryRelationship"]
 
     predicate: Union[str, PredicateType] = None
     subject: Union[str, GeneOrGeneProduct] = None
@@ -6042,7 +6042,7 @@ class AnatomicalEntityToAnatomicalEntityPartOfAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:AnatomicalEntityToAnatomicalEntityPartOfAssociation"}
+    category: ClassVar[str] = ["biolink:AnatomicalEntityToAnatomicalEntityPartOfAssociation"]
 
     subject: Union[URIorCURIE, AnatomicalEntity] = None
     object: Union[URIorCURIE, AnatomicalEntity] = None
@@ -6079,7 +6079,7 @@ class AnatomicalEntityToAnatomicalEntityOntogenicAssociation(
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:AnatomicalEntityToAnatomicalEntityOntogenicAssociation"}
+    category: ClassVar[str] = ["biolink:AnatomicalEntityToAnatomicalEntityOntogenicAssociation"]
 
     subject: Union[URIorCURIE, AnatomicalEntity] = None
     object: Union[URIorCURIE, AnatomicalEntity] = None
@@ -6153,7 +6153,7 @@ class OrganismTaxonToOrganismTaxonSpecialization(OrganismTaxonToOrganismTaxonAss
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:OrganismTaxonToOrganismTaxonSpecialization"}
+    category: ClassVar[str] = ["biolink:OrganismTaxonToOrganismTaxonSpecialization"]
 
     subject: Union[URIorCURIE, OrganismTaxon] = None
     object: Union[URIorCURIE, OrganismTaxon] = None
@@ -6188,7 +6188,7 @@ class OrganismTaxonToOrganismTaxonInteraction(OrganismTaxonToOrganismTaxonAssoci
     """
 
     # Class Variables
-    category: ClassVar[str] = {"biolink:OrganismTaxonToOrganismTaxonInteraction"}
+    category: ClassVar[str] = ["biolink:OrganismTaxonToOrganismTaxonInteraction"]
 
     subject: Union[URIorCURIE, OrganismTaxon] = None
     object: Union[URIorCURIE, OrganismTaxon] = None
