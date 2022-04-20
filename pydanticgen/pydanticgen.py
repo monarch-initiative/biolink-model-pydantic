@@ -170,7 +170,7 @@ from dataclasses import field
 from enum import Enum, unique
 from typing import Any, ClassVar, List, Optional, Union
 
-from pydantic import constr, validator
+from pydantic import constr, validator, Field
 from pydantic.dataclasses import dataclass
 
 LOG = logging.getLogger(__name__)
@@ -524,7 +524,7 @@ valid_prefix = {{
         vars = []
 
         if not (cls.mixin or cls.abstract):
-            vars.append(f'category: ClassVar[str] = ["biolink:{camelcase(cls.name)}"]')
+            vars.append(f'category: List[str] = Field(["biolink:{camelcase(cls.name)}"])')
 
         id_prefixes_fmt = ',\n'.join([f'\t\t"{prefix}"' for prefix in cls.id_prefixes])
 
